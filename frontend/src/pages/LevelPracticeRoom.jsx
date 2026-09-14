@@ -562,7 +562,13 @@ export default function LevelPracticeRoom() {
 
   const handleLoadedMetadata = () => {
     if (audioRef.current) {
-      setDuration(audioRef.current.duration || 75);
+      const dur = audioRef.current.duration || 75;
+      setDuration(dur);
+      // If Part 1 or Part 2 has intro directions (> 60s and ends with /1.mp3), auto-seek to question start (52s)
+      if ((partNum === 1 || partNum === 2) && dur > 60 && currentPassageQ?.audioUrl?.endsWith('/1.mp3')) {
+        audioRef.current.currentTime = 52;
+        setCurrentTime(52);
+      }
     }
   };
 
@@ -1149,6 +1155,25 @@ export default function LevelPracticeRoom() {
                 </button>
               </div>
 
+              {/* Skip Intro Directions Button (Part 1/2 single question audio with 52s intro) */}
+              {((partNum === 1 || partNum === 2) && duration > 60 && currentTime < 50 && currentPassageQ?.audioUrl?.endsWith('/1.mp3')) && (
+                <div className="flex justify-center pt-1 animate-fadeIn">
+                  <button
+                    onClick={() => {
+                      if (audioRef.current) {
+                        audioRef.current.currentTime = 52;
+                        setCurrentTime(52);
+                      }
+                    }}
+                    className="px-3 py-1 rounded-full bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/40 text-cyan-700 dark:text-cyan-300 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm active:scale-95"
+                    title="Bỏ qua đoạn đọc hướng dẫn Part 1/2 để nghe câu hỏi ngay"
+                  >
+                    <RotateCw className="w-3 h-3 text-cyan-500" />
+                    <span>⏩ Bỏ qua hướng dẫn (nghe câu hỏi ngay)</span>
+                  </button>
+                </div>
+              )}
+
               {/* Keyboard Shortcuts Hint Bar */}
               <div className="pt-2 border-t dark:border-slate-800/60 border-slate-200 flex items-center justify-center gap-4 text-[11px] dark:text-slate-400 text-slate-500">
                 <span className="flex items-center gap-1">
@@ -1360,11 +1385,16 @@ export default function LevelPracticeRoom() {
                   <div className="flex items-start justify-between border-b dark:border-slate-800/80 border-slate-200 pb-3 gap-3">
                     <div className="flex items-start gap-2.5 flex-1">
                       <span className="font-heading font-black text-lg text-cyan-600 dark:text-cyan-400 shrink-0">
-                        {qItem.testQuestionNumber || (qGlobalIdx + 1)}.
+                        {isPassageMode ? `${qItem.testQuestionNumber || (qGlobalIdx + 1)}.` : `Câu ${qGlobalIdx + 1}.`}
                       </span>
                       <div className="space-y-1">
                         <span className="text-sm sm:text-base font-semibold dark:text-slate-100 text-slate-900 leading-snug block">
-                          {qItem.promptText}
+                          {partNum === 1 
+                            ? (qItem.promptText && !/listen to the|statement that best describes/i.test(qItem.promptText) 
+                                ? qItem.promptText 
+                                : 'Chọn một câu miêu tả đúng nhất những gì bạn nhìn thấy trong bức tranh.')
+                            : qItem.promptText
+                          }
                         </span>
                         {/* Vietnamese Translation of Question Prompt (Chỉ hiển thị khi đã làm câu hỏi VÀ bật Song ngữ VÀ là tiếng Việt thực sự) */}
                         {isThisQAnswered && isSongNgu && qItem.promptTranslation && 
@@ -1432,7 +1462,7 @@ export default function LevelPracticeRoom() {
                               
                               {/* Option text: Always visible in Part 3/4, or if answered */}
                               <span className="text-sm sm:text-base font-medium dark:text-slate-100 text-slate-800 leading-snug">
-                                {isPassageMode ? opt.text : (isThisQAnswered ? opt.text : opt.label)}
+                                {isPassageMode ? opt.text : (isThisQAnswered ? opt.text : `Phương án ${opt.label}`)}
                               </span>
                             </div>
 
