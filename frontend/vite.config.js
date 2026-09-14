@@ -11,6 +11,11 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:5000',
         changeOrigin: true
+      },
+      '/media': {
+        target: 'https://toeic.danganhtuong.dev',
+        changeOrigin: true,
+        secure: false
       }
     }
   },
