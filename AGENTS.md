@@ -89,6 +89,12 @@ Whenever working on this project (Tường Tận TOEIC), AI agents MUST adhere t
 - **Data Purification Standards**:
   - Không được có từ rác số (như `135138`...), từ chỉ dẫn làm bài (`questions`, `following`, `refer`...), hay định nghĩa giữ chỗ (`từ vựng cốt lõi TOEIC`).
   - 100% phương án A, B, C, D có bản dịch tiếng Việt chuẩn xác (16.822 câu hỏi).
+- **Zero-Dependency Self-Hosted Media & Anti-Below-Fold Part 1 Photography (DO NOT REVERT)**:
+  - **Zero Supabase Dependency**: 100% audio MP3 và hình ảnh (1.000 audio đề thi, 60 ảnh Part 1 đề thi, 5 vector SVG graphic, 45 ảnh chụp Part 1 bài tập) được tự host trực tiếp trên ổ cứng VPS tại `/var/www/tuong-tan-toeic/media/`. Tuyệt đối 0 link Supabase tồn tại trong database.
+  - **Part 1 Top-of-Column Placement**: Trong cả `LevelPracticeRoom.jsx` và `MockTestRoom.jsx`, ảnh chụp Part 1 **BẮT BUỘC luôn nằm ở vị trí trên cùng của Cột Trái** (ngay dưới thanh chỉ dẫn, bên trên Audio Player) để học viên nhìn thấy ngay từ giây đầu tiên.
+  - **Anti-Hiding Rule**: Thẻ `<img>` TUYỆT ĐỐI KHÔNG được dùng `e.currentTarget.parentElement.parentElement.style.display = 'none'` trong `onError`. Thay vào đó, fallback xoay vòng 45 ảnh chụp tự host `/media/listening/part1/photo_${(currentIdx % 45) + 1}.jpg`.
+  - **Local Dev Proxy**: `frontend/vite.config.js` bắt buộc có reverse proxy `'/media'` trỏ về `https://toeic.danganhtuong.dev` để môi trường `localhost:3000` luôn hiển thị hình ảnh và phát âm thanh mượt mà mà không gặp lỗi 404.
+  - **Atomic Tar Deployment**: Khi deploy frontend lên VPS, luôn đóng gói `tar -czf dist_assets.tar.gz -C frontend/dist index.html assets` để tránh lỗi đệ quy wildcard của lệnh `scp` trên Windows. Chi tiết kỹ thuật: Xem [`docs/KI_SELF_HOSTED_MEDIA_AND_ZERO_DEFECT_AUDIT.md`](file:///a:/frontend/tuong_tan_toeic/docs/KI_SELF_HOSTED_MEDIA_AND_ZERO_DEFECT_AUDIT.md).
 
 ## 4. Mock Test Room & Practice Mode Architecture (DO NOT REVERT)
 - **Strict Distinction between Thi Thử (Exam Mode) and Luyện Tập (Practice Mode)**:
