@@ -43,6 +43,8 @@ temp_deploy/
 scratch/
 scribd_download/
 reference_screenshots/
+backend/cache/
+*.mp3
 
 # Sensitive batch / bash upload scripts with credentials
 upload_patch_to_vps.bat

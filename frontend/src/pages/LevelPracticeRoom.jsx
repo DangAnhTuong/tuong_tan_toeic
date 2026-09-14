@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import { 
@@ -53,6 +53,7 @@ import {
   removeWordFromBasket, 
   getBasketWords 
 } from '../services/vocabBasketService';
+import { getPart1ImageUrl } from '../utils/part1ImageBank';
 
 export default function LevelPracticeRoom() {
   const navigate = useNavigate();
@@ -111,6 +112,7 @@ export default function LevelPracticeRoom() {
   const [questions, setQuestions] = useState([]);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(null);
 
   const currentUser = getStoredUser();
   const currentUserId = currentUser?.userId || currentUser?.email || 'guest';
@@ -251,42 +253,12 @@ export default function LevelPracticeRoom() {
     window.speechSynthesis.speak(utterance);
   };
 
-  // Fallback photo questions for Part 1/2
-  const fallbackPhotoQuestions = Array.from({ length: 93 }, (_, i) => ({
-    questionNumber: i + 1,
-    testQuestionNumber: i + 1,
-    imageUrl: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=800&q=80',
-    promptText: 'Select the one statement that best describes what you see in the picture.',
-    promptTranslation: 'Chọn một câu miêu tả đúng nhất những gì bạn nhìn thấy trong bức tranh.',
-    options: [
-      { label: '(A)', text: 'The man is looking at his mobile phone on the train.', translation: 'Người đàn ông đang nhìn vào điện thoại trên tàu.', isCorrect: true },
-      { label: '(B)', text: 'The man is purchasing a train ticket at the counter.', translation: 'Người đàn ông đang mua vé tàu tại quầy.', isCorrect: false },
-      { label: '(C)', text: 'The man is adjusting his winter coat.', translation: 'Người đàn ông đang chỉnh lại áo khoác mùa đông.', isCorrect: false },
-      { label: '(D)', text: 'The man is standing near the train entrance.', translation: 'Người đàn ông đang đứng gần lối vào tàu.', isCorrect: false }
-    ],
-    transcript: 'The man is looking at his mobile phone on the train.',
-    translation: 'Người đàn ông đang nhìn vào điện thoại di động trên tàu.',
-    explanation: 'Trong bức ảnh, người đàn ông đang ngồi trên ghế tàu và chăm chú nhìn vào màn hình điện thoại cầm trên tay.',
-    vocabularyList: [
-      {
-        word: 'passenger',
-        pos: 'n',
-        level: 'A2',
-        ipaUS: '/ˈpæs.ən.dʒɚ/',
-        ipaUK: '/ˈpæs.ən.dʒər/',
-        meaning: 'hành khách (đi tàu, xe, máy bay)',
-        example: 'All passengers must remain seated until the train stops.',
-        exampleTrans: 'Tất cả hành khách phải ngồi yên cho đến khi tàu dừng.',
-        collocations: [{ phrase: 'train passenger', meaning: 'hành khách đi tàu' }]
-      }
-    ]
-  }));
-
   // Fetch Questions from MongoDB
   useEffect(() => {
     async function loadQuestions() {
       try {
         setLoading(true);
+        setLoadError(null);
         const endpoint = modeParam === 'topic' && topicParam
           ? `/api/v1/listening/exercises?mode=topic&part=${partNum}&topic=${encodeURIComponent(topicParam)}`
           : `/api/v1/listening/exercises?mode=level&part=${partNum}&level=${levelNum}`;
@@ -294,7 +266,7 @@ export default function LevelPracticeRoom() {
         const res = await axios.get(endpoint);
         if (res.data?.data && res.data.data.length > 0) {
           const matched = modeParam === 'topic' && topicParam
-            ? (res.data.data.find(ex => ex.topic === topicParam) || res.data.data[0])
+            ? (res.data.data.find(ex => ex.topic === topicParam || ex.title === topicParam) || res.data.data[0])
             : (res.data.data.find(ex => ex.level === levelNum) || res.data.data[0]);
 
           if (matched && matched.questions && matched.questions.length > 0) {
@@ -302,10 +274,10 @@ export default function LevelPracticeRoom() {
             return;
           }
         }
-        setQuestions(fallbackPhotoQuestions);
+        setLoadError('Không tìm thấy câu hỏi bài tập cho phần luyện tập này trong cơ sở dữ liệu.');
       } catch (err) {
-        console.warn('Using fallback level questions:', err.message);
-        setQuestions(fallbackPhotoQuestions);
+        console.error('Error loading listening questions:', err);
+        setLoadError('Không thể kết nối đến máy chủ. Vui lòng kiểm tra lại kết nối mạng.');
       } finally {
         setLoading(false);
       }
@@ -442,7 +414,7 @@ export default function LevelPracticeRoom() {
     setToastMsg('↺ Đã làm lại bài nghe từ câu đầu tiên');
   };
 
-  const activeQuestions = questions.length > 0 ? questions : fallbackPhotoQuestions;
+  const activeQuestions = questions;
   
   // Passage mode vs Single Question mode
   const isPassageMode = partNum === 3 || partNum === 4;
@@ -454,7 +426,39 @@ export default function LevelPracticeRoom() {
   const currentPassageQ = currentPassageQuestions[0] || activeQuestions[0];
   const currentPassageImageUrl = isPassageMode 
     ? (currentPassageQuestions.find(q => q.imageUrl)?.imageUrl || currentPassageQ?.imageUrl || '') 
-    : (currentPassageQ?.imageUrl || '');
+    : (partNum === 1 ? getPart1ImageUrl(currentPassageQ, currentIdx, topicParam) : (currentPassageQ?.imageUrl || ''));
+
+  // Guaranteed natural audio streaming URL with automatic TTS fallback
+  const resolvedAudioUrl = useMemo(() => {
+    if (!currentPassageQ) return '';
+
+    // 1. If audioUrl is valid and not the dead Supabase CDN link
+    if (currentPassageQ.audioUrl && !currentPassageQ.audioUrl.includes('supabase.co')) {
+      return currentPassageQ.audioUrl;
+    }
+
+    // 2. High-definition backend TTS stream
+    let spokenText = '';
+    if (partNum === 1) {
+      if (currentPassageQ.options && currentPassageQ.options.length > 0) {
+        spokenText = currentPassageQ.options.map(o => `${o.label} ${o.text}`).join('. ');
+      } else if (currentPassageQ.transcript) {
+        spokenText = currentPassageQ.transcript;
+      }
+    } else if (partNum === 2) {
+      const prompt = currentPassageQ.promptText || '';
+      const opts = (currentPassageQ.options || []).map(o => `${o.label} ${o.text}`).join('. ');
+      spokenText = `${prompt}. ${opts}`.trim();
+    } else {
+      spokenText = currentPassageQ.transcript || currentPassageQuestions.map(q => q.promptText).join('. ');
+    }
+
+    if (spokenText) {
+      return `/api/v1/audio/tts?text=${encodeURIComponent(spokenText)}&accent=us`;
+    }
+
+    return currentPassageQ.audioUrl || '';
+  }, [currentPassageQ, currentPassageQuestions, partNum]);
   
   const startQNum = currentPassageQuestions[0]?.testQuestionNumber || (currentPassageIdx * 3 + 1);
   const endQNum = currentPassageQuestions[currentPassageQuestions.length - 1]?.testQuestionNumber || (currentPassageIdx * 3 + currentPassageQuestions.length);
@@ -558,7 +562,7 @@ export default function LevelPracticeRoom() {
         }, 300);
       }
     }
-  }, [currentPassageQ?.audioUrl]);
+  }, [resolvedAudioUrl]);
 
   const handleLoadedMetadata = () => {
     if (audioRef.current) {
@@ -878,6 +882,50 @@ export default function LevelPracticeRoom() {
     );
   };
 
+  // Loading skeleton screen
+  if (loading) {
+    return (
+      <div className="min-h-screen dark:bg-slate-950 bg-[#f8fafc] flex flex-col items-center justify-center p-6 text-center space-y-4">
+        <div className="w-16 h-16 rounded-3xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center shadow-inner">
+          <Volume2 className="w-8 h-8 text-cyan-500 animate-pulse" />
+        </div>
+        <div className="space-y-1.5">
+          <h3 className="text-lg font-bold dark:text-white text-slate-900 font-heading">Đang tải phòng luyện nghe...</h3>
+          <p className="text-xs sm:text-sm dark:text-slate-400 text-slate-500">Đang đồng bộ câu hỏi, âm thanh và hình ảnh ETS chính xác.</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error screen if questions cannot be loaded
+  if (loadError || activeQuestions.length === 0) {
+    return (
+      <div className="min-h-screen dark:bg-slate-950 bg-[#f8fafc] flex flex-col items-center justify-center p-6 text-center space-y-5">
+        <div className="w-16 h-16 rounded-3xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-500">
+          <AlertTriangle className="w-8 h-8" />
+        </div>
+        <div className="space-y-1.5 max-w-md">
+          <h3 className="text-lg font-bold dark:text-white text-slate-900 font-heading">Không thể tải bài tập</h3>
+          <p className="text-xs sm:text-sm dark:text-slate-400 text-slate-500">{loadError || 'Bài tập hiện chưa có dữ liệu trong hệ thống.'}</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <button 
+            onClick={() => window.location.reload()} 
+            className="px-5 py-2.5 rounded-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs shadow-lg transition-all cursor-pointer"
+          >
+            Tải lại trang
+          </button>
+          <button 
+            onClick={() => navigate('/listen')} 
+            className="px-5 py-2.5 rounded-full dark:bg-slate-800 bg-slate-200 hover:bg-slate-300 dark:hover:bg-slate-700 text-xs font-bold transition-all cursor-pointer"
+          >
+            Quay lại Luyện nghe
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div 
       data-deck-name={currentDeckName}
@@ -895,9 +943,26 @@ export default function LevelPracticeRoom() {
       {/* Hidden Native Audio Element */}
       <audio 
         ref={audioRef}
-        src={currentPassageQ?.audioUrl || "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/mock-test-media/2026/t1/32-34.mp3"}
+        src={resolvedAudioUrl}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
+        onError={() => {
+          if (audioRef.current && resolvedAudioUrl && !audioRef.current.src.includes('/api/v1/audio/tts')) {
+            let fallbackSpeech = '';
+            if (partNum === 1) {
+              fallbackSpeech = (currentPassageQ?.options || []).map(o => `${o.label} ${o.text}`).join('. ');
+            } else if (partNum === 2) {
+              fallbackSpeech = `${currentPassageQ?.promptText || ''}. ${(currentPassageQ?.options || []).map(o => `${o.label} ${o.text}`).join('. ')}`;
+            } else {
+              fallbackSpeech = currentPassageQ?.transcript || currentPassageQuestions.map(q => q.promptText).join('. ');
+            }
+            if (fallbackSpeech) {
+              audioRef.current.src = `/api/v1/audio/tts?text=${encodeURIComponent(fallbackSpeech)}&accent=us`;
+              audioRef.current.load();
+              audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+            }
+          }
+        }}
         onEnded={() => {
           if (isLoopAudio) {
             audioRef.current?.play();
@@ -1199,6 +1264,13 @@ export default function LevelPracticeRoom() {
                   className="w-full h-full object-contain rounded-2xl transition-transform duration-500 group-hover:scale-105"
                   loading="lazy"
                   onError={(e) => {
+                    if (partNum === 1) {
+                      const fallbackImg = getPart1ImageUrl(currentPassageQ, (currentIdx + 1), topicParam);
+                      if (e.currentTarget.src !== fallbackImg) {
+                        e.currentTarget.src = fallbackImg;
+                        return;
+                      }
+                    }
                     e.currentTarget.parentElement.parentElement.style.display = 'none';
                   }}
                 />

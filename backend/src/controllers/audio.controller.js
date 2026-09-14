@@ -26,27 +26,118 @@ function cleanSentenceText(rawText) {
 }
 
 /**
+ * Split text into chunks <= maxLen (default 180 chars) for Google TTS tw-ob limit
+ */
+function splitTextIntoChunks(text, maxLen = 180) {
+  if (text.length <= maxLen) return [text];
+  const sentences = text.match(/[^.!?\n]+[.!?\n]*/g) || [text];
+  const chunks = [];
+  let currentChunk = '';
+  for (const s of sentences) {
+    if ((currentChunk + ' ' + s).trim().length <= maxLen) {
+      currentChunk = (currentChunk + ' ' + s).trim();
+    } else {
+      if (currentChunk) chunks.push(currentChunk);
+      if (s.length <= maxLen) {
+        currentChunk = s.trim();
+      } else {
+        const words = s.split(' ');
+        currentChunk = '';
+        for (const w of words) {
+          if ((currentChunk + ' ' + w).trim().length <= maxLen) {
+            currentChunk = (currentChunk + ' ' + w).trim();
+          } else {
+            if (currentChunk) chunks.push(currentChunk);
+            currentChunk = w;
+          }
+        }
+      }
+    }
+  }
+  if (currentChunk) chunks.push(currentChunk);
+  return chunks;
+}
+
+function fetchSingleTtsChunk(chunkText, langCode) {
+  return new Promise((resolve, reject) => {
+    const encoded = encodeURIComponent(chunkText);
+    const ttsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encoded}&tl=${langCode}&client=tw-ob`;
+    https.get(ttsUrl, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+      }
+    }, (ttsRes) => {
+      if (ttsRes.statusCode !== 200) {
+        return reject(new Error(`TTS status ${ttsRes.statusCode}`));
+      }
+      const chunks = [];
+      ttsRes.on('data', c => chunks.push(c));
+      ttsRes.on('end', () => resolve(Buffer.concat(chunks)));
+    }).on('error', reject);
+  });
+}
+
+const { MsEdgeTTS, OUTPUT_FORMAT } = require('msedge-tts');
+
+/**
+ * Map accents to authentic ETS-style neural voices
+ */
+function getVoiceForAccent(accent, gender = 'male') {
+  const acc = (accent || 'us').toLowerCase();
+  if (acc === 'uk' || acc === 'gb') {
+    return gender === 'female' ? 'en-GB-SoniaNeural' : 'en-GB-RyanNeural';
+  } else if (acc === 'au') {
+    return gender === 'female' ? 'en-AU-NatashaNeural' : 'en-AU-WilliamNeural';
+  } else if (acc === 'ca') {
+    return gender === 'female' ? 'en-CA-ClaraNeural' : 'en-CA-LiamNeural';
+  }
+  return gender === 'female' ? 'en-US-JennyNeural' : 'en-US-ChristopherNeural';
+}
+
+/**
+ * Fetch studio-quality neural audio via MsEdgeTTS
+ */
+async function fetchEdgeTtsAudio(text, voiceName) {
+  const tts = new MsEdgeTTS();
+  await tts.setMetadata(voiceName, OUTPUT_FORMAT.AUDIO_24KHZ_48KBITRATE_MONO_MP3);
+  const { audioStream } = tts.toStream(text);
+  
+  return new Promise((resolve, reject) => {
+    const chunks = [];
+    const timeout = setTimeout(() => {
+      reject(new Error('MsEdgeTTS stream timeout'));
+    }, 12000);
+
+    audioStream.on('data', c => chunks.push(c));
+    audioStream.on('end', () => {
+      clearTimeout(timeout);
+      resolve(Buffer.concat(chunks));
+    });
+    audioStream.on('error', (err) => {
+      clearTimeout(timeout);
+      reject(err);
+    });
+  });
+}
+
+/**
  * High-definition Natural Voice TTS Controller (US, UK, AU accents)
  */
 exports.getSpeechAudio = async (req, res) => {
   try {
     const rawText = req.query.text || '';
     const accent = (req.query.accent || 'us').toLowerCase();
+    const gender = (req.query.gender || 'male').toLowerCase();
     
     const text = cleanSentenceText(rawText);
     if (!text) {
       return res.status(400).json({ success: false, message: 'Text parameter is required' });
     }
 
-    // Map accent to language code
-    let langCode = 'en-US';
-    if (accent === 'uk' || accent === 'gb') langCode = 'en-GB';
-    else if (accent === 'au') langCode = 'en-AU';
-    else if (accent === 'ca') langCode = 'en-CA';
+    const voiceName = getVoiceForAccent(accent, gender);
+    const cacheKey = crypto.createHash('md5').update(`${voiceName}_${text}`).digest('hex');
 
-    const cacheKey = crypto.createHash('md5').update(`${langCode}_${text}`).digest('hex');
-
-    // 1. Check memory cache
+    // 1. Check memory cache (0ms instant)
     if (memoryCache.has(cacheKey)) {
       const buffer = memoryCache.get(cacheKey);
       res.set({
@@ -72,49 +163,44 @@ exports.getSpeechAudio = async (req, res) => {
       return res.send(buffer);
     }
 
-    // 3. Fetch high-definition MP3 stream from TTS provider
-    const encodedText = encodeURIComponent(text.slice(0, 300));
-    const ttsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=${langCode}&client=tw-ob`;
+    // 3. Generate high-definition neural MP3 stream via MsEdgeTTS
+    let audioBuffer;
+    try {
+      audioBuffer = await fetchEdgeTtsAudio(text, voiceName);
+    } catch (edgeErr) {
+      console.warn('MsEdgeTTS failed, falling back to chunked Google TTS:', edgeErr.message);
+      let langCode = 'en-US';
+      if (accent === 'uk' || accent === 'gb') langCode = 'en-GB';
+      else if (accent === 'au') langCode = 'en-AU';
 
-    const request = https.get(ttsUrl, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+      const textChunks = splitTextIntoChunks(text);
+      const buffers = [];
+      for (const chunk of textChunks) {
+        const buf = await fetchSingleTtsChunk(chunk, langCode);
+        buffers.push(buf);
       }
-    }, (ttsRes) => {
-      if (ttsRes.statusCode !== 200) {
-        return res.status(ttsRes.statusCode).json({ success: false, message: 'Failed to generate audio' });
-      }
+      audioBuffer = Buffer.concat(buffers);
+    }
 
-      const chunks = [];
-      ttsRes.on('data', (chunk) => chunks.push(chunk));
-      ttsRes.on('end', () => {
-        const audioBuffer = Buffer.concat(chunks);
-        
-        // Cache in memory and disk
-        memoryCache.set(cacheKey, audioBuffer);
-        try {
-          fs.writeFileSync(diskPath, audioBuffer);
-        } catch (e) {
-          // Ignore disk write errors
-        }
+    // Cache in memory and disk
+    memoryCache.set(cacheKey, audioBuffer);
+    try {
+      fs.writeFileSync(diskPath, audioBuffer);
+    } catch (e) {
+      // Ignore disk write errors
+    }
 
-        res.set({
-          'Content-Type': 'audio/mpeg',
-          'Content-Length': audioBuffer.length,
-          'Cache-Control': 'public, max-age=31536000, immutable',
-          'X-Audio-Source': 'live-stream'
-        });
-        res.send(audioBuffer);
-      });
+    res.set({
+      'Content-Type': 'audio/mpeg',
+      'Content-Length': audioBuffer.length,
+      'Cache-Control': 'public, max-age=31536000, immutable',
+      'X-Audio-Source': 'live-neural-stream'
     });
-
-    request.on('error', (err) => {
-      console.error('TTS streaming error:', err);
-      res.status(500).json({ success: false, message: 'Audio stream error', error: err.message });
-    });
+    return res.send(audioBuffer);
 
   } catch (err) {
     console.error('Audio controller error:', err);
     res.status(500).json({ success: false, message: 'Internal server error', error: err.message });
   }
 };
+
