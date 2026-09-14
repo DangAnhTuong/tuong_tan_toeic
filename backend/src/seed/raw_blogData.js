@@ -1,0 +1,1 @@
+const i=[{id:"tips",label:"Mẹo làm bài",icon:"💡"},{id:"strategy",label:"Chiến lược",icon:"🎯"},{id:"roadmap",label:"Lộ trình",icon:"🗺️"},{id:"experience",label:"Kinh nghiệm",icon:"✨"},{id:"resources",label:"Tài liệu",icon:"📚"}];export{i as b};

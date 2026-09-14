@@ -1,0 +1,60 @@
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Environment Variables & Secrets
+.env
+.env.*
+*.env
+backend/.env
+backend/.env.*
+frontend/.env
+frontend/.env.*
+
+# Build Outputs
+dist/
+build/
+frontend/dist/
+dist_bundle.tar.gz
+
+# Deploy packages & Large ZIP / Archive files
+*.zip
+*.tar.gz
+*.rar
+*.7z
+deploy_package.zip
+update_dist.zip
+deploy_patch.zip
+patch_controllers.zip
+update_backend.zip
+frontend/dist.zip
+
+# Media & Raw video crawler files (>50MB)
+backend/temp_dautoeic_raw/
+*.mp4
+*.m4a
+*.ts
+*.webm
+*.avi
+*.mov
+
+# Temp & Scratch directories
+temp_deploy/
+scratch/
+scribd_download/
+reference_screenshots/
+
+# Sensitive batch / bash upload scripts with credentials
+upload_patch_to_vps.bat
+upload_to_vps.bat
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# System
+.DS_Store
+Thumbs.db

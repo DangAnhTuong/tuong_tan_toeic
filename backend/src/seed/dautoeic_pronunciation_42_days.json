@@ -1,0 +1,3858 @@
+[
+  {
+    "id": "8500cb05-5402-4e11-a336-5d865604e95d",
+    "lesson_id": "36200181-47ef-4b40-ae24-879e532e1254",
+    "title": "42 Ngày Phát Âm | Tập 1: /p/",
+    "sound_symbol": "/p/",
+    "youtube_url": "https://www.youtube.com/watch?v=CxtAwAfEhao",
+    "theory_vietnamese": "Âm /p/ là phụ âm vô thanh, hai môi khép lại (bilabial stop).\\n\\nCách phát âm:\\n- Hai môi khép chặt lại\\n- Giữ hơi trong miệng\\n- Bật hơi mạnh ra ngoài\\n- Không rung dây thanh quản\\n\\nLưu ý cho người Việt:\\n- Cần bật hơi (aspiration) mạnh hơn âm /p/ tiếng Việt\\n- Đặt tay trước miệng, phải cảm nhận được luồng hơi\\n- Không nhầm với /b/ (âm hữu thanh)",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/p.png",
+    "example_words": [
+      "pen",
+      "paper",
+      "people",
+      "play",
+      "happy",
+      "stop",
+      "up"
+    ],
+    "example_sentences": [
+      "Please pass me the pen.",
+      "People play piano in the park.",
+      "She is a happy person.",
+      "Stop and look up."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/36200181-47ef-4b40-ae24-879e532e1254/sound.mp3",
+      "words": {
+        "up": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/36200181-47ef-4b40-ae24-879e532e1254/word-up.mp3",
+        "pen": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/36200181-47ef-4b40-ae24-879e532e1254/word-pen.mp3",
+        "play": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/36200181-47ef-4b40-ae24-879e532e1254/word-play.mp3",
+        "stop": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/36200181-47ef-4b40-ae24-879e532e1254/word-stop.mp3",
+        "happy": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/36200181-47ef-4b40-ae24-879e532e1254/word-happy.mp3",
+        "paper": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/36200181-47ef-4b40-ae24-879e532e1254/word-paper.mp3",
+        "people": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/36200181-47ef-4b40-ae24-879e532e1254/word-people.mp3"
+      },
+      "sentences": {
+        "Stop and look up.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/36200181-47ef-4b40-ae24-879e532e1254/sentence-stop-and-look-up.mp3",
+        "She is a happy person.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/36200181-47ef-4b40-ae24-879e532e1254/sentence-she-is-a-happy-person.mp3",
+        "Please pass me the pen.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/36200181-47ef-4b40-ae24-879e532e1254/sentence-please-pass-me-the-pen.mp3",
+        "People play piano in the park.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/36200181-47ef-4b40-ae24-879e532e1254/sentence-people-play-piano-in-the-park.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "pen",
+        "meaning": "bút",
+        "phonetic": "/pen/"
+      },
+      {
+        "text": "paper",
+        "meaning": "giấy",
+        "phonetic": "/ˈpeɪpə/"
+      },
+      {
+        "text": "people",
+        "meaning": "người",
+        "phonetic": "/ˈpiːpl/"
+      },
+      {
+        "text": "play",
+        "meaning": "chơi",
+        "phonetic": "/pleɪ/"
+      },
+      {
+        "text": "happy",
+        "meaning": "vui vẻ",
+        "phonetic": "/ˈhæpi/"
+      },
+      {
+        "text": "stop",
+        "meaning": "dừng lại",
+        "phonetic": "/stɒp/"
+      },
+      {
+        "text": "up",
+        "meaning": "lên",
+        "phonetic": "/ʌp/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "Please pass me the pen.",
+        "meaning": "Làm ơn đưa tôi cây bút."
+      },
+      {
+        "text": "People play piano in the park.",
+        "meaning": "Mọi người chơi piano trong công viên."
+      },
+      {
+        "text": "She is a happy person.",
+        "meaning": "Cô ấy là người vui vẻ."
+      },
+      {
+        "text": "Stop and look up.",
+        "meaning": "Dừng lại và nhìn lên."
+      }
+    ]
+  },
+  {
+    "id": "76e5afae-a55d-4261-8014-7f3fb4ed2800",
+    "lesson_id": "b045696c-5046-46d0-87eb-6affc3e048d1",
+    "title": "42 Ngày Phát Âm | Tập 2: /b/",
+    "sound_symbol": "/b/",
+    "youtube_url": "https://www.youtube.com/watch?v=fCenV8TgWpQ",
+    "theory_vietnamese": "Âm /b/ là phụ âm hữu thanh, hai môi khép lại (voiced bilabial stop).\\n\\nCách phát âm:\\n- Hai môi khép chặt lại\\n- Dây thanh quản rung\\n- Bật hơi nhẹ hơn /p/\\n\\nLưu ý cho người Việt:\\n- Giống âm \"b\" trong tiếng Việt\\n- Dây thanh rung khi phát âm\\n- Phân biệt rõ với /p/",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/b.png",
+    "example_words": [
+      "boy",
+      "baby",
+      "book",
+      "big",
+      "job",
+      "cab"
+    ],
+    "example_sentences": [
+      "The boy bought a big book.",
+      "The baby is beautiful.",
+      "Bob has a new job."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/b045696c-5046-46d0-87eb-6affc3e048d1/sound.mp3",
+      "words": {
+        "big": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/b045696c-5046-46d0-87eb-6affc3e048d1/word-big.mp3",
+        "boy": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/b045696c-5046-46d0-87eb-6affc3e048d1/word-boy.mp3",
+        "cab": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/b045696c-5046-46d0-87eb-6affc3e048d1/word-cab.mp3",
+        "job": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/b045696c-5046-46d0-87eb-6affc3e048d1/word-job.mp3",
+        "baby": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/b045696c-5046-46d0-87eb-6affc3e048d1/word-baby.mp3",
+        "book": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/b045696c-5046-46d0-87eb-6affc3e048d1/word-book.mp3"
+      },
+      "sentences": {
+        "Bob has a new job.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/b045696c-5046-46d0-87eb-6affc3e048d1/sentence-bob-has-a-new-job.mp3",
+        "The baby is beautiful.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/b045696c-5046-46d0-87eb-6affc3e048d1/sentence-the-baby-is-beautiful.mp3",
+        "The boy bought a big book.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/b045696c-5046-46d0-87eb-6affc3e048d1/sentence-the-boy-bought-a-big-book.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "boy",
+        "meaning": "con trai",
+        "phonetic": "/bɔɪ/"
+      },
+      {
+        "text": "baby",
+        "meaning": "em bé",
+        "phonetic": "/ˈbeɪbi/"
+      },
+      {
+        "text": "book",
+        "meaning": "quyển sách",
+        "phonetic": "/bʊk/"
+      },
+      {
+        "text": "big",
+        "meaning": "lớn",
+        "phonetic": "/bɪɡ/"
+      },
+      {
+        "text": "job",
+        "meaning": "công việc",
+        "phonetic": "/dʒɒb/"
+      },
+      {
+        "text": "cab",
+        "meaning": "xe taxi",
+        "phonetic": "/kæb/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "The boy bought a big book.",
+        "meaning": "Cậu bé mua một quyển sách lớn."
+      },
+      {
+        "text": "The baby is beautiful.",
+        "meaning": "Em bé rất đẹp."
+      },
+      {
+        "text": "Bob has a new job.",
+        "meaning": "Bob có một công việc mới."
+      }
+    ]
+  },
+  {
+    "id": "6172e223-23e6-41ae-a993-e24953c3aa53",
+    "lesson_id": "79a4efb4-5bf4-49fb-a388-f710bf9889c0",
+    "title": "42 Ngày Phát Âm | Tập 3: /t/",
+    "sound_symbol": "/t/",
+    "youtube_url": "https://www.youtube.com/watch?v=EDfOv-WhWmE",
+    "theory_vietnamese": "Âm /t/ là phụ âm vô thanh, đầu lưỡi chạm lợi (voiceless alveolar stop).\\n\\nCách phát âm:\\n- Đầu lưỡi chạm vào lợi phía trên\\n- Giữ hơi rồi bật ra mạnh\\n- Không rung dây thanh quản\\n\\nLưu ý cho người Việt:\\n- Bật hơi mạnh hơn \"t\" tiếng Việt\\n- Ở cuối từ, /t/ thường không bật hơi (unreleased)\\n- Phân biệt /t/ và /d/",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/t.png",
+    "example_words": [
+      "time",
+      "table",
+      "top",
+      "ten",
+      "sit",
+      "cat",
+      "water"
+    ],
+    "example_sentences": [
+      "Take your time at the table.",
+      "Ten cats sit on top.",
+      "Tom told the truth."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/79a4efb4-5bf4-49fb-a388-f710bf9889c0/sound.mp3",
+      "words": {
+        "cat": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/79a4efb4-5bf4-49fb-a388-f710bf9889c0/word-cat.mp3",
+        "sit": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/79a4efb4-5bf4-49fb-a388-f710bf9889c0/word-sit.mp3",
+        "ten": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/79a4efb4-5bf4-49fb-a388-f710bf9889c0/word-ten.mp3",
+        "top": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/79a4efb4-5bf4-49fb-a388-f710bf9889c0/word-top.mp3",
+        "time": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/79a4efb4-5bf4-49fb-a388-f710bf9889c0/word-time.mp3",
+        "table": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/79a4efb4-5bf4-49fb-a388-f710bf9889c0/word-table.mp3",
+        "water": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/79a4efb4-5bf4-49fb-a388-f710bf9889c0/word-water.mp3"
+      },
+      "sentences": {
+        "Tom told the truth.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/79a4efb4-5bf4-49fb-a388-f710bf9889c0/sentence-tom-told-the-truth.mp3",
+        "Ten cats sit on top.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/79a4efb4-5bf4-49fb-a388-f710bf9889c0/sentence-ten-cats-sit-on-top.mp3",
+        "Take your time at the table.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/79a4efb4-5bf4-49fb-a388-f710bf9889c0/sentence-take-your-time-at-the-table.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "time",
+        "meaning": "thời gian",
+        "phonetic": "/taɪm/"
+      },
+      {
+        "text": "table",
+        "meaning": "cái bàn",
+        "phonetic": "/ˈteɪbl/"
+      },
+      {
+        "text": "top",
+        "meaning": "đỉnh",
+        "phonetic": "/tɒp/"
+      },
+      {
+        "text": "ten",
+        "meaning": "mười",
+        "phonetic": "/ten/"
+      },
+      {
+        "text": "sit",
+        "meaning": "ngồi",
+        "phonetic": "/sɪt/"
+      },
+      {
+        "text": "cat",
+        "meaning": "con mèo",
+        "phonetic": "/kæt/"
+      },
+      {
+        "text": "water",
+        "meaning": "nước",
+        "phonetic": "/ˈwɔːtə/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "Take your time at the table.",
+        "meaning": "Cứ từ từ ở bàn."
+      },
+      {
+        "text": "Ten cats sit on top.",
+        "meaning": "Mười con mèo ngồi trên đỉnh."
+      },
+      {
+        "text": "Tom told the truth.",
+        "meaning": "Tom đã nói sự thật."
+      }
+    ]
+  },
+  {
+    "id": "886d0815-c674-48ba-b749-03250a6365be",
+    "lesson_id": "886ea487-5a69-4665-9c0c-5857be19add1",
+    "title": "42 Ngày Phát Âm | Tập 4: /d/",
+    "sound_symbol": "/d/",
+    "youtube_url": "https://www.youtube.com/watch?v=xPPGX4dv5Eo",
+    "theory_vietnamese": "Âm /d/ là phụ âm hữu thanh, đầu lưỡi chạm lợi (voiced alveolar stop).\\n\\nCách phát âm:\\n- Đầu lưỡi chạm vào lợi\\n- Dây thanh quản rung\\n- Bật hơi nhẹ\\n\\nLưu ý cho người Việt:\\n- Giống \"đ\" tiếng Việt nhưng lưỡi chạm lợi chứ không phải răng\\n- Cuối từ thường không bật hơi",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/d.png",
+    "example_words": [
+      "dog",
+      "day",
+      "do",
+      "did",
+      "bad",
+      "bed",
+      "door"
+    ],
+    "example_sentences": [
+      "The dog played all day.",
+      "Did you do your homework?",
+      "David opened the door."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/886ea487-5a69-4665-9c0c-5857be19add1/sound.mp3",
+      "words": {
+        "do": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/886ea487-5a69-4665-9c0c-5857be19add1/word-do.mp3",
+        "bad": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/886ea487-5a69-4665-9c0c-5857be19add1/word-bad.mp3",
+        "bed": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/886ea487-5a69-4665-9c0c-5857be19add1/word-bed.mp3",
+        "day": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/886ea487-5a69-4665-9c0c-5857be19add1/word-day.mp3",
+        "did": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/886ea487-5a69-4665-9c0c-5857be19add1/word-did.mp3",
+        "dog": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/886ea487-5a69-4665-9c0c-5857be19add1/word-dog.mp3",
+        "door": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/886ea487-5a69-4665-9c0c-5857be19add1/word-door.mp3"
+      },
+      "sentences": {
+        "David opened the door.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/886ea487-5a69-4665-9c0c-5857be19add1/sentence-david-opened-the-door.mp3",
+        "The dog played all day.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/886ea487-5a69-4665-9c0c-5857be19add1/sentence-the-dog-played-all-day.mp3",
+        "Did you do your homework?": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/886ea487-5a69-4665-9c0c-5857be19add1/sentence-did-you-do-your-homework.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "dog",
+        "meaning": "con chó",
+        "phonetic": "/dɒɡ/"
+      },
+      {
+        "text": "day",
+        "meaning": "ngày",
+        "phonetic": "/deɪ/"
+      },
+      {
+        "text": "do",
+        "meaning": "làm",
+        "phonetic": "/duː/"
+      },
+      {
+        "text": "did",
+        "meaning": "đã làm",
+        "phonetic": "/dɪd/"
+      },
+      {
+        "text": "bad",
+        "meaning": "xấu",
+        "phonetic": "/bæd/"
+      },
+      {
+        "text": "bed",
+        "meaning": "giường",
+        "phonetic": "/bed/"
+      },
+      {
+        "text": "door",
+        "meaning": "cửa",
+        "phonetic": "/dɔː/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "The dog played all day.",
+        "meaning": "Con chó chơi cả ngày."
+      },
+      {
+        "text": "Did you do your homework?",
+        "meaning": "Bạn đã làm bài tập chưa?"
+      },
+      {
+        "text": "David opened the door.",
+        "meaning": "David mở cửa."
+      }
+    ]
+  },
+  {
+    "id": "492fdc16-1e0c-4817-a782-85ccdc7a2d2e",
+    "lesson_id": "061e517d-4c25-4a76-874f-9d5296b4104d",
+    "title": "42 Ngày Phát Âm | Tập 5: /k/",
+    "sound_symbol": "/k/",
+    "youtube_url": "https://www.youtube.com/watch?v=eMlci4X6SeI",
+    "theory_vietnamese": "Âm /k/ là phụ âm vô thanh, gốc lưỡi chạm ngạc mềm (voiceless velar stop).\\n\\nCách phát âm:\\n- Phần sau của lưỡi (gốc lưỡi) nâng lên chạm ngạc mềm\\n- Giữ hơi rồi bật ra mạnh\\n- Không rung dây thanh quản\\n\\nLưu ý cho người Việt:\\n- Bật hơi mạnh hơn \"c/k\" tiếng Việt\\n- Viết là c, k, ck, ch (school)",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/k.png",
+    "example_words": [
+      "cat",
+      "key",
+      "come",
+      "kick",
+      "look",
+      "back",
+      "school"
+    ],
+    "example_sentences": [
+      "The cat caught a key.",
+      "Come back and look.",
+      "Keep calm and carry on."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/061e517d-4c25-4a76-874f-9d5296b4104d/sound.mp3",
+      "words": {
+        "cat": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/061e517d-4c25-4a76-874f-9d5296b4104d/word-cat.mp3",
+        "key": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/061e517d-4c25-4a76-874f-9d5296b4104d/word-key.mp3",
+        "back": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/061e517d-4c25-4a76-874f-9d5296b4104d/word-back.mp3",
+        "come": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/061e517d-4c25-4a76-874f-9d5296b4104d/word-come.mp3",
+        "kick": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/061e517d-4c25-4a76-874f-9d5296b4104d/word-kick.mp3",
+        "look": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/061e517d-4c25-4a76-874f-9d5296b4104d/word-look.mp3",
+        "school": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/061e517d-4c25-4a76-874f-9d5296b4104d/word-school.mp3"
+      },
+      "sentences": {
+        "Come back and look.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/061e517d-4c25-4a76-874f-9d5296b4104d/sentence-come-back-and-look.mp3",
+        "The cat caught a key.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/061e517d-4c25-4a76-874f-9d5296b4104d/sentence-the-cat-caught-a-key.mp3",
+        "Keep calm and carry on.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/061e517d-4c25-4a76-874f-9d5296b4104d/sentence-keep-calm-and-carry-on.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "cat",
+        "meaning": "con mèo",
+        "phonetic": "/kæt/"
+      },
+      {
+        "text": "key",
+        "meaning": "chìa khóa",
+        "phonetic": "/kiː/"
+      },
+      {
+        "text": "come",
+        "meaning": "đến",
+        "phonetic": "/kʌm/"
+      },
+      {
+        "text": "kick",
+        "meaning": "đá",
+        "phonetic": "/kɪk/"
+      },
+      {
+        "text": "look",
+        "meaning": "nhìn",
+        "phonetic": "/lʊk/"
+      },
+      {
+        "text": "back",
+        "meaning": "lại",
+        "phonetic": "/bæk/"
+      },
+      {
+        "text": "school",
+        "meaning": "trường học",
+        "phonetic": "/skuːl/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "The cat caught a key.",
+        "meaning": "Con mèo bắt được một chìa khóa."
+      },
+      {
+        "text": "Come back and look.",
+        "meaning": "Quay lại và nhìn."
+      },
+      {
+        "text": "Keep calm and carry on.",
+        "meaning": "Giữ bình tĩnh và tiếp tục."
+      }
+    ]
+  },
+  {
+    "id": "283245b7-a0c9-4947-afae-799bf751dd86",
+    "lesson_id": "38e49446-1bf5-40c5-a30f-3517cd96f6a0",
+    "title": "42 Ngày Phát Âm | Tập 6: /g/",
+    "sound_symbol": "/g/",
+    "youtube_url": "https://www.youtube.com/watch?v=hIm7BwZMqPo",
+    "theory_vietnamese": "Âm /g/ là phụ âm hữu thanh, gốc lưỡi chạm ngạc mềm (voiced velar stop).\\n\\nCách phát âm:\\n- Gốc lưỡi nâng l��n chạm ngạc mềm\\n- Dây thanh quản rung\\n- Bật hơi nhẹ\\n\\nLưu ý cho người Việt:\\n- Giống âm \"g\" tiếng Việt\\n- Phân biệt với /k/",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/g.png",
+    "example_words": [
+      "go",
+      "get",
+      "give",
+      "good",
+      "big",
+      "dog",
+      "girl"
+    ],
+    "example_sentences": [
+      "Go and get the good girl.",
+      "Give me a big hug.",
+      "The dog is getting bigger."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/38e49446-1bf5-40c5-a30f-3517cd96f6a0/sound.mp3",
+      "words": {
+        "go": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/38e49446-1bf5-40c5-a30f-3517cd96f6a0/word-go.mp3",
+        "big": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/38e49446-1bf5-40c5-a30f-3517cd96f6a0/word-big.mp3",
+        "dog": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/38e49446-1bf5-40c5-a30f-3517cd96f6a0/word-dog.mp3",
+        "get": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/38e49446-1bf5-40c5-a30f-3517cd96f6a0/word-get.mp3",
+        "girl": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/38e49446-1bf5-40c5-a30f-3517cd96f6a0/word-girl.mp3",
+        "give": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/38e49446-1bf5-40c5-a30f-3517cd96f6a0/word-give.mp3",
+        "good": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/38e49446-1bf5-40c5-a30f-3517cd96f6a0/word-good.mp3"
+      },
+      "sentences": {
+        "Give me a big hug.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/38e49446-1bf5-40c5-a30f-3517cd96f6a0/sentence-give-me-a-big-hug.mp3",
+        "Go and get the good girl.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/38e49446-1bf5-40c5-a30f-3517cd96f6a0/sentence-go-and-get-the-good-girl.mp3",
+        "The dog is getting bigger.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/38e49446-1bf5-40c5-a30f-3517cd96f6a0/sentence-the-dog-is-getting-bigger.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "go",
+        "meaning": "đi",
+        "phonetic": "/ɡəʊ/"
+      },
+      {
+        "text": "get",
+        "meaning": "lấy",
+        "phonetic": "/ɡet/"
+      },
+      {
+        "text": "give",
+        "meaning": "cho",
+        "phonetic": "/ɡɪv/"
+      },
+      {
+        "text": "good",
+        "meaning": "tốt",
+        "phonetic": "/ɡʊd/"
+      },
+      {
+        "text": "big",
+        "meaning": "lớn",
+        "phonetic": "/bɪɡ/"
+      },
+      {
+        "text": "dog",
+        "meaning": "con chó",
+        "phonetic": "/dɒɡ/"
+      },
+      {
+        "text": "girl",
+        "meaning": "con gái",
+        "phonetic": "/ɡɜːl/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "Go and get the good girl.",
+        "meaning": "Đi và đón cô gái ngoan."
+      },
+      {
+        "text": "Give me a big hug.",
+        "meaning": "Cho tôi một cái ôm lớn."
+      },
+      {
+        "text": "The dog is getting bigger.",
+        "meaning": "Con chó đang lớn hơn."
+      }
+    ]
+  },
+  {
+    "id": "cc1c7613-be50-4fd9-ba5b-dbc6cc36dffc",
+    "lesson_id": "c66bec60-6321-4394-8e64-c53ad7bc7244",
+    "title": "42 Ngày Phát Âm | Tập 7: /f/",
+    "sound_symbol": "/f/",
+    "youtube_url": "https://www.youtube.com/watch?v=pz7QO_Ye3YQ",
+    "theory_vietnamese": "Âm /f/ là phụ âm vô thanh, môi dưới chạm răng trên (voiceless labiodental fricative).\\n\\nCách phát âm:\\n- Răng trên đặt nhẹ lên môi dưới\\n- Đẩy hơi ra qua khe hẹp giữa răng và môi\\n- Không rung dây thanh quản\\n\\nLưu ý cho người Việt:\\n- Tiếng Việt không có âm /f/ (chữ \"ph\" phát âm khác)\\n- Răng phải chạm nhẹ vào môi dưới",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/f.png",
+    "example_words": [
+      "five",
+      "fun",
+      "find",
+      "fish",
+      "life",
+      "off",
+      "after"
+    ],
+    "example_sentences": [
+      "Five fish swim in the fountain.",
+      "Life is fun and full of adventure.",
+      "After finishing, turn off the fan."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/c66bec60-6321-4394-8e64-c53ad7bc7244/sound.mp3",
+      "words": {
+        "fun": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/c66bec60-6321-4394-8e64-c53ad7bc7244/word-fun.mp3",
+        "off": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/c66bec60-6321-4394-8e64-c53ad7bc7244/word-off.mp3",
+        "find": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/c66bec60-6321-4394-8e64-c53ad7bc7244/word-find.mp3",
+        "fish": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/c66bec60-6321-4394-8e64-c53ad7bc7244/word-fish.mp3",
+        "five": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/c66bec60-6321-4394-8e64-c53ad7bc7244/word-five.mp3",
+        "life": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/c66bec60-6321-4394-8e64-c53ad7bc7244/word-life.mp3",
+        "after": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/c66bec60-6321-4394-8e64-c53ad7bc7244/word-after.mp3"
+      },
+      "sentences": {
+        "Five fish swim in the fountain.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/c66bec60-6321-4394-8e64-c53ad7bc7244/sentence-five-fish-swim-in-the-fountain.mp3",
+        "After finishing, turn off the fan.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/c66bec60-6321-4394-8e64-c53ad7bc7244/sentence-after-finishing-turn-off-the-fan.mp3",
+        "Life is fun and full of adventure.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/c66bec60-6321-4394-8e64-c53ad7bc7244/sentence-life-is-fun-and-full-of-adventure.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "five",
+        "meaning": "năm",
+        "phonetic": "/faɪv/"
+      },
+      {
+        "text": "fun",
+        "meaning": "vui",
+        "phonetic": "/fʌn/"
+      },
+      {
+        "text": "find",
+        "meaning": "tìm",
+        "phonetic": "/faɪnd/"
+      },
+      {
+        "text": "fish",
+        "meaning": "con cá",
+        "phonetic": "/fɪʃ/"
+      },
+      {
+        "text": "life",
+        "meaning": "cuộc sống",
+        "phonetic": "/laɪf/"
+      },
+      {
+        "text": "off",
+        "meaning": "tắt",
+        "phonetic": "/ɒf/"
+      },
+      {
+        "text": "after",
+        "meaning": "sau",
+        "phonetic": "/ˈɑːftə/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "Five fish swim in the fountain.",
+        "meaning": "Năm con cá bơi trong đài phun nước."
+      },
+      {
+        "text": "Life is fun and full of adventure.",
+        "meaning": "Cuộc sống thú vị và đầy phiêu lưu."
+      },
+      {
+        "text": "After finishing, turn off the fan.",
+        "meaning": "Sau khi xong, tắt quạt đi."
+      }
+    ]
+  },
+  {
+    "id": "14962684-2f99-4db2-9f14-cc30e0d00503",
+    "lesson_id": "fd1d9c66-1fe8-445a-ac51-ef4976400947",
+    "title": "42 Ngày Phát Âm | Tập 8: /v/",
+    "sound_symbol": "/v/",
+    "youtube_url": "https://www.youtube.com/watch?v=ui-UtFPZYds",
+    "theory_vietnamese": "Âm /v/ là phụ âm hữu thanh, môi dưới chạm răng trên (voiced labiodental fricative).\\n\\nCách phát âm:\\n- Giống /f/ nhưng dây thanh quản rung\\n- Răng trên đặt nhẹ lên môi dưới\\n- Đẩy hơi ra kèm theo rung thanh\\n\\nLưu ý cho người Việt:\\n- Giống âm \"v\" tiếng Việt\\n- Phân biệt rõ với /f/",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/v.png",
+    "example_words": [
+      "very",
+      "voice",
+      "visit",
+      "video",
+      "love",
+      "give",
+      "five"
+    ],
+    "example_sentences": [
+      "Very nice video.",
+      "Visit and give your love.",
+      "Five voices in the valley."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/fd1d9c66-1fe8-445a-ac51-ef4976400947/sound.mp3",
+      "words": {
+        "five": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/fd1d9c66-1fe8-445a-ac51-ef4976400947/word-five.mp3",
+        "give": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/fd1d9c66-1fe8-445a-ac51-ef4976400947/word-give.mp3",
+        "love": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/fd1d9c66-1fe8-445a-ac51-ef4976400947/word-love.mp3",
+        "very": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/fd1d9c66-1fe8-445a-ac51-ef4976400947/word-very.mp3",
+        "video": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/fd1d9c66-1fe8-445a-ac51-ef4976400947/word-video.mp3",
+        "visit": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/fd1d9c66-1fe8-445a-ac51-ef4976400947/word-visit.mp3",
+        "voice": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/fd1d9c66-1fe8-445a-ac51-ef4976400947/word-voice.mp3"
+      },
+      "sentences": {
+        "Very nice video.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/fd1d9c66-1fe8-445a-ac51-ef4976400947/sentence-very-nice-video.mp3",
+        "Visit and give your love.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/fd1d9c66-1fe8-445a-ac51-ef4976400947/sentence-visit-and-give-your-love.mp3",
+        "Five voices in the valley.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/fd1d9c66-1fe8-445a-ac51-ef4976400947/sentence-five-voices-in-the-valley.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "very",
+        "meaning": "rất",
+        "phonetic": "/ˈveri/"
+      },
+      {
+        "text": "voice",
+        "meaning": "giọng nói",
+        "phonetic": "/vɔɪs/"
+      },
+      {
+        "text": "visit",
+        "meaning": "thăm",
+        "phonetic": "/ˈvɪzɪt/"
+      },
+      {
+        "text": "video",
+        "meaning": "video",
+        "phonetic": "/ˈvɪdiəʊ/"
+      },
+      {
+        "text": "love",
+        "meaning": "yêu",
+        "phonetic": "/lʌv/"
+      },
+      {
+        "text": "give",
+        "meaning": "cho",
+        "phonetic": "/ɡɪv/"
+      },
+      {
+        "text": "five",
+        "meaning": "năm",
+        "phonetic": "/faɪv/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "Very nice video.",
+        "meaning": "Video rất hay."
+      },
+      {
+        "text": "Visit and give your love.",
+        "meaning": "Ghé thăm và trao tình yêu."
+      },
+      {
+        "text": "Five voices in the valley.",
+        "meaning": "Năm giọng nói trong thung lũng."
+      }
+    ]
+  },
+  {
+    "id": "ef583266-f2b1-4659-a31e-0bf131d730b2",
+    "lesson_id": "9e7d6524-7ec8-4071-903c-8e677c9d8daa",
+    "title": "42 Ngày Phát Âm | Tập 9: /θ/",
+    "sound_symbol": "/θ/",
+    "youtube_url": "https://www.youtube.com/watch?v=iDlbkyzJNcY",
+    "theory_vietnamese": "Âm /θ/ là phụ âm vô thanh, lưỡi đặt giữa hai hàm răng (voiceless dental fricative).\\n\\nCách phát âm:\\n- Đầu lưỡi đặt nhẹ giữa hàm răng trên và dưới\\n- Đẩy hơi ra qua khe giữa lưỡi và răng\\n- Không rung dây thanh quản\\n\\nLưu ý cho người Việt:\\n- Âm này KHÔNG có trong tiếng Việt\\n- Thường bị đọc thành /t/ hoặc /s/\\n- Phải thò lưỡi ra giữa răng",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/th.png",
+    "example_words": [
+      "think",
+      "three",
+      "thank",
+      "thick",
+      "both",
+      "math",
+      "tooth"
+    ],
+    "example_sentences": [
+      "Think about three things.",
+      "Thank you for the math book.",
+      "Both teeth are thick."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/9e7d6524-7ec8-4071-903c-8e677c9d8daa/sound.mp3",
+      "words": {
+        "both": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/9e7d6524-7ec8-4071-903c-8e677c9d8daa/word-both.mp3",
+        "math": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/9e7d6524-7ec8-4071-903c-8e677c9d8daa/word-math.mp3",
+        "thank": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/9e7d6524-7ec8-4071-903c-8e677c9d8daa/word-thank.mp3",
+        "thick": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/9e7d6524-7ec8-4071-903c-8e677c9d8daa/word-thick.mp3",
+        "think": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/9e7d6524-7ec8-4071-903c-8e677c9d8daa/word-think.mp3",
+        "three": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/9e7d6524-7ec8-4071-903c-8e677c9d8daa/word-three.mp3",
+        "tooth": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/9e7d6524-7ec8-4071-903c-8e677c9d8daa/word-tooth.mp3"
+      },
+      "sentences": {
+        "Both teeth are thick.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/9e7d6524-7ec8-4071-903c-8e677c9d8daa/sentence-both-teeth-are-thick.mp3",
+        "Think about three things.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/9e7d6524-7ec8-4071-903c-8e677c9d8daa/sentence-think-about-three-things.mp3",
+        "Thank you for the math book.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/9e7d6524-7ec8-4071-903c-8e677c9d8daa/sentence-thank-you-for-the-math-book.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "think",
+        "meaning": "nghĩ",
+        "phonetic": "/θɪŋk/"
+      },
+      {
+        "text": "three",
+        "meaning": "ba",
+        "phonetic": "/θriː/"
+      },
+      {
+        "text": "thank",
+        "meaning": "cảm ơn",
+        "phonetic": "/θæŋk/"
+      },
+      {
+        "text": "thick",
+        "meaning": "dày",
+        "phonetic": "/θɪk/"
+      },
+      {
+        "text": "both",
+        "meaning": "cả hai",
+        "phonetic": "/bəʊθ/"
+      },
+      {
+        "text": "math",
+        "meaning": "toán",
+        "phonetic": "/mæθ/"
+      },
+      {
+        "text": "tooth",
+        "meaning": "răng",
+        "phonetic": "/tuːθ/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "Think about three things.",
+        "meaning": "Hãy nghĩ về ba điều."
+      },
+      {
+        "text": "Thank you for the math book.",
+        "meaning": "Cảm ơn bạn vì quyển sách toán."
+      },
+      {
+        "text": "Both teeth are thick.",
+        "meaning": "Cả hai chiếc răng đều dày."
+      }
+    ]
+  },
+  {
+    "id": "5af580d7-9295-48b1-9c2f-3fd7303977d7",
+    "lesson_id": "fba826d4-162f-4025-8224-b0ad7904cccf",
+    "title": "42 Ngày Phát Âm | Tập 10: /ð/",
+    "sound_symbol": "/ð/",
+    "youtube_url": "https://www.youtube.com/watch?v=kCHZoPZcPXg",
+    "theory_vietnamese": "Âm /ð/ là phụ âm hữu thanh, lưỡi đặt giữa hai hàm răng (voiced dental fricative).\\n\\nCách phát âm:\\n- Giống /θ/ nhưng dây thanh quản rung\\n- Đầu lưỡi đặt giữa răng\\n\\nLưu ý cho người Việt:\\n- KHÔNG có trong tiếng Việt\\n- Thường bị đọc thành /d/ hoặc /z/\\n- Xuất hiện trong the, this, that, there",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/dh.png",
+    "example_words": [
+      "the",
+      "this",
+      "that",
+      "there",
+      "mother",
+      "father",
+      "brother"
+    ],
+    "example_sentences": [
+      "This is the mother.",
+      "That father is there.",
+      "The brother is with them."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/fba826d4-162f-4025-8224-b0ad7904cccf/sound.mp3",
+      "words": {
+        "the": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/fba826d4-162f-4025-8224-b0ad7904cccf/word-the.mp3",
+        "that": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/fba826d4-162f-4025-8224-b0ad7904cccf/word-that.mp3",
+        "this": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/fba826d4-162f-4025-8224-b0ad7904cccf/word-this.mp3",
+        "there": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/fba826d4-162f-4025-8224-b0ad7904cccf/word-there.mp3",
+        "father": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/fba826d4-162f-4025-8224-b0ad7904cccf/word-father.mp3",
+        "mother": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/fba826d4-162f-4025-8224-b0ad7904cccf/word-mother.mp3",
+        "brother": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/fba826d4-162f-4025-8224-b0ad7904cccf/word-brother.mp3"
+      },
+      "sentences": {
+        "This is the mother.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/fba826d4-162f-4025-8224-b0ad7904cccf/sentence-this-is-the-mother.mp3",
+        "That father is there.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/fba826d4-162f-4025-8224-b0ad7904cccf/sentence-that-father-is-there.mp3",
+        "The brother is with them.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/fba826d4-162f-4025-8224-b0ad7904cccf/sentence-the-brother-is-with-them.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "the",
+        "meaning": "mạo từ xác định",
+        "phonetic": "/ðə/"
+      },
+      {
+        "text": "this",
+        "meaning": "cái này",
+        "phonetic": "/ðɪs/"
+      },
+      {
+        "text": "that",
+        "meaning": "cái đó",
+        "phonetic": "/ðæt/"
+      },
+      {
+        "text": "there",
+        "meaning": "ở đó",
+        "phonetic": "/ðeə/"
+      },
+      {
+        "text": "mother",
+        "meaning": "mẹ",
+        "phonetic": "/ˈmʌðə/"
+      },
+      {
+        "text": "father",
+        "meaning": "bố",
+        "phonetic": "/ˈfɑːðə/"
+      },
+      {
+        "text": "brother",
+        "meaning": "anh/em trai",
+        "phonetic": "/ˈbrʌðə/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "This is the mother.",
+        "meaning": "Đây là mẹ."
+      },
+      {
+        "text": "That father is there.",
+        "meaning": "Người cha đó ở đó."
+      },
+      {
+        "text": "The brother is with them.",
+        "meaning": "Anh trai ở cùng họ."
+      }
+    ]
+  },
+  {
+    "id": "da8f8102-af5a-42f8-a756-36b0ee0b3bc1",
+    "lesson_id": "e66ac461-b026-4f29-a46e-debe0efe057d",
+    "title": "42 Ngày Phát Âm | Tập 11: /s/",
+    "sound_symbol": "/s/",
+    "youtube_url": "https://www.youtube.com/watch?v=Yof1BQPaRc4",
+    "theory_vietnamese": "Âm /s/ là phụ âm vô thanh, đầu lưỡi gần lợi (voiceless alveolar fricative).\\n\\nCách phát âm:\\n- Đầu lưỡi gần lợi, không chạm\\n- Đẩy hơi ra qua khe hẹp tạo tiếng xì\\n- Không rung dây thanh quản\\n\\nLưu ý cho người Việt:\\n- Giống âm \"x\" tiếng Việt\\n- Phân biệt với /z/",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/s.png",
+    "example_words": [
+      "see",
+      "sun",
+      "sit",
+      "six",
+      "class",
+      "bus",
+      "nice"
+    ],
+    "example_sentences": [
+      "See the six buses.",
+      "Sit in the sun.",
+      "The class is nice."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/e66ac461-b026-4f29-a46e-debe0efe057d/sound.mp3",
+      "words": {
+        "bus": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/e66ac461-b026-4f29-a46e-debe0efe057d/word-bus.mp3",
+        "see": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/e66ac461-b026-4f29-a46e-debe0efe057d/word-see.mp3",
+        "sit": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/e66ac461-b026-4f29-a46e-debe0efe057d/word-sit.mp3",
+        "six": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/e66ac461-b026-4f29-a46e-debe0efe057d/word-six.mp3",
+        "sun": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/e66ac461-b026-4f29-a46e-debe0efe057d/word-sun.mp3",
+        "nice": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/e66ac461-b026-4f29-a46e-debe0efe057d/word-nice.mp3",
+        "class": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/e66ac461-b026-4f29-a46e-debe0efe057d/word-class.mp3"
+      },
+      "sentences": {
+        "Sit in the sun.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/e66ac461-b026-4f29-a46e-debe0efe057d/sentence-sit-in-the-sun.mp3",
+        "See the six buses.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/e66ac461-b026-4f29-a46e-debe0efe057d/sentence-see-the-six-buses.mp3",
+        "The class is nice.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/e66ac461-b026-4f29-a46e-debe0efe057d/sentence-the-class-is-nice.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "see",
+        "meaning": "nhìn",
+        "phonetic": "/siː/"
+      },
+      {
+        "text": "sun",
+        "meaning": "mặt trời",
+        "phonetic": "/sʌn/"
+      },
+      {
+        "text": "sit",
+        "meaning": "ngồi",
+        "phonetic": "/sɪt/"
+      },
+      {
+        "text": "six",
+        "meaning": "sáu",
+        "phonetic": "/sɪks/"
+      },
+      {
+        "text": "class",
+        "meaning": "lớp học",
+        "phonetic": "/klɑːs/"
+      },
+      {
+        "text": "bus",
+        "meaning": "xe buýt",
+        "phonetic": "/bʌs/"
+      },
+      {
+        "text": "nice",
+        "meaning": "tốt đẹp",
+        "phonetic": "/naɪs/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "See the six buses.",
+        "meaning": "Nhìn sáu chiếc xe buýt."
+      },
+      {
+        "text": "Sit in the sun.",
+        "meaning": "Ngồi dưới nắng."
+      },
+      {
+        "text": "The class is nice.",
+        "meaning": "Lớp học rất tốt."
+      }
+    ]
+  },
+  {
+    "id": "0fb8eb41-7530-4c35-9e69-573b3985a9a1",
+    "lesson_id": "4e9f3286-b9a4-4629-b317-1ba32eb8a316",
+    "title": "42 Ngày Phát Âm | Tập 12: /z/",
+    "sound_symbol": "/z/",
+    "youtube_url": "https://www.youtube.com/watch?v=dGTIMhKR4n0",
+    "theory_vietnamese": "Âm /z/ là phụ âm hữu thanh, đầu lưỡi gần lợi (voiced alveolar fricative).\\n\\nCách phát âm:\\n- Giống /s/ nhưng dây thanh quản rung\\n- Tạo tiếng vo vo\\n\\nLưu ý cho người Việt:\\n- Giống âm \"d\" hoặc \"gi\" tiếng Việt (gần đúng)\\n- Đặt tay lên cổ, phải cảm nhận rung",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/z.png",
+    "example_words": [
+      "zoo",
+      "zero",
+      "zone",
+      "zip",
+      "buzz",
+      "is",
+      "has"
+    ],
+    "example_sentences": [
+      "The zoo has zero zones.",
+      "He is busy with the quiz.",
+      "Zip up in the zone."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/4e9f3286-b9a4-4629-b317-1ba32eb8a316/sound.mp3",
+      "words": {
+        "is": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/4e9f3286-b9a4-4629-b317-1ba32eb8a316/word-is.mp3",
+        "has": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/4e9f3286-b9a4-4629-b317-1ba32eb8a316/word-has.mp3",
+        "zip": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/4e9f3286-b9a4-4629-b317-1ba32eb8a316/word-zip.mp3",
+        "zoo": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/4e9f3286-b9a4-4629-b317-1ba32eb8a316/word-zoo.mp3",
+        "buzz": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/4e9f3286-b9a4-4629-b317-1ba32eb8a316/word-buzz.mp3",
+        "zero": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/4e9f3286-b9a4-4629-b317-1ba32eb8a316/word-zero.mp3",
+        "zone": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/4e9f3286-b9a4-4629-b317-1ba32eb8a316/word-zone.mp3"
+      },
+      "sentences": {
+        "Zip up in the zone.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/4e9f3286-b9a4-4629-b317-1ba32eb8a316/sentence-zip-up-in-the-zone.mp3",
+        "The zoo has zero zones.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/4e9f3286-b9a4-4629-b317-1ba32eb8a316/sentence-the-zoo-has-zero-zones.mp3",
+        "He is busy with the quiz.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/4e9f3286-b9a4-4629-b317-1ba32eb8a316/sentence-he-is-busy-with-the-quiz.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "zoo",
+        "meaning": "sở thú",
+        "phonetic": "/zuː/"
+      },
+      {
+        "text": "zero",
+        "meaning": "số không",
+        "phonetic": "/ˈzɪərəʊ/"
+      },
+      {
+        "text": "zone",
+        "meaning": "khu vực",
+        "phonetic": "/zəʊn/"
+      },
+      {
+        "text": "zip",
+        "meaning": "kéo khóa",
+        "phonetic": "/zɪp/"
+      },
+      {
+        "text": "buzz",
+        "meaning": "tiếng vo",
+        "phonetic": "/bʌz/"
+      },
+      {
+        "text": "is",
+        "meaning": "là",
+        "phonetic": "/ɪz/"
+      },
+      {
+        "text": "has",
+        "meaning": "có",
+        "phonetic": "/hæz/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "The zoo has zero zones.",
+        "meaning": "Sở thú không có khu vực nào."
+      },
+      {
+        "text": "He is busy with the quiz.",
+        "meaning": "Anh ấy bận với bài kiểm tra."
+      },
+      {
+        "text": "Zip up in the zone.",
+        "meaning": "Kéo khóa lên trong khu vực."
+      }
+    ]
+  },
+  {
+    "id": "360b5888-97df-429d-8cf8-0d742b7f222c",
+    "lesson_id": "eb6230a7-fdfb-4e70-a37a-bba77eb8056b",
+    "title": "42 Ngày Phát Âm | Tập 13: /ʃ/",
+    "sound_symbol": "/ʃ/",
+    "youtube_url": "https://www.youtube.com/watch?v=cN4ZkIktnTo",
+    "theory_vietnamese": "Âm /ʃ/ là phụ âm vô thanh (voiceless postalveolar fricative).\\n\\nCách phát âm:\\n- Lưỡi nâng lên gần ngạc, phía sau lợi\\n- Môi hơi tròn và đẩy ra phía trước\\n- Đẩy hơi ra tạo tiếng \"sh\"\\n\\nLưu ý cho người Việt:\\n- Gần giống \"s\" nhưng mềm hơn\\n- Viết là sh, ti, ci, ssi",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/sh.png",
+    "example_words": [
+      "she",
+      "ship",
+      "shop",
+      "shoe",
+      "fish",
+      "wash",
+      "nation"
+    ],
+    "example_sentences": [
+      "She sells shoes at the shop.",
+      "Wash the fish with fresh water.",
+      "The nation shares a tradition."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/eb6230a7-fdfb-4e70-a37a-bba77eb8056b/sound.mp3",
+      "words": {
+        "she": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/eb6230a7-fdfb-4e70-a37a-bba77eb8056b/word-she.mp3",
+        "fish": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/eb6230a7-fdfb-4e70-a37a-bba77eb8056b/word-fish.mp3",
+        "ship": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/eb6230a7-fdfb-4e70-a37a-bba77eb8056b/word-ship.mp3",
+        "shoe": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/eb6230a7-fdfb-4e70-a37a-bba77eb8056b/word-shoe.mp3",
+        "shop": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/eb6230a7-fdfb-4e70-a37a-bba77eb8056b/word-shop.mp3",
+        "wash": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/eb6230a7-fdfb-4e70-a37a-bba77eb8056b/word-wash.mp3",
+        "nation": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/eb6230a7-fdfb-4e70-a37a-bba77eb8056b/word-nation.mp3"
+      },
+      "sentences": {
+        "She sells shoes at the shop.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/eb6230a7-fdfb-4e70-a37a-bba77eb8056b/sentence-she-sells-shoes-at-the-shop.mp3",
+        "The nation shares a tradition.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/eb6230a7-fdfb-4e70-a37a-bba77eb8056b/sentence-the-nation-shares-a-tradition.mp3",
+        "Wash the fish with fresh water.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/eb6230a7-fdfb-4e70-a37a-bba77eb8056b/sentence-wash-the-fish-with-fresh-water.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "she",
+        "meaning": "cô ấy",
+        "phonetic": "/ʃiː/"
+      },
+      {
+        "text": "ship",
+        "meaning": "con tàu",
+        "phonetic": "/ʃɪp/"
+      },
+      {
+        "text": "shop",
+        "meaning": "cửa hàng",
+        "phonetic": "/ʃɒp/"
+      },
+      {
+        "text": "shoe",
+        "meaning": "giày",
+        "phonetic": "/ʃuː/"
+      },
+      {
+        "text": "fish",
+        "meaning": "con cá",
+        "phonetic": "/fɪʃ/"
+      },
+      {
+        "text": "wash",
+        "meaning": "rửa",
+        "phonetic": "/wɒʃ/"
+      },
+      {
+        "text": "nation",
+        "meaning": "quốc gia",
+        "phonetic": "/ˈneɪʃn/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "She sells shoes at the shop.",
+        "meaning": "Cô ấy bán giày ở cửa hàng."
+      },
+      {
+        "text": "Wash the fish with fresh water.",
+        "meaning": "Rửa cá bằng nước sạch."
+      },
+      {
+        "text": "The nation shares a tradition.",
+        "meaning": "Quốc gia chia sẻ một truyền thống."
+      }
+    ]
+  },
+  {
+    "id": "7dc8a63b-0b4a-4360-a460-3c7bb7b9d572",
+    "lesson_id": "eaa36d58-fb65-4976-b6f3-c1a8bbf3c0d8",
+    "title": "42 Ngày Phát Âm | Tập 14: /ʒ/",
+    "sound_symbol": "/ʒ/",
+    "youtube_url": "https://www.youtube.com/watch?v=mUCFMXqU43o",
+    "theory_vietnamese": "Âm /ʒ/ là phụ âm hữu thanh (voiced postalveolar fricative).\\n\\nCách phát âm:\\n- Giống /ʃ/ nhưng dây thanh rung\\n- Viết là s (pleasure), si (vision), g (genre)\\n\\nLưu ý cho người Việt:\\n- Rất hiếm trong tiếng Việt\\n- Thường bị đọc thành /z/ hoặc /dʒ/",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/zh.png",
+    "example_words": [
+      "vision",
+      "pleasure",
+      "measure",
+      "treasure",
+      "decision",
+      "garage"
+    ],
+    "example_sentences": [
+      "It is a pleasure to measure.",
+      "The vision of treasure.",
+      "Make a decision about the garage."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/eaa36d58-fb65-4976-b6f3-c1a8bbf3c0d8/sound.mp3",
+      "words": {
+        "garage": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/eaa36d58-fb65-4976-b6f3-c1a8bbf3c0d8/word-garage.mp3",
+        "vision": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/eaa36d58-fb65-4976-b6f3-c1a8bbf3c0d8/word-vision.mp3",
+        "measure": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/eaa36d58-fb65-4976-b6f3-c1a8bbf3c0d8/word-measure.mp3",
+        "decision": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/eaa36d58-fb65-4976-b6f3-c1a8bbf3c0d8/word-decision.mp3",
+        "pleasure": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/eaa36d58-fb65-4976-b6f3-c1a8bbf3c0d8/word-pleasure.mp3",
+        "treasure": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/eaa36d58-fb65-4976-b6f3-c1a8bbf3c0d8/word-treasure.mp3"
+      },
+      "sentences": {
+        "The vision of treasure.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/eaa36d58-fb65-4976-b6f3-c1a8bbf3c0d8/sentence-the-vision-of-treasure.mp3",
+        "It is a pleasure to measure.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/eaa36d58-fb65-4976-b6f3-c1a8bbf3c0d8/sentence-it-is-a-pleasure-to-measure.mp3",
+        "Make a decision about the garage.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/eaa36d58-fb65-4976-b6f3-c1a8bbf3c0d8/sentence-make-a-decision-about-the-garage.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "vision",
+        "meaning": "tầm nhìn",
+        "phonetic": "/ˈvɪʒn/"
+      },
+      {
+        "text": "pleasure",
+        "meaning": "niềm vui",
+        "phonetic": "/ˈpleʒə/"
+      },
+      {
+        "text": "measure",
+        "meaning": "đo lường",
+        "phonetic": "/ˈmeʒə/"
+      },
+      {
+        "text": "treasure",
+        "meaning": "kho báu",
+        "phonetic": "/ˈtreʒə/"
+      },
+      {
+        "text": "decision",
+        "meaning": "quyết định",
+        "phonetic": "/dɪˈsɪʒn/"
+      },
+      {
+        "text": "garage",
+        "meaning": "nhà để xe",
+        "phonetic": "/ˈɡærɑːʒ/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "It is a pleasure to measure.",
+        "meaning": "Thật vui khi được đo lường."
+      },
+      {
+        "text": "The vision of treasure.",
+        "meaning": "Tầm nhìn về kho báu."
+      },
+      {
+        "text": "Make a decision about the garage.",
+        "meaning": "Đưa ra quyết định về nhà để xe."
+      }
+    ]
+  },
+  {
+    "id": "1de2451a-c619-477c-8f86-6b1533ad1e74",
+    "lesson_id": "90d29a9c-eed2-40aa-bc7d-393a7dbdb7a5",
+    "title": "42 Ngày Phát Âm | Tập 15: /tʃ/",
+    "sound_symbol": "/tʃ/",
+    "youtube_url": "https://www.youtube.com/watch?v=WIvIrCz-k1M",
+    "theory_vietnamese": "Âm /tʃ/ là phụ âm vô thanh (voiceless postalveolar affricate).\\n\\nCách phát âm:\\n- Bắt đầu bằng /t/ rồi chuyển sang /ʃ/\\n- Lưỡi chạm lợi rồi rút lại\\n- Viết là ch, tch, tu\\n\\nLưu ý cho người Việt:\\n- Gần giống \"ch\" tiếng Việt nhưng bật hơi mạnh hơn",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/tsh.png",
+    "example_words": [
+      "church",
+      "chair",
+      "child",
+      "choose",
+      "watch",
+      "catch",
+      "teacher"
+    ],
+    "example_sentences": [
+      "The child chose a chair.",
+      "Watch the teacher in the church.",
+      "Catch the ball, children!"
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/90d29a9c-eed2-40aa-bc7d-393a7dbdb7a5/sound.mp3",
+      "words": {
+        "catch": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/90d29a9c-eed2-40aa-bc7d-393a7dbdb7a5/word-catch.mp3",
+        "chair": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/90d29a9c-eed2-40aa-bc7d-393a7dbdb7a5/word-chair.mp3",
+        "child": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/90d29a9c-eed2-40aa-bc7d-393a7dbdb7a5/word-child.mp3",
+        "watch": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/90d29a9c-eed2-40aa-bc7d-393a7dbdb7a5/word-watch.mp3",
+        "choose": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/90d29a9c-eed2-40aa-bc7d-393a7dbdb7a5/word-choose.mp3",
+        "church": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/90d29a9c-eed2-40aa-bc7d-393a7dbdb7a5/word-church.mp3",
+        "teacher": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/90d29a9c-eed2-40aa-bc7d-393a7dbdb7a5/word-teacher.mp3"
+      },
+      "sentences": {
+        "The child chose a chair.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/90d29a9c-eed2-40aa-bc7d-393a7dbdb7a5/sentence-the-child-chose-a-chair.mp3",
+        "Catch the ball, children!": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/90d29a9c-eed2-40aa-bc7d-393a7dbdb7a5/sentence-catch-the-ball-children.mp3",
+        "Watch the teacher in the church.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/90d29a9c-eed2-40aa-bc7d-393a7dbdb7a5/sentence-watch-the-teacher-in-the-church.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "church",
+        "meaning": "nhà thờ",
+        "phonetic": "/tʃɜːtʃ/"
+      },
+      {
+        "text": "chair",
+        "meaning": "ghế",
+        "phonetic": "/tʃeə/"
+      },
+      {
+        "text": "child",
+        "meaning": "đứa trẻ",
+        "phonetic": "/tʃaɪld/"
+      },
+      {
+        "text": "choose",
+        "meaning": "chọn",
+        "phonetic": "/tʃuːz/"
+      },
+      {
+        "text": "watch",
+        "meaning": "xem",
+        "phonetic": "/wɒtʃ/"
+      },
+      {
+        "text": "catch",
+        "meaning": "bắt",
+        "phonetic": "/kætʃ/"
+      },
+      {
+        "text": "teacher",
+        "meaning": "giáo viên",
+        "phonetic": "/ˈtiːtʃə/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "The child chose a chair.",
+        "meaning": "Đứa trẻ chọn một chiếc ghế."
+      },
+      {
+        "text": "Watch the teacher in the church.",
+        "meaning": "Xem giáo viên trong nhà thờ."
+      },
+      {
+        "text": "Catch the ball, children!",
+        "meaning": "Bắt bóng đi, các em!"
+      }
+    ]
+  },
+  {
+    "id": "ca4197b7-4155-407f-9def-bfbbd576b952",
+    "lesson_id": "1b1634a0-d0d5-44da-955a-b5c33892765f",
+    "title": "42 Ngày Phát Âm | Tập 16: /dʒ/",
+    "sound_symbol": "/dʒ/",
+    "youtube_url": "https://www.youtube.com/watch?v=m8jaDyWq4zk",
+    "theory_vietnamese": "Âm /dʒ/ là phụ âm hữu thanh (voiced postalveolar affricate).\\n\\nCách phát âm:\\n- Giống /tʃ/ nhưng dây thanh rung\\n- Viết là j, g, dg\\n\\nLưu ý cho người Việt:\\n- Gần giống \"tr\" hoặc \"gi\" tiếng Việt\\n- Dây thanh phải rung",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/dzh.png",
+    "example_words": [
+      "job",
+      "join",
+      "just",
+      "jump",
+      "age",
+      "page",
+      "bridge"
+    ],
+    "example_sentences": [
+      "Just jump over the bridge.",
+      "Join the job on the stage.",
+      "The judge read the page."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/1b1634a0-d0d5-44da-955a-b5c33892765f/sound.mp3",
+      "words": {
+        "age": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/1b1634a0-d0d5-44da-955a-b5c33892765f/word-age.mp3",
+        "job": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/1b1634a0-d0d5-44da-955a-b5c33892765f/word-job.mp3",
+        "join": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/1b1634a0-d0d5-44da-955a-b5c33892765f/word-join.mp3",
+        "jump": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/1b1634a0-d0d5-44da-955a-b5c33892765f/word-jump.mp3",
+        "just": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/1b1634a0-d0d5-44da-955a-b5c33892765f/word-just.mp3",
+        "page": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/1b1634a0-d0d5-44da-955a-b5c33892765f/word-page.mp3",
+        "bridge": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/1b1634a0-d0d5-44da-955a-b5c33892765f/word-bridge.mp3"
+      },
+      "sentences": {
+        "The judge read the page.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/1b1634a0-d0d5-44da-955a-b5c33892765f/sentence-the-judge-read-the-page.mp3",
+        "Join the job on the stage.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/1b1634a0-d0d5-44da-955a-b5c33892765f/sentence-join-the-job-on-the-stage.mp3",
+        "Just jump over the bridge.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/1b1634a0-d0d5-44da-955a-b5c33892765f/sentence-just-jump-over-the-bridge.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "job",
+        "meaning": "công việc",
+        "phonetic": "/dʒɒb/"
+      },
+      {
+        "text": "join",
+        "meaning": "tham gia",
+        "phonetic": "/dʒɔɪn/"
+      },
+      {
+        "text": "just",
+        "meaning": "chỉ",
+        "phonetic": "/dʒʌst/"
+      },
+      {
+        "text": "jump",
+        "meaning": "nhảy",
+        "phonetic": "/dʒʌmp/"
+      },
+      {
+        "text": "age",
+        "meaning": "tuổi",
+        "phonetic": "/eɪdʒ/"
+      },
+      {
+        "text": "page",
+        "meaning": "trang",
+        "phonetic": "/peɪdʒ/"
+      },
+      {
+        "text": "bridge",
+        "meaning": "cây cầu",
+        "phonetic": "/brɪdʒ/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "Just jump over the bridge.",
+        "meaning": "Cứ nhảy qua cầu."
+      },
+      {
+        "text": "Join the job on the stage.",
+        "meaning": "Tham gia công việc trên sân khấu."
+      },
+      {
+        "text": "The judge read the page.",
+        "meaning": "Thẩm phán đọc trang giấy."
+      }
+    ]
+  },
+  {
+    "id": "94783c2e-384f-4ec2-9f1d-af9b5c82c294",
+    "lesson_id": "0bfa9616-7ab4-43b1-a9e8-6785c452afb6",
+    "title": "42 Ngày Phát Âm | Tập 17: /m/",
+    "sound_symbol": "/m/",
+    "youtube_url": "https://www.youtube.com/watch?v=8meCF9Hrj4U",
+    "theory_vietnamese": "Âm /m/ là phụ âm mũi hữu thanh, hai môi khép (voiced bilabial nasal).\\n\\nCách phát âm:\\n- Hai môi khép lại\\n- Hơi đi qua mũi\\n- Dây thanh rung\\n\\nLưu ý cho người Việt:\\n- Giống âm \"m\" tiếng Việt",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/m.png",
+    "example_words": [
+      "man",
+      "make",
+      "more",
+      "money",
+      "come",
+      "home",
+      "swim"
+    ],
+    "example_sentences": [
+      "The man makes more money.",
+      "Come home and swim.",
+      "Mom made a meal."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/0bfa9616-7ab4-43b1-a9e8-6785c452afb6/sound.mp3",
+      "words": {
+        "man": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/0bfa9616-7ab4-43b1-a9e8-6785c452afb6/word-man.mp3",
+        "come": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/0bfa9616-7ab4-43b1-a9e8-6785c452afb6/word-come.mp3",
+        "home": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/0bfa9616-7ab4-43b1-a9e8-6785c452afb6/word-home.mp3",
+        "make": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/0bfa9616-7ab4-43b1-a9e8-6785c452afb6/word-make.mp3",
+        "more": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/0bfa9616-7ab4-43b1-a9e8-6785c452afb6/word-more.mp3",
+        "swim": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/0bfa9616-7ab4-43b1-a9e8-6785c452afb6/word-swim.mp3",
+        "money": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/0bfa9616-7ab4-43b1-a9e8-6785c452afb6/word-money.mp3"
+      },
+      "sentences": {
+        "Mom made a meal.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/0bfa9616-7ab4-43b1-a9e8-6785c452afb6/sentence-mom-made-a-meal.mp3",
+        "Come home and swim.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/0bfa9616-7ab4-43b1-a9e8-6785c452afb6/sentence-come-home-and-swim.mp3",
+        "The man makes more money.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/0bfa9616-7ab4-43b1-a9e8-6785c452afb6/sentence-the-man-makes-more-money.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "man",
+        "meaning": "đàn ông",
+        "phonetic": "/mæn/"
+      },
+      {
+        "text": "make",
+        "meaning": "làm",
+        "phonetic": "/meɪk/"
+      },
+      {
+        "text": "more",
+        "meaning": "thêm",
+        "phonetic": "/mɔː/"
+      },
+      {
+        "text": "money",
+        "meaning": "tiền",
+        "phonetic": "/ˈmʌni/"
+      },
+      {
+        "text": "come",
+        "meaning": "đến",
+        "phonetic": "/kʌm/"
+      },
+      {
+        "text": "home",
+        "meaning": "nhà",
+        "phonetic": "/həʊm/"
+      },
+      {
+        "text": "swim",
+        "meaning": "bơi",
+        "phonetic": "/swɪm/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "The man makes more money.",
+        "meaning": "Người đàn ông kiếm thêm tiền."
+      },
+      {
+        "text": "Come home and swim.",
+        "meaning": "Về nhà và bơi."
+      },
+      {
+        "text": "Mom made a meal.",
+        "meaning": "Mẹ đã nấu bữa ăn."
+      }
+    ]
+  },
+  {
+    "id": "a104e6da-ab12-4647-a2ae-ef6c0fb68614",
+    "lesson_id": "f6ddd276-f45f-4ef2-84f4-6fa2c5bcb41b",
+    "title": "42 Ngày Phát Âm | Tập 18: /n/",
+    "sound_symbol": "/n/",
+    "youtube_url": "https://www.youtube.com/watch?v=AbAk0jnUMlg",
+    "theory_vietnamese": "Âm /n/ là phụ âm mũi hữu thanh, đầu lưỡi chạm lợi (voiced alveolar nasal).\\n\\nCách phát âm:\\n- Đầu lưỡi chạm lợi\\n- Hơi đi qua mũi\\n- Dây thanh rung\\n\\nLưu ý cho người Việt:\\n- Giống âm \"n\" tiếng Việt",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/n.png",
+    "example_words": [
+      "no",
+      "name",
+      "nice",
+      "new",
+      "ten",
+      "sun",
+      "phone"
+    ],
+    "example_sentences": [
+      "No, his name is not Nick.",
+      "Ten nice new phones.",
+      "The sun shines at noon."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/f6ddd276-f45f-4ef2-84f4-6fa2c5bcb41b/sound.mp3",
+      "words": {
+        "no": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/f6ddd276-f45f-4ef2-84f4-6fa2c5bcb41b/word-no.mp3",
+        "new": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/f6ddd276-f45f-4ef2-84f4-6fa2c5bcb41b/word-new.mp3",
+        "sun": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/f6ddd276-f45f-4ef2-84f4-6fa2c5bcb41b/word-sun.mp3",
+        "ten": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/f6ddd276-f45f-4ef2-84f4-6fa2c5bcb41b/word-ten.mp3",
+        "name": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/f6ddd276-f45f-4ef2-84f4-6fa2c5bcb41b/word-name.mp3",
+        "nice": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/f6ddd276-f45f-4ef2-84f4-6fa2c5bcb41b/word-nice.mp3",
+        "phone": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/f6ddd276-f45f-4ef2-84f4-6fa2c5bcb41b/word-phone.mp3"
+      },
+      "sentences": {
+        "Ten nice new phones.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/f6ddd276-f45f-4ef2-84f4-6fa2c5bcb41b/sentence-ten-nice-new-phones.mp3",
+        "The sun shines at noon.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/f6ddd276-f45f-4ef2-84f4-6fa2c5bcb41b/sentence-the-sun-shines-at-noon.mp3",
+        "No, his name is not Nick.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/f6ddd276-f45f-4ef2-84f4-6fa2c5bcb41b/sentence-no-his-name-is-not-nick.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "no",
+        "meaning": "không",
+        "phonetic": "/nəʊ/"
+      },
+      {
+        "text": "name",
+        "meaning": "tên",
+        "phonetic": "/neɪm/"
+      },
+      {
+        "text": "nice",
+        "meaning": "tốt đẹp",
+        "phonetic": "/naɪs/"
+      },
+      {
+        "text": "new",
+        "meaning": "mới",
+        "phonetic": "/njuː/"
+      },
+      {
+        "text": "ten",
+        "meaning": "mười",
+        "phonetic": "/ten/"
+      },
+      {
+        "text": "sun",
+        "meaning": "mặt trời",
+        "phonetic": "/sʌn/"
+      },
+      {
+        "text": "phone",
+        "meaning": "điện thoại",
+        "phonetic": "/fəʊn/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "No, his name is not Nick.",
+        "meaning": "Không, tên anh ấy không phải Nick."
+      },
+      {
+        "text": "Ten nice new phones.",
+        "meaning": "Mười chiếc điện thoại mới đẹp."
+      },
+      {
+        "text": "The sun shines at noon.",
+        "meaning": "Mặt trời chiếu sáng vào buổi trưa."
+      }
+    ]
+  },
+  {
+    "id": "1dc48346-af0d-4521-84f4-d2252101fe96",
+    "lesson_id": "33611e7d-3468-4c0d-9b3c-bf58f51a1241",
+    "title": "42 Ngày Phát Âm | Tập 19: /ŋ/",
+    "sound_symbol": "/ŋ/",
+    "youtube_url": "https://www.youtube.com/watch?v=wnxutoJOLoQ",
+    "theory_vietnamese": "Âm /ŋ/ là phụ âm mũi hữu thanh, gốc lưỡi chạm ngạc mềm (voiced velar nasal).\\n\\nCách phát âm:\\n- Gốc lưỡi nâng lên chạm ngạc mềm\\n- Hơi đi qua mũi\\n- Dây thanh rung\\n\\nLưu ý cho người Việt:\\n- Giống vần \"ng\" trong tiếng Việt\\n- Chỉ xuất hiện ở cuối âm tiết",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/ng.png",
+    "example_words": [
+      "sing",
+      "ring",
+      "long",
+      "song",
+      "thing",
+      "morning",
+      "young"
+    ],
+    "example_sentences": [
+      "Sing a long song.",
+      "The young king wore a ring.",
+      "Good morning, bring the thing."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/33611e7d-3468-4c0d-9b3c-bf58f51a1241/sound.mp3",
+      "words": {
+        "long": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/33611e7d-3468-4c0d-9b3c-bf58f51a1241/word-long.mp3",
+        "ring": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/33611e7d-3468-4c0d-9b3c-bf58f51a1241/word-ring.mp3",
+        "sing": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/33611e7d-3468-4c0d-9b3c-bf58f51a1241/word-sing.mp3",
+        "song": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/33611e7d-3468-4c0d-9b3c-bf58f51a1241/word-song.mp3",
+        "thing": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/33611e7d-3468-4c0d-9b3c-bf58f51a1241/word-thing.mp3",
+        "young": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/33611e7d-3468-4c0d-9b3c-bf58f51a1241/word-young.mp3",
+        "morning": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/33611e7d-3468-4c0d-9b3c-bf58f51a1241/word-morning.mp3"
+      },
+      "sentences": {
+        "Sing a long song.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/33611e7d-3468-4c0d-9b3c-bf58f51a1241/sentence-sing-a-long-song.mp3",
+        "The young king wore a ring.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/33611e7d-3468-4c0d-9b3c-bf58f51a1241/sentence-the-young-king-wore-a-ring.mp3",
+        "Good morning, bring the thing.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/33611e7d-3468-4c0d-9b3c-bf58f51a1241/sentence-good-morning-bring-the-thing.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "sing",
+        "meaning": "hát",
+        "phonetic": "/sɪŋ/"
+      },
+      {
+        "text": "ring",
+        "meaning": "chiếc nhẫn",
+        "phonetic": "/rɪŋ/"
+      },
+      {
+        "text": "long",
+        "meaning": "dài",
+        "phonetic": "/lɒŋ/"
+      },
+      {
+        "text": "song",
+        "meaning": "bài hát",
+        "phonetic": "/sɒŋ/"
+      },
+      {
+        "text": "thing",
+        "meaning": "thứ",
+        "phonetic": "/θɪŋ/"
+      },
+      {
+        "text": "morning",
+        "meaning": "buổi sáng",
+        "phonetic": "/ˈmɔːnɪŋ/"
+      },
+      {
+        "text": "young",
+        "meaning": "trẻ",
+        "phonetic": "/jʌŋ/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "Sing a long song.",
+        "meaning": "Hát một bài hát dài."
+      },
+      {
+        "text": "The young king wore a ring.",
+        "meaning": "Vị vua trẻ đeo chiếc nhẫn."
+      },
+      {
+        "text": "Good morning, bring the thing.",
+        "meaning": "Chào buổi sáng, mang cái đó đến."
+      }
+    ]
+  },
+  {
+    "id": "a39ff0e8-39eb-42c6-a715-47cd42bd8a4b",
+    "lesson_id": "f27063a9-e8d1-44ae-b2f5-9513ac9ca346",
+    "title": "42 Ngày Phát Âm | Tập 20: /h/",
+    "sound_symbol": "/h/",
+    "youtube_url": "https://www.youtube.com/watch?v=2AvwyD-bihM",
+    "theory_vietnamese": "Âm /h/ là phụ âm vô thanh (voiceless glottal fricative).\\n\\nCách phát âm:\\n- Đẩy hơi nhẹ từ cổ họng ra ngoài\\n- Miệng mở tự nhiên theo nguyên âm phía sau\\n\\nLưu ý cho người Việt:\\n- Giống \"h\" tiếng Việt nhưng nhẹ hơn\\n- Một số từ \"h\" câm: hour, honest, heir",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/h.png",
+    "example_words": [
+      "hat",
+      "home",
+      "hot",
+      "help",
+      "behind",
+      "ahead",
+      "happy"
+    ],
+    "example_sentences": [
+      "He is happy at home.",
+      "Help him with the hot hat.",
+      "Hurry up and head home."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/f27063a9-e8d1-44ae-b2f5-9513ac9ca346/sound.mp3",
+      "words": {
+        "hat": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/f27063a9-e8d1-44ae-b2f5-9513ac9ca346/word-hat.mp3",
+        "hot": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/f27063a9-e8d1-44ae-b2f5-9513ac9ca346/word-hot.mp3",
+        "help": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/f27063a9-e8d1-44ae-b2f5-9513ac9ca346/word-help.mp3",
+        "home": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/f27063a9-e8d1-44ae-b2f5-9513ac9ca346/word-home.mp3",
+        "ahead": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/f27063a9-e8d1-44ae-b2f5-9513ac9ca346/word-ahead.mp3",
+        "happy": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/f27063a9-e8d1-44ae-b2f5-9513ac9ca346/word-happy.mp3",
+        "behind": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/f27063a9-e8d1-44ae-b2f5-9513ac9ca346/word-behind.mp3"
+      },
+      "sentences": {
+        "He is happy at home.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/f27063a9-e8d1-44ae-b2f5-9513ac9ca346/sentence-he-is-happy-at-home.mp3",
+        "Hurry up and head home.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/f27063a9-e8d1-44ae-b2f5-9513ac9ca346/sentence-hurry-up-and-head-home.mp3",
+        "Help him with the hot hat.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/f27063a9-e8d1-44ae-b2f5-9513ac9ca346/sentence-help-him-with-the-hot-hat.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "hat",
+        "meaning": "mũ",
+        "phonetic": "/hæt/"
+      },
+      {
+        "text": "home",
+        "meaning": "nhà",
+        "phonetic": "/həʊm/"
+      },
+      {
+        "text": "hot",
+        "meaning": "nóng",
+        "phonetic": "/hɒt/"
+      },
+      {
+        "text": "help",
+        "meaning": "giúp đỡ",
+        "phonetic": "/help/"
+      },
+      {
+        "text": "behind",
+        "meaning": "phía sau",
+        "phonetic": "/bɪˈhaɪnd/"
+      },
+      {
+        "text": "ahead",
+        "meaning": "phía trước",
+        "phonetic": "/əˈhed/"
+      },
+      {
+        "text": "happy",
+        "meaning": "vui vẻ",
+        "phonetic": "/ˈhæpi/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "He is happy at home.",
+        "meaning": "Anh ấy vui vẻ ở nhà."
+      },
+      {
+        "text": "Help him with the hot hat.",
+        "meaning": "Giúp anh ấy với chiếc mũ nóng."
+      },
+      {
+        "text": "Hurry up and head home.",
+        "meaning": "Nhanh lên và về nhà."
+      }
+    ]
+  },
+  {
+    "id": "2500d279-6083-466d-a0c3-93141f8c0327",
+    "lesson_id": "d4a76588-8b2a-4637-a80f-08b95abdc6d2",
+    "title": "42 Ngày Phát Âm | Tập 21: /l/",
+    "sound_symbol": "/l/",
+    "youtube_url": "https://www.youtube.com/watch?v=7Ma-SGB3fug",
+    "theory_vietnamese": "Âm /l/ là phụ âm hữu thanh (voiced alveolar lateral approximant).\\n\\nCách phát âm:\\n- Đầu lưỡi chạm lợi\\n- Hơi thoát ra hai bên lưỡi\\n- Dây thanh rung\\n\\nLưu ý cho người Việt:\\n- Giống \"l\" tiếng Việt ở đầu từ\\n- \"Dark L\" ở cuối từ: lưỡi nâng lên nhưng hơi cong về phía sau",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/l.png",
+    "example_words": [
+      "love",
+      "look",
+      "long",
+      "live",
+      "call",
+      "ball",
+      "feel"
+    ],
+    "example_sentences": [
+      "Look at the lovely lake.",
+      "Call me and I will feel alive.",
+      "Live long and love life."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/d4a76588-8b2a-4637-a80f-08b95abdc6d2/sound.mp3",
+      "words": {
+        "ball": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/d4a76588-8b2a-4637-a80f-08b95abdc6d2/word-ball.mp3",
+        "call": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/d4a76588-8b2a-4637-a80f-08b95abdc6d2/word-call.mp3",
+        "feel": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/d4a76588-8b2a-4637-a80f-08b95abdc6d2/word-feel.mp3",
+        "live": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/d4a76588-8b2a-4637-a80f-08b95abdc6d2/word-live.mp3",
+        "long": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/d4a76588-8b2a-4637-a80f-08b95abdc6d2/word-long.mp3",
+        "look": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/d4a76588-8b2a-4637-a80f-08b95abdc6d2/word-look.mp3",
+        "love": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/d4a76588-8b2a-4637-a80f-08b95abdc6d2/word-love.mp3"
+      },
+      "sentences": {
+        "Live long and love life.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/d4a76588-8b2a-4637-a80f-08b95abdc6d2/sentence-live-long-and-love-life.mp3",
+        "Look at the lovely lake.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/d4a76588-8b2a-4637-a80f-08b95abdc6d2/sentence-look-at-the-lovely-lake.mp3",
+        "Call me and I will feel alive.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/d4a76588-8b2a-4637-a80f-08b95abdc6d2/sentence-call-me-and-i-will-feel-alive.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "love",
+        "meaning": "yêu",
+        "phonetic": "/lʌv/"
+      },
+      {
+        "text": "look",
+        "meaning": "nhìn",
+        "phonetic": "/lʊk/"
+      },
+      {
+        "text": "long",
+        "meaning": "dài",
+        "phonetic": "/lɒŋ/"
+      },
+      {
+        "text": "live",
+        "meaning": "sống",
+        "phonetic": "/lɪv/"
+      },
+      {
+        "text": "call",
+        "meaning": "gọi",
+        "phonetic": "/kɔːl/"
+      },
+      {
+        "text": "ball",
+        "meaning": "quả bóng",
+        "phonetic": "/bɔːl/"
+      },
+      {
+        "text": "feel",
+        "meaning": "cảm thấy",
+        "phonetic": "/fiːl/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "Look at the lovely lake.",
+        "meaning": "Nhìn hồ nước đáng yêu."
+      },
+      {
+        "text": "Call me and I will feel alive.",
+        "meaning": "Gọi tôi và tôi sẽ cảm thấy sống động."
+      },
+      {
+        "text": "Live long and love life.",
+        "meaning": "Sống lâu và yêu cuộc sống."
+      }
+    ]
+  },
+  {
+    "id": "30851f4d-2ca9-4e5e-97a1-ab7e41d36fa2",
+    "lesson_id": "26f62269-54b3-444d-be4a-04314f72e333",
+    "title": "42 Ngày Phát Âm | Tập 22: /r/",
+    "sound_symbol": "/r/",
+    "youtube_url": "https://www.youtube.com/watch?v=ZMV0aNx-1Jg",
+    "theory_vietnamese": "Âm /r/ là phụ âm hữu thanh (voiced alveolar approximant).\\n\\nCách phát âm:\\n- Đầu lưỡi cong lên về phía ngạc nhưng KHÔNG chạm\\n- Hai bên lưỡi chạm nhẹ vào răng hàm\\n- Dây thanh rung\\n\\nLưu ý cho người Việt:\\n- KHÁC với \"r\" tiếng Việt (không rung lưỡi)\\n- Lưỡi không chạm bất kỳ đâu trong miệng\\n- Phân biệt /r/ và /l/",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/r.png",
+    "example_words": [
+      "run",
+      "red",
+      "read",
+      "right",
+      "car",
+      "far",
+      "very"
+    ],
+    "example_sentences": [
+      "Run and read the red book.",
+      "The car is very far right.",
+      "Rain or shine, he runs."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/26f62269-54b3-444d-be4a-04314f72e333/sound.mp3",
+      "words": {
+        "car": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/26f62269-54b3-444d-be4a-04314f72e333/word-car.mp3",
+        "far": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/26f62269-54b3-444d-be4a-04314f72e333/word-far.mp3",
+        "red": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/26f62269-54b3-444d-be4a-04314f72e333/word-red.mp3",
+        "run": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/26f62269-54b3-444d-be4a-04314f72e333/word-run.mp3",
+        "read": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/26f62269-54b3-444d-be4a-04314f72e333/word-read.mp3",
+        "very": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/26f62269-54b3-444d-be4a-04314f72e333/word-very.mp3",
+        "right": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/26f62269-54b3-444d-be4a-04314f72e333/word-right.mp3"
+      },
+      "sentences": {
+        "Rain or shine, he runs.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/26f62269-54b3-444d-be4a-04314f72e333/sentence-rain-or-shine-he-runs.mp3",
+        "Run and read the red book.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/26f62269-54b3-444d-be4a-04314f72e333/sentence-run-and-read-the-red-book.mp3",
+        "The car is very far right.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/26f62269-54b3-444d-be4a-04314f72e333/sentence-the-car-is-very-far-right.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "run",
+        "meaning": "chạy",
+        "phonetic": "/rʌn/"
+      },
+      {
+        "text": "red",
+        "meaning": "đỏ",
+        "phonetic": "/red/"
+      },
+      {
+        "text": "read",
+        "meaning": "đọc",
+        "phonetic": "/riːd/"
+      },
+      {
+        "text": "right",
+        "meaning": "đúng",
+        "phonetic": "/raɪt/"
+      },
+      {
+        "text": "car",
+        "meaning": "xe hơi",
+        "phonetic": "/kɑː/"
+      },
+      {
+        "text": "far",
+        "meaning": "xa",
+        "phonetic": "/fɑː/"
+      },
+      {
+        "text": "very",
+        "meaning": "rất",
+        "phonetic": "/ˈveri/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "Run and read the red book.",
+        "meaning": "Chạy và đọc quyển sách đỏ."
+      },
+      {
+        "text": "The car is very far right.",
+        "meaning": "Chiếc xe ở rất xa bên phải."
+      },
+      {
+        "text": "Rain or shine, he runs.",
+        "meaning": "Mưa hay nắng, anh ấy vẫn chạy."
+      }
+    ]
+  },
+  {
+    "id": "3056c507-534c-461a-b8b3-51e32a0cb517",
+    "lesson_id": "49103468-2b16-4bf8-b2bd-fee28b4f81a9",
+    "title": "42 Ngày Phát Âm | Tập 23: /w/",
+    "sound_symbol": "/w/",
+    "youtube_url": "https://www.youtube.com/watch?v=HpfPSzMF63Q",
+    "theory_vietnamese": "Âm /w/ là bán nguyên âm hữu thanh (voiced labio-velar approximant).\\n\\nCách phát âm:\\n- Hai môi tròn lại (giống chuẩn bị nói \"u\")\\n- Gốc lưỡi nâng lên gần ngạc mềm\\n- Nhanh chóng chuyển sang nguyên âm tiếp theo\\n\\nLưu ý cho người Việt:\\n- Gần giống khi bắt đầu nói \"u\" rồi chuyển nguyên âm\\n- Không giống \"qu\" tiếng Việt",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/w.png",
+    "example_words": [
+      "we",
+      "water",
+      "want",
+      "well",
+      "with",
+      "will",
+      "away"
+    ],
+    "example_sentences": [
+      "We want water.",
+      "Will you walk with me?",
+      "Away we went to the well."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/49103468-2b16-4bf8-b2bd-fee28b4f81a9/sound.mp3",
+      "words": {
+        "we": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/49103468-2b16-4bf8-b2bd-fee28b4f81a9/word-we.mp3",
+        "away": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/49103468-2b16-4bf8-b2bd-fee28b4f81a9/word-away.mp3",
+        "want": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/49103468-2b16-4bf8-b2bd-fee28b4f81a9/word-want.mp3",
+        "well": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/49103468-2b16-4bf8-b2bd-fee28b4f81a9/word-well.mp3",
+        "will": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/49103468-2b16-4bf8-b2bd-fee28b4f81a9/word-will.mp3",
+        "with": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/49103468-2b16-4bf8-b2bd-fee28b4f81a9/word-with.mp3",
+        "water": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/49103468-2b16-4bf8-b2bd-fee28b4f81a9/word-water.mp3"
+      },
+      "sentences": {
+        "We want water.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/49103468-2b16-4bf8-b2bd-fee28b4f81a9/sentence-we-want-water.mp3",
+        "Will you walk with me?": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/49103468-2b16-4bf8-b2bd-fee28b4f81a9/sentence-will-you-walk-with-me.mp3",
+        "Away we went to the well.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/49103468-2b16-4bf8-b2bd-fee28b4f81a9/sentence-away-we-went-to-the-well.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "we",
+        "meaning": "chúng tôi",
+        "phonetic": "/wiː/"
+      },
+      {
+        "text": "water",
+        "meaning": "nước",
+        "phonetic": "/ˈwɔːtə/"
+      },
+      {
+        "text": "want",
+        "meaning": "muốn",
+        "phonetic": "/wɒnt/"
+      },
+      {
+        "text": "well",
+        "meaning": "tốt",
+        "phonetic": "/wel/"
+      },
+      {
+        "text": "with",
+        "meaning": "với",
+        "phonetic": "/wɪð/"
+      },
+      {
+        "text": "will",
+        "meaning": "sẽ",
+        "phonetic": "/wɪl/"
+      },
+      {
+        "text": "away",
+        "meaning": "đi",
+        "phonetic": "/əˈweɪ/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "We want water.",
+        "meaning": "Chúng tôi muốn nước."
+      },
+      {
+        "text": "Will you walk with me?",
+        "meaning": "Bạn sẽ đi bộ cùng tôi chứ?"
+      },
+      {
+        "text": "Away we went to the well.",
+        "meaning": "Chúng tôi đi đến giếng nước."
+      }
+    ]
+  },
+  {
+    "id": "8692cb92-ed86-4dd2-bba2-29021e1a9eb9",
+    "lesson_id": "220e4614-284f-4d00-a190-9589caf7c6ea",
+    "title": "42 Ngày Phát Âm | Tập 24: /j/",
+    "sound_symbol": "/j/",
+    "youtube_url": "https://www.youtube.com/watch?v=MTXxsNEE8EY",
+    "theory_vietnamese": "Âm /j/ là bán nguyên âm hữu thanh (voiced palatal approximant).\\n\\nCách phát âm:\\n- Lưỡi nâng lên gần ngạc cứng (giống chuẩn bị nói \"i\")\\n- Nhanh chóng chuyển sang nguyên âm tiếp theo\\n- Viết là y (yes), u (use), ew (new)\\n\\nLưu ý cho người Việt:\\n- Gần giống \"d\" đầu từ miền Nam\\n- Không phải âm \"j\" tiếng Anh",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/j.png",
+    "example_words": [
+      "yes",
+      "you",
+      "year",
+      "young",
+      "use",
+      "new",
+      "few"
+    ],
+    "example_sentences": [
+      "Yes, you are young this year.",
+      "Use a few new ideas.",
+      "Yesterday was a beautiful day."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/220e4614-284f-4d00-a190-9589caf7c6ea/sound.mp3",
+      "words": {
+        "few": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/220e4614-284f-4d00-a190-9589caf7c6ea/word-few.mp3",
+        "new": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/220e4614-284f-4d00-a190-9589caf7c6ea/word-new.mp3",
+        "use": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/220e4614-284f-4d00-a190-9589caf7c6ea/word-use.mp3",
+        "yes": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/220e4614-284f-4d00-a190-9589caf7c6ea/word-yes.mp3",
+        "you": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/220e4614-284f-4d00-a190-9589caf7c6ea/word-you.mp3",
+        "year": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/220e4614-284f-4d00-a190-9589caf7c6ea/word-year.mp3",
+        "young": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/220e4614-284f-4d00-a190-9589caf7c6ea/word-young.mp3"
+      },
+      "sentences": {
+        "Use a few new ideas.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/220e4614-284f-4d00-a190-9589caf7c6ea/sentence-use-a-few-new-ideas.mp3",
+        "Yes, you are young this year.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/220e4614-284f-4d00-a190-9589caf7c6ea/sentence-yes-you-are-young-this-year.mp3",
+        "Yesterday was a beautiful day.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/220e4614-284f-4d00-a190-9589caf7c6ea/sentence-yesterday-was-a-beautiful-day.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "yes",
+        "meaning": "vâng",
+        "phonetic": "/jes/"
+      },
+      {
+        "text": "you",
+        "meaning": "bạn",
+        "phonetic": "/juː/"
+      },
+      {
+        "text": "year",
+        "meaning": "năm",
+        "phonetic": "/jɪə/"
+      },
+      {
+        "text": "young",
+        "meaning": "trẻ",
+        "phonetic": "/jʌŋ/"
+      },
+      {
+        "text": "use",
+        "meaning": "sử dụng",
+        "phonetic": "/juːz/"
+      },
+      {
+        "text": "new",
+        "meaning": "mới",
+        "phonetic": "/njuː/"
+      },
+      {
+        "text": "few",
+        "meaning": "ít",
+        "phonetic": "/fjuː/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "Yes, you are young this year.",
+        "meaning": "Vâng, bạn còn trẻ năm nay."
+      },
+      {
+        "text": "Use a few new ideas.",
+        "meaning": "Dùng một vài ý tưởng mới."
+      },
+      {
+        "text": "Yesterday was a beautiful day.",
+        "meaning": "Hôm qua là một ngày đẹp."
+      }
+    ]
+  },
+  {
+    "id": "53b58bef-108c-46a7-92ed-fcd22d967d1a",
+    "lesson_id": "6bde5553-6c3e-42d8-841b-f08779817385",
+    "title": "42 Ngày Phát Âm | Tập 25: /ɪ/",
+    "sound_symbol": "/ɪ/",
+    "youtube_url": "https://www.youtube.com/watch?v=HsKWHxhSwnc",
+    "theory_vietnamese": "Âm /ɪ/ là nguyên âm ngắn, lưỡi gần cao, gần trước (near-close near-front unrounded vowel).\\n\\nCách phát âm:\\n- Lưỡi nâng lên gần ngạc (nhưng thấp hơn /iː/)\\n- Miệng hơi mở\\n- Môi tự nhiên, không tròn\\n\\nLưu ý cho người Việt:\\n- NGẮN hơn /iː/\\n- Giống âm \"i\" trong \"tin\" nhưng lơi hơn\\n- Phân biệt ship /ɪ/ vs sheep /iː/",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/i_short.png",
+    "example_words": [
+      "sit",
+      "big",
+      "fish",
+      "hit",
+      "is",
+      "it",
+      "lip"
+    ],
+    "example_sentences": [
+      "Sit and hit the big fish.",
+      "It is a little bit different.",
+      "His lips slipped."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/6bde5553-6c3e-42d8-841b-f08779817385/sound.mp3",
+      "words": {
+        "is": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/6bde5553-6c3e-42d8-841b-f08779817385/word-is.mp3",
+        "it": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/6bde5553-6c3e-42d8-841b-f08779817385/word-it.mp3",
+        "big": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/6bde5553-6c3e-42d8-841b-f08779817385/word-big.mp3",
+        "hit": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/6bde5553-6c3e-42d8-841b-f08779817385/word-hit.mp3",
+        "lip": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/6bde5553-6c3e-42d8-841b-f08779817385/word-lip.mp3",
+        "sit": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/6bde5553-6c3e-42d8-841b-f08779817385/word-sit.mp3",
+        "fish": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/6bde5553-6c3e-42d8-841b-f08779817385/word-fish.mp3"
+      },
+      "sentences": {
+        "His lips slipped.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/6bde5553-6c3e-42d8-841b-f08779817385/sentence-his-lips-slipped.mp3",
+        "Sit and hit the big fish.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/6bde5553-6c3e-42d8-841b-f08779817385/sentence-sit-and-hit-the-big-fish.mp3",
+        "It is a little bit different.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/6bde5553-6c3e-42d8-841b-f08779817385/sentence-it-is-a-little-bit-different.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "sit",
+        "meaning": "ngồi",
+        "phonetic": "/sɪt/"
+      },
+      {
+        "text": "big",
+        "meaning": "lớn",
+        "phonetic": "/bɪɡ/"
+      },
+      {
+        "text": "fish",
+        "meaning": "con cá",
+        "phonetic": "/fɪʃ/"
+      },
+      {
+        "text": "hit",
+        "meaning": "đánh",
+        "phonetic": "/hɪt/"
+      },
+      {
+        "text": "is",
+        "meaning": "là",
+        "phonetic": "/ɪz/"
+      },
+      {
+        "text": "it",
+        "meaning": "nó",
+        "phonetic": "/ɪt/"
+      },
+      {
+        "text": "lip",
+        "meaning": "môi",
+        "phonetic": "/lɪp/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "Sit and hit the big fish.",
+        "meaning": "Ngồi và đánh con cá lớn."
+      },
+      {
+        "text": "It is a little bit different.",
+        "meaning": "Nó hơi khác một chút."
+      },
+      {
+        "text": "His lips slipped.",
+        "meaning": "Môi anh ấy bị trượt."
+      }
+    ]
+  },
+  {
+    "id": "924a2732-bd02-4b60-a7c6-87edb48e376f",
+    "lesson_id": "0b749726-375f-48af-bee7-6f0552f651d4",
+    "title": "42 Ngày Phát Âm | Tập 26: /e/",
+    "sound_symbol": "/e/",
+    "youtube_url": "https://www.youtube.com/watch?v=kmNc8FGNGMk",
+    "theory_vietnamese": "Âm /e/ là nguyên âm, lưỡi giữa-trước (close-mid front unrounded vowel).\\n\\nCách phát âm:\\n- Lưỡi ở vị trí giữa-trước\\n- Miệng mở vừa\\n- Môi tự nhiên\\n\\nLưu ý cho người Việt:\\n- Giống \"e\" tiếng Việt\\n- Ngắn gọn",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/e.png",
+    "example_words": [
+      "bed",
+      "red",
+      "ten",
+      "pen",
+      "set",
+      "yes",
+      "best"
+    ],
+    "example_sentences": [
+      "Ten red pens on the bed.",
+      "Yes, this is the best set.",
+      "Let them get ready."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/0b749726-375f-48af-bee7-6f0552f651d4/sound.mp3",
+      "words": {
+        "bed": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/0b749726-375f-48af-bee7-6f0552f651d4/word-bed.mp3",
+        "pen": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/0b749726-375f-48af-bee7-6f0552f651d4/word-pen.mp3",
+        "red": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/0b749726-375f-48af-bee7-6f0552f651d4/word-red.mp3",
+        "set": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/0b749726-375f-48af-bee7-6f0552f651d4/word-set.mp3",
+        "ten": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/0b749726-375f-48af-bee7-6f0552f651d4/word-ten.mp3",
+        "yes": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/0b749726-375f-48af-bee7-6f0552f651d4/word-yes.mp3",
+        "best": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/0b749726-375f-48af-bee7-6f0552f651d4/word-best.mp3"
+      },
+      "sentences": {
+        "Let them get ready.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/0b749726-375f-48af-bee7-6f0552f651d4/sentence-let-them-get-ready.mp3",
+        "Ten red pens on the bed.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/0b749726-375f-48af-bee7-6f0552f651d4/sentence-ten-red-pens-on-the-bed.mp3",
+        "Yes, this is the best set.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/0b749726-375f-48af-bee7-6f0552f651d4/sentence-yes-this-is-the-best-set.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "bed",
+        "meaning": "giường",
+        "phonetic": "/bed/"
+      },
+      {
+        "text": "red",
+        "meaning": "đỏ",
+        "phonetic": "/red/"
+      },
+      {
+        "text": "ten",
+        "meaning": "mười",
+        "phonetic": "/ten/"
+      },
+      {
+        "text": "pen",
+        "meaning": "bút",
+        "phonetic": "/pen/"
+      },
+      {
+        "text": "set",
+        "meaning": "bộ",
+        "phonetic": "/set/"
+      },
+      {
+        "text": "yes",
+        "meaning": "vâng",
+        "phonetic": "/jes/"
+      },
+      {
+        "text": "best",
+        "meaning": "tốt nhất",
+        "phonetic": "/best/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "Ten red pens on the bed.",
+        "meaning": "Mười cây bút đỏ trên giường."
+      },
+      {
+        "text": "Yes, this is the best set.",
+        "meaning": "Vâng, đây là bộ tốt nhất."
+      },
+      {
+        "text": "Let them get ready.",
+        "meaning": "Để họ chuẩn bị."
+      }
+    ]
+  },
+  {
+    "id": "41d16d95-7317-4029-a083-4e4c5546508e",
+    "lesson_id": "ec3255df-d61d-4296-af75-b7465398fd62",
+    "title": "42 Ngày Phát Âm | Tập 27: /æ/",
+    "sound_symbol": "/æ/",
+    "youtube_url": "https://www.youtube.com/watch?v=ouMXAWG8hZ0",
+    "theory_vietnamese": "Âm /æ/ là nguyên âm, lưỡi gần thấp-trước (near-open front unrounded vowel).\\n\\nCách phát âm:\\n- Miệng mở rộng (rộng hơn /e/)\\n- Lưỡi hạ thấp và đẩy về phía trước\\n- Môi tự nhiên\\n\\nLưu ý cho người Việt:\\n- KHÔNG có trong tiếng Việt\\n- Giữa \"e\" và \"a\"\\n- Miệng phải mở rộng rõ ràng",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/ae.png",
+    "example_words": [
+      "cat",
+      "hat",
+      "man",
+      "bad",
+      "happy",
+      "apple",
+      "black"
+    ],
+    "example_sentences": [
+      "The cat sat on the black mat.",
+      "A happy man ate an apple.",
+      "That bad hat is back."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ec3255df-d61d-4296-af75-b7465398fd62/sound.mp3",
+      "words": {
+        "bad": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ec3255df-d61d-4296-af75-b7465398fd62/word-bad.mp3",
+        "cat": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ec3255df-d61d-4296-af75-b7465398fd62/word-cat.mp3",
+        "hat": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ec3255df-d61d-4296-af75-b7465398fd62/word-hat.mp3",
+        "man": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ec3255df-d61d-4296-af75-b7465398fd62/word-man.mp3",
+        "apple": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ec3255df-d61d-4296-af75-b7465398fd62/word-apple.mp3",
+        "black": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ec3255df-d61d-4296-af75-b7465398fd62/word-black.mp3",
+        "happy": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ec3255df-d61d-4296-af75-b7465398fd62/word-happy.mp3"
+      },
+      "sentences": {
+        "That bad hat is back.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ec3255df-d61d-4296-af75-b7465398fd62/sentence-that-bad-hat-is-back.mp3",
+        "A happy man ate an apple.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ec3255df-d61d-4296-af75-b7465398fd62/sentence-a-happy-man-ate-an-apple.mp3",
+        "The cat sat on the black mat.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ec3255df-d61d-4296-af75-b7465398fd62/sentence-the-cat-sat-on-the-black-mat.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "cat",
+        "meaning": "con mèo",
+        "phonetic": "/kæt/"
+      },
+      {
+        "text": "hat",
+        "meaning": "mũ",
+        "phonetic": "/hæt/"
+      },
+      {
+        "text": "man",
+        "meaning": "đàn ông",
+        "phonetic": "/mæn/"
+      },
+      {
+        "text": "bad",
+        "meaning": "xấu",
+        "phonetic": "/bæd/"
+      },
+      {
+        "text": "happy",
+        "meaning": "vui vẻ",
+        "phonetic": "/ˈhæpi/"
+      },
+      {
+        "text": "apple",
+        "meaning": "quả táo",
+        "phonetic": "/ˈæpl/"
+      },
+      {
+        "text": "black",
+        "meaning": "đen",
+        "phonetic": "/blæk/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "The cat sat on the black mat.",
+        "meaning": "Con mèo ngồi trên tấm thảm đen."
+      },
+      {
+        "text": "A happy man ate an apple.",
+        "meaning": "Người đàn ông vui vẻ ăn quả táo."
+      },
+      {
+        "text": "That bad hat is back.",
+        "meaning": "Cái mũ xấu đó quay lại."
+      }
+    ]
+  },
+  {
+    "id": "73834bea-ca94-4c76-b7d8-4427ba5ed408",
+    "lesson_id": "ef6085b8-d640-4d45-be36-c6d79e443a43",
+    "title": "42 Ngày Phát Âm | Tập 28: /ʌ/",
+    "sound_symbol": "/ʌ/",
+    "youtube_url": "https://www.youtube.com/watch?v=5cOVsoZiuU0",
+    "theory_vietnamese": "Âm /ʌ/ là nguyên âm ngắn, lưỡi giữa-thấp (open-mid back unrounded vowel).\\n\\nCách phát âm:\\n- Miệng mở vừa\\n- Lưỡi ở vị trí giữa-thấp\\n- Giống \"ơ\" nhưng ngắn hơn\\n\\nLưu ý cho người Việt:\\n- Gần giống \"ă\" tiếng Việt\\n- Luôn ở âm tiết có trọng âm",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/uh.png",
+    "example_words": [
+      "cup",
+      "bus",
+      "but",
+      "cut",
+      "sun",
+      "fun",
+      "love"
+    ],
+    "example_sentences": [
+      "A cup of love under the sun.",
+      "But the bus was fun.",
+      "Run and jump for fun."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ef6085b8-d640-4d45-be36-c6d79e443a43/sound.mp3",
+      "words": {
+        "bus": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ef6085b8-d640-4d45-be36-c6d79e443a43/word-bus.mp3",
+        "but": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ef6085b8-d640-4d45-be36-c6d79e443a43/word-but.mp3",
+        "cup": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ef6085b8-d640-4d45-be36-c6d79e443a43/word-cup.mp3",
+        "cut": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ef6085b8-d640-4d45-be36-c6d79e443a43/word-cut.mp3",
+        "fun": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ef6085b8-d640-4d45-be36-c6d79e443a43/word-fun.mp3",
+        "sun": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ef6085b8-d640-4d45-be36-c6d79e443a43/word-sun.mp3",
+        "love": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ef6085b8-d640-4d45-be36-c6d79e443a43/word-love.mp3"
+      },
+      "sentences": {
+        "But the bus was fun.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ef6085b8-d640-4d45-be36-c6d79e443a43/sentence-but-the-bus-was-fun.mp3",
+        "Run and jump for fun.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ef6085b8-d640-4d45-be36-c6d79e443a43/sentence-run-and-jump-for-fun.mp3",
+        "A cup of love under the sun.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ef6085b8-d640-4d45-be36-c6d79e443a43/sentence-a-cup-of-love-under-the-sun.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "cup",
+        "meaning": "cái cốc",
+        "phonetic": "/kʌp/"
+      },
+      {
+        "text": "bus",
+        "meaning": "xe buýt",
+        "phonetic": "/bʌs/"
+      },
+      {
+        "text": "but",
+        "meaning": "nhưng",
+        "phonetic": "/bʌt/"
+      },
+      {
+        "text": "cut",
+        "meaning": "cắt",
+        "phonetic": "/kʌt/"
+      },
+      {
+        "text": "sun",
+        "meaning": "mặt trời",
+        "phonetic": "/sʌn/"
+      },
+      {
+        "text": "fun",
+        "meaning": "vui",
+        "phonetic": "/fʌn/"
+      },
+      {
+        "text": "love",
+        "meaning": "yêu",
+        "phonetic": "/lʌv/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "A cup of love under the sun.",
+        "meaning": "Một cốc tình yêu dưới ánh mặt trời."
+      },
+      {
+        "text": "But the bus was fun.",
+        "meaning": "Nhưng xe buýt rất vui."
+      },
+      {
+        "text": "Run and jump for fun.",
+        "meaning": "Chạy và nhảy cho vui."
+      }
+    ]
+  },
+  {
+    "id": "c76dd28a-ce6d-4f8d-a7c1-8f05864a1bde",
+    "lesson_id": "39d8342b-343f-4706-9a16-fc5027662aea",
+    "title": "42 Ngày Phát Âm | Tập 29: /ɒ/",
+    "sound_symbol": "/ɒ/",
+    "youtube_url": null,
+    "theory_vietnamese": "Âm /ɒ/ là nguyên âm ngắn tròn môi (open back rounded vowel) — British English.\\n\\nCách phát âm:\\n- Miệng mở rộng\\n- Lưỡi hạ thấp và lùi về phía sau\\n- Môi hơi tròn\\n\\nLưu ý cho người Việt:\\n- Gần giống \"o\" tiếng Việt nhưng ngắn\\n- Trong American English thường thay bằng /ɑː/",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/o_short.png",
+    "example_words": [
+      "hot",
+      "lot",
+      "stop",
+      "dog",
+      "box",
+      "not",
+      "top"
+    ],
+    "example_sentences": [
+      "The hot dog is on top.",
+      "Stop and do not drop the box.",
+      "A lot of dots on the pot."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/39d8342b-343f-4706-9a16-fc5027662aea/sound.mp3",
+      "words": {
+        "box": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/39d8342b-343f-4706-9a16-fc5027662aea/word-box.mp3",
+        "dog": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/39d8342b-343f-4706-9a16-fc5027662aea/word-dog.mp3",
+        "hot": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/39d8342b-343f-4706-9a16-fc5027662aea/word-hot.mp3",
+        "lot": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/39d8342b-343f-4706-9a16-fc5027662aea/word-lot.mp3",
+        "not": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/39d8342b-343f-4706-9a16-fc5027662aea/word-not.mp3",
+        "top": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/39d8342b-343f-4706-9a16-fc5027662aea/word-top.mp3",
+        "stop": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/39d8342b-343f-4706-9a16-fc5027662aea/word-stop.mp3"
+      },
+      "sentences": {
+        "The hot dog is on top.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/39d8342b-343f-4706-9a16-fc5027662aea/sentence-the-hot-dog-is-on-top.mp3",
+        "A lot of dots on the pot.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/39d8342b-343f-4706-9a16-fc5027662aea/sentence-a-lot-of-dots-on-the-pot.mp3",
+        "Stop and do not drop the box.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/39d8342b-343f-4706-9a16-fc5027662aea/sentence-stop-and-do-not-drop-the-box.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "hot",
+        "meaning": "nóng",
+        "phonetic": "/hɒt/"
+      },
+      {
+        "text": "lot",
+        "meaning": "nhiều",
+        "phonetic": "/lɒt/"
+      },
+      {
+        "text": "stop",
+        "meaning": "dừng lại",
+        "phonetic": "/stɒp/"
+      },
+      {
+        "text": "dog",
+        "meaning": "con chó",
+        "phonetic": "/dɒɡ/"
+      },
+      {
+        "text": "box",
+        "meaning": "cái hộp",
+        "phonetic": "/bɒks/"
+      },
+      {
+        "text": "not",
+        "meaning": "không",
+        "phonetic": "/nɒt/"
+      },
+      {
+        "text": "top",
+        "meaning": "đỉnh",
+        "phonetic": "/tɒp/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "The hot dog is on top.",
+        "meaning": "Xúc xích nóng ở trên cùng."
+      },
+      {
+        "text": "Stop and do not drop the box.",
+        "meaning": "Dừng lại và đừng làm rơi hộp."
+      },
+      {
+        "text": "A lot of dots on the pot.",
+        "meaning": "Rất nhiều chấm trên cái nồi."
+      }
+    ]
+  },
+  {
+    "id": "e6f8a5be-ef82-495b-8f99-ea23c772c53c",
+    "lesson_id": "943a1847-5828-4e64-98ff-53151eab161b",
+    "title": "42 Ngày Phát Âm | Tập 30: /ʊ/",
+    "sound_symbol": "/ʊ/",
+    "youtube_url": "https://www.youtube.com/watch?v=cnqb2qGhdbU",
+    "theory_vietnamese": "Âm /ʊ/ là nguyên âm ngắn (near-close near-back rounded vowel).\\n\\nCách phát âm:\\n- Lưỡi nâng cao và lùi về sau\\n- Môi hơi tròn\\n- Ngắn hơn /uː/\\n\\nLưu ý cho người Việt:\\n- Giống \"u\" ngắn\\n- Phân biệt /ʊ/ (book) vs /uː/ (boot)",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/u_short.png",
+    "example_words": [
+      "book",
+      "look",
+      "good",
+      "put",
+      "foot",
+      "cook",
+      "full"
+    ],
+    "example_sentences": [
+      "Look at the good book.",
+      "Put your foot on the wood.",
+      "The cook is full."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/943a1847-5828-4e64-98ff-53151eab161b/sound.mp3",
+      "words": {
+        "put": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/943a1847-5828-4e64-98ff-53151eab161b/word-put.mp3",
+        "book": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/943a1847-5828-4e64-98ff-53151eab161b/word-book.mp3",
+        "cook": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/943a1847-5828-4e64-98ff-53151eab161b/word-cook.mp3",
+        "foot": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/943a1847-5828-4e64-98ff-53151eab161b/word-foot.mp3",
+        "full": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/943a1847-5828-4e64-98ff-53151eab161b/word-full.mp3",
+        "good": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/943a1847-5828-4e64-98ff-53151eab161b/word-good.mp3",
+        "look": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/943a1847-5828-4e64-98ff-53151eab161b/word-look.mp3"
+      },
+      "sentences": {
+        "The cook is full.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/943a1847-5828-4e64-98ff-53151eab161b/sentence-the-cook-is-full.mp3",
+        "Look at the good book.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/943a1847-5828-4e64-98ff-53151eab161b/sentence-look-at-the-good-book.mp3",
+        "Put your foot on the wood.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/943a1847-5828-4e64-98ff-53151eab161b/sentence-put-your-foot-on-the-wood.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "book",
+        "meaning": "quyển sách",
+        "phonetic": "/bʊk/"
+      },
+      {
+        "text": "look",
+        "meaning": "nhìn",
+        "phonetic": "/lʊk/"
+      },
+      {
+        "text": "good",
+        "meaning": "tốt",
+        "phonetic": "/ɡʊd/"
+      },
+      {
+        "text": "put",
+        "meaning": "đặt",
+        "phonetic": "/pʊt/"
+      },
+      {
+        "text": "foot",
+        "meaning": "bàn chân",
+        "phonetic": "/fʊt/"
+      },
+      {
+        "text": "cook",
+        "meaning": "nấu",
+        "phonetic": "/kʊk/"
+      },
+      {
+        "text": "full",
+        "meaning": "đầy",
+        "phonetic": "/fʊl/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "Look at the good book.",
+        "meaning": "Nhìn quyển sách hay."
+      },
+      {
+        "text": "Put your foot on the wood.",
+        "meaning": "Đặt chân lên gỗ."
+      },
+      {
+        "text": "The cook is full.",
+        "meaning": "Đầu bếp đã no."
+      }
+    ]
+  },
+  {
+    "id": "4d3e31e5-e970-4f60-96db-196b551226f7",
+    "lesson_id": "2cd7a58f-4620-4ba8-9225-2ab7e18243c8",
+    "title": "42 Ngày Phát Âm | Tập 31: /ə/",
+    "sound_symbol": "/ə/",
+    "youtube_url": "https://www.youtube.com/watch?v=8gwWFwxbJNw",
+    "theory_vietnamese": "Âm /ə/ là nguyên âm yếu \"schwa\" (mid central vowel) — nguyên âm phổ biến nhất tiếng Anh.\\n\\nCách phát âm:\\n- Lưỡi ở vị trí trung tâm, thả lỏng\\n- Miệng mở nhẹ\\n- Rất ngắn và yếu\\n\\nLưu ý cho người Việt:\\n- Giống \"ơ\" rất ngắn và nhẹ\\n- Chỉ xuất hiện ở âm tiết KHÔNG có trọng âm\\n- Là nguyên âm phổ biến nhất",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/schwa.png",
+    "example_words": [
+      "about",
+      "banana",
+      "ago",
+      "taken",
+      "lemon",
+      "sofa",
+      "away"
+    ],
+    "example_sentences": [
+      "A banana about to fall.",
+      "The sofa arrived a moment ago.",
+      "She was taken away."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/2cd7a58f-4620-4ba8-9225-2ab7e18243c8/sound.mp3",
+      "words": {
+        "ago": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/2cd7a58f-4620-4ba8-9225-2ab7e18243c8/word-ago.mp3",
+        "away": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/2cd7a58f-4620-4ba8-9225-2ab7e18243c8/word-away.mp3",
+        "sofa": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/2cd7a58f-4620-4ba8-9225-2ab7e18243c8/word-sofa.mp3",
+        "about": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/2cd7a58f-4620-4ba8-9225-2ab7e18243c8/word-about.mp3",
+        "lemon": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/2cd7a58f-4620-4ba8-9225-2ab7e18243c8/word-lemon.mp3",
+        "taken": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/2cd7a58f-4620-4ba8-9225-2ab7e18243c8/word-taken.mp3",
+        "banana": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/2cd7a58f-4620-4ba8-9225-2ab7e18243c8/word-banana.mp3"
+      },
+      "sentences": {
+        "She was taken away.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/2cd7a58f-4620-4ba8-9225-2ab7e18243c8/sentence-she-was-taken-away.mp3",
+        "A banana about to fall.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/2cd7a58f-4620-4ba8-9225-2ab7e18243c8/sentence-a-banana-about-to-fall.mp3",
+        "The sofa arrived a moment ago.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/2cd7a58f-4620-4ba8-9225-2ab7e18243c8/sentence-the-sofa-arrived-a-moment-ago.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "about",
+        "meaning": "về",
+        "phonetic": "/əˈbaʊt/"
+      },
+      {
+        "text": "banana",
+        "meaning": "quả chuối",
+        "phonetic": "/bəˈnɑːnə/"
+      },
+      {
+        "text": "ago",
+        "meaning": "trước đây",
+        "phonetic": "/əˈɡəʊ/"
+      },
+      {
+        "text": "taken",
+        "meaning": "được lấy",
+        "phonetic": "/ˈteɪkən/"
+      },
+      {
+        "text": "lemon",
+        "meaning": "quả chanh",
+        "phonetic": "/ˈlemən/"
+      },
+      {
+        "text": "sofa",
+        "meaning": "ghế sofa",
+        "phonetic": "/ˈsəʊfə/"
+      },
+      {
+        "text": "away",
+        "meaning": "đi",
+        "phonetic": "/əˈweɪ/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "A banana about to fall.",
+        "meaning": "Quả chuối sắp rơi."
+      },
+      {
+        "text": "The sofa arrived a moment ago.",
+        "meaning": "Ghế sofa đã đến cách đây một lúc."
+      },
+      {
+        "text": "She was taken away.",
+        "meaning": "Cô ấy đã bị mang đi."
+      }
+    ]
+  },
+  {
+    "id": "ada9f5de-629a-4d24-8dc3-10b912f579dd",
+    "lesson_id": "c151ff3f-d627-4505-b4af-54542e2cb7d5",
+    "title": "42 Ngày Phát Âm | Tập 32: /iː/",
+    "sound_symbol": "/iː/",
+    "youtube_url": "https://www.youtube.com/watch?v=PjnoeDmSO_w",
+    "theory_vietnamese": "Âm /iː/ là nguyên âm dài (close front unrounded vowel).\\n\\nCách phát âm:\\n- Lưỡi nâng cao lên gần ngạc\\n- Miệng hơi mở\\n- Kéo dài hơn /ɪ/\\n\\nLưu ý cho người Việt:\\n- Giống \"i\" kéo dài\\n- Phân biệt với /ɪ/ (ngắn)",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/i.png",
+    "example_words": [
+      "see",
+      "tree",
+      "me",
+      "he",
+      "she",
+      "eat",
+      "read"
+    ],
+    "example_sentences": [
+      "See the green tree.",
+      "She and he eat meat.",
+      "Read and feel free."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/c151ff3f-d627-4505-b4af-54542e2cb7d5/sound.mp3",
+      "words": {
+        "he": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/c151ff3f-d627-4505-b4af-54542e2cb7d5/word-he.mp3",
+        "me": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/c151ff3f-d627-4505-b4af-54542e2cb7d5/word-me.mp3",
+        "eat": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/c151ff3f-d627-4505-b4af-54542e2cb7d5/word-eat.mp3",
+        "see": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/c151ff3f-d627-4505-b4af-54542e2cb7d5/word-see.mp3",
+        "she": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/c151ff3f-d627-4505-b4af-54542e2cb7d5/word-she.mp3",
+        "read": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/c151ff3f-d627-4505-b4af-54542e2cb7d5/word-read.mp3",
+        "tree": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/c151ff3f-d627-4505-b4af-54542e2cb7d5/word-tree.mp3"
+      },
+      "sentences": {
+        "Read and feel free.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/c151ff3f-d627-4505-b4af-54542e2cb7d5/sentence-read-and-feel-free.mp3",
+        "See the green tree.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/c151ff3f-d627-4505-b4af-54542e2cb7d5/sentence-see-the-green-tree.mp3",
+        "She and he eat meat.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/c151ff3f-d627-4505-b4af-54542e2cb7d5/sentence-she-and-he-eat-meat.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "see",
+        "meaning": "nhìn",
+        "phonetic": "/siː/"
+      },
+      {
+        "text": "tree",
+        "meaning": "cái cây",
+        "phonetic": "/triː/"
+      },
+      {
+        "text": "me",
+        "meaning": "tôi",
+        "phonetic": "/miː/"
+      },
+      {
+        "text": "he",
+        "meaning": "anh ấy",
+        "phonetic": "/hiː/"
+      },
+      {
+        "text": "she",
+        "meaning": "cô ấy",
+        "phonetic": "/ʃiː/"
+      },
+      {
+        "text": "eat",
+        "meaning": "ăn",
+        "phonetic": "/iːt/"
+      },
+      {
+        "text": "read",
+        "meaning": "đọc",
+        "phonetic": "/riːd/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "See the green tree.",
+        "meaning": "Nhìn cây xanh."
+      },
+      {
+        "text": "She and he eat meat.",
+        "meaning": "Cô ấy và anh ấy ăn thịt."
+      },
+      {
+        "text": "Read and feel free.",
+        "meaning": "Đọc và cảm thấy tự do."
+      }
+    ]
+  },
+  {
+    "id": "54543442-7cf0-4dbc-91eb-18303cfed4dd",
+    "lesson_id": "bb696ff3-b824-4ef4-b2a4-641d6eb3b99a",
+    "title": "42 Ngày Phát Âm | Tập 33: /ɑː/",
+    "sound_symbol": "/ɑː/",
+    "youtube_url": "https://www.youtube.com/watch?v=guge8DCl8ho",
+    "theory_vietnamese": "Âm /ɑː/ là nguyên âm dài (open back unrounded vowel).\\n\\nCách phát âm:\\n- Miệng mở rộng\\n- Lưỡi hạ thấp và lùi về sau\\n- Kéo dài\\n\\nLưu ý cho người Việt:\\n- Giống \"a\" kéo dài\\n- Viết là ar, a, al",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/ah.png",
+    "example_words": [
+      "car",
+      "far",
+      "start",
+      "heart",
+      "park",
+      "dark",
+      "father"
+    ],
+    "example_sentences": [
+      "Start the car in the dark park.",
+      "Father has a kind heart.",
+      "The star is far away."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/bb696ff3-b824-4ef4-b2a4-641d6eb3b99a/sound.mp3",
+      "words": {
+        "car": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/bb696ff3-b824-4ef4-b2a4-641d6eb3b99a/word-car.mp3",
+        "far": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/bb696ff3-b824-4ef4-b2a4-641d6eb3b99a/word-far.mp3",
+        "dark": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/bb696ff3-b824-4ef4-b2a4-641d6eb3b99a/word-dark.mp3",
+        "park": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/bb696ff3-b824-4ef4-b2a4-641d6eb3b99a/word-park.mp3",
+        "heart": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/bb696ff3-b824-4ef4-b2a4-641d6eb3b99a/word-heart.mp3",
+        "start": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/bb696ff3-b824-4ef4-b2a4-641d6eb3b99a/word-start.mp3",
+        "father": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/bb696ff3-b824-4ef4-b2a4-641d6eb3b99a/word-father.mp3"
+      },
+      "sentences": {
+        "The star is far away.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/bb696ff3-b824-4ef4-b2a4-641d6eb3b99a/sentence-the-star-is-far-away.mp3",
+        "Father has a kind heart.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/bb696ff3-b824-4ef4-b2a4-641d6eb3b99a/sentence-father-has-a-kind-heart.mp3",
+        "Start the car in the dark park.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/bb696ff3-b824-4ef4-b2a4-641d6eb3b99a/sentence-start-the-car-in-the-dark-park.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "car",
+        "meaning": "xe hơi",
+        "phonetic": "/kɑː/"
+      },
+      {
+        "text": "far",
+        "meaning": "xa",
+        "phonetic": "/fɑː/"
+      },
+      {
+        "text": "start",
+        "meaning": "bắt đầu",
+        "phonetic": "/stɑːt/"
+      },
+      {
+        "text": "heart",
+        "meaning": "trái tim",
+        "phonetic": "/hɑːt/"
+      },
+      {
+        "text": "park",
+        "meaning": "công viên",
+        "phonetic": "/pɑːk/"
+      },
+      {
+        "text": "dark",
+        "meaning": "tối",
+        "phonetic": "/dɑːk/"
+      },
+      {
+        "text": "father",
+        "meaning": "bố",
+        "phonetic": "/ˈfɑːðə/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "Start the car in the dark park.",
+        "meaning": "Khởi động xe trong công viên tối."
+      },
+      {
+        "text": "Father has a kind heart.",
+        "meaning": "Cha có trái tim nhân hậu."
+      },
+      {
+        "text": "The star is far away.",
+        "meaning": "Ngôi sao ở rất xa."
+      }
+    ]
+  },
+  {
+    "id": "1610e0bd-0066-4fa0-b788-ad9c08039935",
+    "lesson_id": "98de1909-bae6-4cca-b9bf-c0af9f7fad1d",
+    "title": "42 Ngày Phát Âm | Tập 34: /ɔː/",
+    "sound_symbol": "/ɔː/",
+    "youtube_url": "https://www.youtube.com/watch?v=hUIpo2hD8b0",
+    "theory_vietnamese": "Âm /ɔː/ là nguyên âm dài tròn môi (open-mid back rounded vowel).\\n\\nCách phát âm:\\n- Miệng mở vừa\\n- Lưỡi lùi về sau\\n- Môi tròn\\n- Kéo dài\\n\\nLưu ý cho người Việt:\\n- Giống \"o\" kéo dài\\n- Viết là or, aw, au, al",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/aw.png",
+    "example_words": [
+      "more",
+      "door",
+      "four",
+      "call",
+      "walk",
+      "ball",
+      "law"
+    ],
+    "example_sentences": [
+      "Walk through the door for more.",
+      "Call four friends to the hall.",
+      "The ball hit the wall."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/98de1909-bae6-4cca-b9bf-c0af9f7fad1d/sound.mp3",
+      "words": {
+        "law": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/98de1909-bae6-4cca-b9bf-c0af9f7fad1d/word-law.mp3",
+        "ball": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/98de1909-bae6-4cca-b9bf-c0af9f7fad1d/word-ball.mp3",
+        "call": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/98de1909-bae6-4cca-b9bf-c0af9f7fad1d/word-call.mp3",
+        "door": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/98de1909-bae6-4cca-b9bf-c0af9f7fad1d/word-door.mp3",
+        "four": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/98de1909-bae6-4cca-b9bf-c0af9f7fad1d/word-four.mp3",
+        "more": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/98de1909-bae6-4cca-b9bf-c0af9f7fad1d/word-more.mp3",
+        "walk": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/98de1909-bae6-4cca-b9bf-c0af9f7fad1d/word-walk.mp3"
+      },
+      "sentences": {
+        "The ball hit the wall.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/98de1909-bae6-4cca-b9bf-c0af9f7fad1d/sentence-the-ball-hit-the-wall.mp3",
+        "Call four friends to the hall.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/98de1909-bae6-4cca-b9bf-c0af9f7fad1d/sentence-call-four-friends-to-the-hall.mp3",
+        "Walk through the door for more.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/98de1909-bae6-4cca-b9bf-c0af9f7fad1d/sentence-walk-through-the-door-for-more.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "more",
+        "meaning": "thêm",
+        "phonetic": "/mɔː/"
+      },
+      {
+        "text": "door",
+        "meaning": "cửa",
+        "phonetic": "/dɔː/"
+      },
+      {
+        "text": "four",
+        "meaning": "bốn",
+        "phonetic": "/fɔː/"
+      },
+      {
+        "text": "call",
+        "meaning": "gọi",
+        "phonetic": "/kɔːl/"
+      },
+      {
+        "text": "walk",
+        "meaning": "đi bộ",
+        "phonetic": "/wɔːk/"
+      },
+      {
+        "text": "ball",
+        "meaning": "quả bóng",
+        "phonetic": "/bɔːl/"
+      },
+      {
+        "text": "law",
+        "meaning": "luật",
+        "phonetic": "/lɔː/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "Walk through the door for more.",
+        "meaning": "Đi qua cửa để xem thêm."
+      },
+      {
+        "text": "Call four friends to the hall.",
+        "meaning": "Gọi bốn người bạn đến hội trường."
+      },
+      {
+        "text": "The ball hit the wall.",
+        "meaning": "Quả bóng đập vào tường."
+      }
+    ]
+  },
+  {
+    "id": "e7e1a9bc-ea7d-4834-86e5-d2a7a05caa5e",
+    "lesson_id": "aa447b92-3068-467d-a525-3ace1c9c055e",
+    "title": "42 Ngày Phát Âm | Tập 35: /uː/",
+    "sound_symbol": "/uː/",
+    "youtube_url": "https://www.youtube.com/watch?v=HOZngteqqzM",
+    "theory_vietnamese": "Âm /uː/ là nguyên âm dài (close back rounded vowel).\\n\\nCách phát âm:\\n- Lưỡi nâng cao và lùi về sau\\n- Môi tròn và đẩy ra trước\\n- Kéo dài hơn /ʊ/\\n\\nLưu ý cho người Việt:\\n- Giống \"u\" kéo dài\\n- Phân biệt với /ʊ/",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/u.png",
+    "example_words": [
+      "food",
+      "moon",
+      "too",
+      "blue",
+      "school",
+      "cool",
+      "room"
+    ],
+    "example_sentences": [
+      "The cool moon shines on the room.",
+      "Too much food at school.",
+      "The blue pool is beautiful."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/aa447b92-3068-467d-a525-3ace1c9c055e/sound.mp3",
+      "words": {
+        "too": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/aa447b92-3068-467d-a525-3ace1c9c055e/word-too.mp3",
+        "blue": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/aa447b92-3068-467d-a525-3ace1c9c055e/word-blue.mp3",
+        "cool": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/aa447b92-3068-467d-a525-3ace1c9c055e/word-cool.mp3",
+        "food": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/aa447b92-3068-467d-a525-3ace1c9c055e/word-food.mp3",
+        "moon": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/aa447b92-3068-467d-a525-3ace1c9c055e/word-moon.mp3",
+        "room": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/aa447b92-3068-467d-a525-3ace1c9c055e/word-room.mp3",
+        "school": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/aa447b92-3068-467d-a525-3ace1c9c055e/word-school.mp3"
+      },
+      "sentences": {
+        "Too much food at school.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/aa447b92-3068-467d-a525-3ace1c9c055e/sentence-too-much-food-at-school.mp3",
+        "The blue pool is beautiful.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/aa447b92-3068-467d-a525-3ace1c9c055e/sentence-the-blue-pool-is-beautiful.mp3",
+        "The cool moon shines on the room.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/aa447b92-3068-467d-a525-3ace1c9c055e/sentence-the-cool-moon-shines-on-the-room.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "food",
+        "meaning": "thức ăn",
+        "phonetic": "/fuːd/"
+      },
+      {
+        "text": "moon",
+        "meaning": "mặt trăng",
+        "phonetic": "/muːn/"
+      },
+      {
+        "text": "too",
+        "meaning": "cũng",
+        "phonetic": "/tuː/"
+      },
+      {
+        "text": "blue",
+        "meaning": "xanh",
+        "phonetic": "/bluː/"
+      },
+      {
+        "text": "school",
+        "meaning": "trường học",
+        "phonetic": "/skuːl/"
+      },
+      {
+        "text": "cool",
+        "meaning": "mát",
+        "phonetic": "/kuːl/"
+      },
+      {
+        "text": "room",
+        "meaning": "phòng",
+        "phonetic": "/ruːm/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "The cool moon shines on the room.",
+        "meaning": "Mặt trăng mát mẻ chiếu sáng căn phòng."
+      },
+      {
+        "text": "Too much food at school.",
+        "meaning": "Quá nhiều đồ ăn ở trường."
+      },
+      {
+        "text": "The blue pool is beautiful.",
+        "meaning": "Hồ bơi xanh thật đẹp."
+      }
+    ]
+  },
+  {
+    "id": "f9caa885-2ca6-4881-8603-85a03c5333c6",
+    "lesson_id": "2abe0ebf-dbe9-4401-ad7c-0a46d5c187f3",
+    "title": "42 Ngày Phát Âm | Tập 36: /ɜː/",
+    "sound_symbol": "/ɜː/",
+    "youtube_url": "https://www.youtube.com/watch?v=Mhb55KK8P1g",
+    "theory_vietnamese": "Âm /ɜː/ là nguyên âm dài (open-mid central unrounded vowel).\\n\\nCách phát âm:\\n- Lưỡi ở vị trí trung tâm\\n- Miệng mở vừa\\n- Kéo dài\\n- Viết là er, ir, ur, ear\\n\\nLưu ý cho người Việt:\\n- Giống \"ơ\" kéo dài\\n- Không tròn môi",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/er.png",
+    "example_words": [
+      "bird",
+      "word",
+      "learn",
+      "turn",
+      "first",
+      "nurse",
+      "earth"
+    ],
+    "example_sentences": [
+      "The bird learns first.",
+      "Turn the word around.",
+      "The nurse works on earth."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/2abe0ebf-dbe9-4401-ad7c-0a46d5c187f3/sound.mp3",
+      "words": {
+        "bird": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/2abe0ebf-dbe9-4401-ad7c-0a46d5c187f3/word-bird.mp3",
+        "turn": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/2abe0ebf-dbe9-4401-ad7c-0a46d5c187f3/word-turn.mp3",
+        "word": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/2abe0ebf-dbe9-4401-ad7c-0a46d5c187f3/word-word.mp3",
+        "earth": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/2abe0ebf-dbe9-4401-ad7c-0a46d5c187f3/word-earth.mp3",
+        "first": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/2abe0ebf-dbe9-4401-ad7c-0a46d5c187f3/word-first.mp3",
+        "learn": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/2abe0ebf-dbe9-4401-ad7c-0a46d5c187f3/word-learn.mp3",
+        "nurse": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/2abe0ebf-dbe9-4401-ad7c-0a46d5c187f3/word-nurse.mp3"
+      },
+      "sentences": {
+        "Turn the word around.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/2abe0ebf-dbe9-4401-ad7c-0a46d5c187f3/sentence-turn-the-word-around.mp3",
+        "The bird learns first.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/2abe0ebf-dbe9-4401-ad7c-0a46d5c187f3/sentence-the-bird-learns-first.mp3",
+        "The nurse works on earth.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/2abe0ebf-dbe9-4401-ad7c-0a46d5c187f3/sentence-the-nurse-works-on-earth.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "bird",
+        "meaning": "con chim",
+        "phonetic": "/bɜːd/"
+      },
+      {
+        "text": "word",
+        "meaning": "từ",
+        "phonetic": "/wɜːd/"
+      },
+      {
+        "text": "learn",
+        "meaning": "học",
+        "phonetic": "/lɜːn/"
+      },
+      {
+        "text": "turn",
+        "meaning": "quay",
+        "phonetic": "/tɜːn/"
+      },
+      {
+        "text": "first",
+        "meaning": "đầu tiên",
+        "phonetic": "/fɜːst/"
+      },
+      {
+        "text": "nurse",
+        "meaning": "y tá",
+        "phonetic": "/nɜːs/"
+      },
+      {
+        "text": "earth",
+        "meaning": "trái đất",
+        "phonetic": "/ɜːθ/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "The bird learns first.",
+        "meaning": "Con chim học trước."
+      },
+      {
+        "text": "Turn the word around.",
+        "meaning": "Đảo ngược từ đó."
+      },
+      {
+        "text": "The nurse works on earth.",
+        "meaning": "Y tá làm việc trên trái đất."
+      }
+    ]
+  },
+  {
+    "id": "4732019a-c850-4d08-8e7d-acfd15281d37",
+    "lesson_id": "ec54a5df-8702-4307-aab4-4f8725095eda",
+    "title": "42 Ngày Phát Âm | Tập 37: /eɪ/",
+    "sound_symbol": "/eɪ/",
+    "youtube_url": "https://www.youtube.com/watch?v=26zPMG2rzuI",
+    "theory_vietnamese": "Âm /eɪ/ là nguyên âm đôi (diphthong).\\n\\nCách phát âm:\\n- Bắt đầu từ /e/ rồi trượt lên /ɪ/\\n- Miệng từ mở vừa chuyển sang hẹp hơn\\n\\nLưu ý cho người Việt:\\n- Giống \"ây\" hoặc \"ây\"\\n- Viết là a-e, ai, ay, ey",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/ei_short.png",
+    "example_words": [
+      "day",
+      "say",
+      "make",
+      "name",
+      "play",
+      "late",
+      "rain"
+    ],
+    "example_sentences": [
+      "Say my name on a rainy day.",
+      "Play a game and make a cake.",
+      "The train was late today."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ec54a5df-8702-4307-aab4-4f8725095eda/sound.mp3",
+      "words": {
+        "day": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ec54a5df-8702-4307-aab4-4f8725095eda/word-day.mp3",
+        "say": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ec54a5df-8702-4307-aab4-4f8725095eda/word-say.mp3",
+        "late": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ec54a5df-8702-4307-aab4-4f8725095eda/word-late.mp3",
+        "make": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ec54a5df-8702-4307-aab4-4f8725095eda/word-make.mp3",
+        "name": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ec54a5df-8702-4307-aab4-4f8725095eda/word-name.mp3",
+        "play": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ec54a5df-8702-4307-aab4-4f8725095eda/word-play.mp3",
+        "rain": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ec54a5df-8702-4307-aab4-4f8725095eda/word-rain.mp3"
+      },
+      "sentences": {
+        "The train was late today.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ec54a5df-8702-4307-aab4-4f8725095eda/sentence-the-train-was-late-today.mp3",
+        "Say my name on a rainy day.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ec54a5df-8702-4307-aab4-4f8725095eda/sentence-say-my-name-on-a-rainy-day.mp3",
+        "Play a game and make a cake.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ec54a5df-8702-4307-aab4-4f8725095eda/sentence-play-a-game-and-make-a-cake.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "day",
+        "meaning": "ngày",
+        "phonetic": "/deɪ/"
+      },
+      {
+        "text": "say",
+        "meaning": "nói",
+        "phonetic": "/seɪ/"
+      },
+      {
+        "text": "make",
+        "meaning": "làm",
+        "phonetic": "/meɪk/"
+      },
+      {
+        "text": "name",
+        "meaning": "t��n",
+        "phonetic": "/neɪm/"
+      },
+      {
+        "text": "play",
+        "meaning": "chơi",
+        "phonetic": "/pleɪ/"
+      },
+      {
+        "text": "late",
+        "meaning": "muộn",
+        "phonetic": "/leɪt/"
+      },
+      {
+        "text": "rain",
+        "meaning": "mưa",
+        "phonetic": "/reɪn/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "Say my name on a rainy day.",
+        "meaning": "Gọi tên tôi vào ngày mưa."
+      },
+      {
+        "text": "Play a game and make a cake.",
+        "meaning": "Chơi trò chơi và làm bánh."
+      },
+      {
+        "text": "The train was late today.",
+        "meaning": "Tàu đến muộn hôm nay."
+      }
+    ]
+  },
+  {
+    "id": "277b50ed-bc79-46cd-90a7-98959b614f28",
+    "lesson_id": "05161c14-4b05-41a9-8dee-f3951fa55b09",
+    "title": "42 Ngày Phát Âm | Tập 38: /aɪ/",
+    "sound_symbol": "/aɪ/",
+    "youtube_url": "https://www.youtube.com/watch?v=Y4uYs85BoLU",
+    "theory_vietnamese": "Âm /aɪ/ là nguyên âm đôi.\\n\\nCách phát âm:\\n- Bắt đầu từ /a/ rồi trượt lên /ɪ/\\n- Miệng từ mở rộng chuyển sang hẹp\\n\\nLưu ý cho người Việt:\\n- Giống \"ai\" tiếng Việt\\n- Viết là i-e, y, igh, ie",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/ai_short.png",
+    "example_words": [
+      "time",
+      "like",
+      "my",
+      "five",
+      "night",
+      "ride",
+      "fly"
+    ],
+    "example_sentences": [
+      "Five nights I ride my bike.",
+      "I like to fly high.",
+      "Time flies by."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/05161c14-4b05-41a9-8dee-f3951fa55b09/sound.mp3",
+      "words": {
+        "my": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/05161c14-4b05-41a9-8dee-f3951fa55b09/word-my.mp3",
+        "fly": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/05161c14-4b05-41a9-8dee-f3951fa55b09/word-fly.mp3",
+        "five": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/05161c14-4b05-41a9-8dee-f3951fa55b09/word-five.mp3",
+        "like": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/05161c14-4b05-41a9-8dee-f3951fa55b09/word-like.mp3",
+        "ride": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/05161c14-4b05-41a9-8dee-f3951fa55b09/word-ride.mp3",
+        "time": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/05161c14-4b05-41a9-8dee-f3951fa55b09/word-time.mp3",
+        "night": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/05161c14-4b05-41a9-8dee-f3951fa55b09/word-night.mp3"
+      },
+      "sentences": {
+        "Time flies by.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/05161c14-4b05-41a9-8dee-f3951fa55b09/sentence-time-flies-by.mp3",
+        "I like to fly high.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/05161c14-4b05-41a9-8dee-f3951fa55b09/sentence-i-like-to-fly-high.mp3",
+        "Five nights I ride my bike.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/05161c14-4b05-41a9-8dee-f3951fa55b09/sentence-five-nights-i-ride-my-bike.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "time",
+        "meaning": "thời gian",
+        "phonetic": "/taɪm/"
+      },
+      {
+        "text": "like",
+        "meaning": "thích",
+        "phonetic": "/laɪk/"
+      },
+      {
+        "text": "my",
+        "meaning": "của tôi",
+        "phonetic": "/maɪ/"
+      },
+      {
+        "text": "five",
+        "meaning": "năm",
+        "phonetic": "/faɪv/"
+      },
+      {
+        "text": "night",
+        "meaning": "đêm",
+        "phonetic": "/naɪt/"
+      },
+      {
+        "text": "ride",
+        "meaning": "đi xe",
+        "phonetic": "/raɪd/"
+      },
+      {
+        "text": "fly",
+        "meaning": "bay",
+        "phonetic": "/flaɪ/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "Five nights I ride my bike.",
+        "meaning": "Năm đêm tôi đạp xe."
+      },
+      {
+        "text": "I like to fly high.",
+        "meaning": "Tôi thích bay cao."
+      },
+      {
+        "text": "Time flies by.",
+        "meaning": "Thời gian trôi qua."
+      }
+    ]
+  },
+  {
+    "id": "63c16a65-26fb-4dd7-8d6c-bc1ff1cc2f52",
+    "lesson_id": "48c47d7c-eaab-4935-9c72-597cd02f2386",
+    "title": "42 Ngày Phát Âm | Tập 39: /ɔɪ/",
+    "sound_symbol": "/ɔɪ/",
+    "youtube_url": "https://www.youtube.com/watch?v=aH1QN2CmkY0",
+    "theory_vietnamese": "Âm /ɔɪ/ là nguyên âm đôi.\\n\\nCách phát âm:\\n- Bắt đầu từ /ɔ/ rồi trượt lên /ɪ/\\n- Môi từ tròn chuyển sang tự nhiên\\n\\nLưu ý cho người Việt:\\n- Giống \"oi\" tiếng Việt\\n- Viết là oi, oy",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/awi_short.png",
+    "example_words": [
+      "boy",
+      "toy",
+      "join",
+      "coin",
+      "enjoy",
+      "noise",
+      "point"
+    ],
+    "example_sentences": [
+      "The boy enjoys his toy.",
+      "Join and point at the coin.",
+      "The noise annoyed the boy."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/48c47d7c-eaab-4935-9c72-597cd02f2386/sound.mp3",
+      "words": {
+        "boy": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/48c47d7c-eaab-4935-9c72-597cd02f2386/word-boy.mp3",
+        "toy": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/48c47d7c-eaab-4935-9c72-597cd02f2386/word-toy.mp3",
+        "coin": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/48c47d7c-eaab-4935-9c72-597cd02f2386/word-coin.mp3",
+        "join": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/48c47d7c-eaab-4935-9c72-597cd02f2386/word-join.mp3",
+        "enjoy": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/48c47d7c-eaab-4935-9c72-597cd02f2386/word-enjoy.mp3",
+        "noise": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/48c47d7c-eaab-4935-9c72-597cd02f2386/word-noise.mp3",
+        "point": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/48c47d7c-eaab-4935-9c72-597cd02f2386/word-point.mp3"
+      },
+      "sentences": {
+        "The boy enjoys his toy.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/48c47d7c-eaab-4935-9c72-597cd02f2386/sentence-the-boy-enjoys-his-toy.mp3",
+        "The noise annoyed the boy.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/48c47d7c-eaab-4935-9c72-597cd02f2386/sentence-the-noise-annoyed-the-boy.mp3",
+        "Join and point at the coin.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/48c47d7c-eaab-4935-9c72-597cd02f2386/sentence-join-and-point-at-the-coin.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "boy",
+        "meaning": "con trai",
+        "phonetic": "/bɔɪ/"
+      },
+      {
+        "text": "toy",
+        "meaning": "đồ chơi",
+        "phonetic": "/tɔɪ/"
+      },
+      {
+        "text": "join",
+        "meaning": "tham gia",
+        "phonetic": "/dʒɔɪn/"
+      },
+      {
+        "text": "coin",
+        "meaning": "đồng xu",
+        "phonetic": "/kɔɪn/"
+      },
+      {
+        "text": "enjoy",
+        "meaning": "thưởng thức",
+        "phonetic": "/ɪnˈdʒɔɪ/"
+      },
+      {
+        "text": "noise",
+        "meaning": "tiếng ồn",
+        "phonetic": "/nɔɪz/"
+      },
+      {
+        "text": "point",
+        "meaning": "điểm",
+        "phonetic": "/pɔɪnt/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "The boy enjoys his toy.",
+        "meaning": "Cậu bé thích đồ chơi của mình."
+      },
+      {
+        "text": "Join and point at the coin.",
+        "meaning": "Tham gia và chỉ vào đồng xu."
+      },
+      {
+        "text": "The noise annoyed the boy.",
+        "meaning": "Tiếng ồn làm phiền cậu bé."
+      }
+    ]
+  },
+  {
+    "id": "0c6d4e04-23f6-421f-93fb-0dd176db5264",
+    "lesson_id": "a8a92801-7063-4162-8eec-a04840832469",
+    "title": "42 Ngày Phát Âm | Tập 40: /aʊ/",
+    "sound_symbol": "/aʊ/",
+    "youtube_url": "https://www.youtube.com/watch?v=8wSdmU8CmLU",
+    "theory_vietnamese": "Âm /aʊ/ là nguyên âm đôi.\\n\\nCách phát âm:\\n- Bắt đầu từ /a/ rồi trượt lên /ʊ/\\n- Miệng từ mở rộng chuyển sang tròn\\n\\nLưu ý cho người Việt:\\n- Giống \"ao\" tiếng Việt\\n- Viết là ou, ow",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/au_short.png",
+    "example_words": [
+      "now",
+      "how",
+      "out",
+      "about",
+      "house",
+      "down",
+      "town"
+    ],
+    "example_sentences": [
+      "How about going out now?",
+      "The house is down in town.",
+      "Shout out loud."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/a8a92801-7063-4162-8eec-a04840832469/sound.mp3",
+      "words": {
+        "how": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/a8a92801-7063-4162-8eec-a04840832469/word-how.mp3",
+        "now": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/a8a92801-7063-4162-8eec-a04840832469/word-now.mp3",
+        "out": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/a8a92801-7063-4162-8eec-a04840832469/word-out.mp3",
+        "down": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/a8a92801-7063-4162-8eec-a04840832469/word-down.mp3",
+        "town": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/a8a92801-7063-4162-8eec-a04840832469/word-town.mp3",
+        "about": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/a8a92801-7063-4162-8eec-a04840832469/word-about.mp3",
+        "house": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/a8a92801-7063-4162-8eec-a04840832469/word-house.mp3"
+      },
+      "sentences": {
+        "Shout out loud.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/a8a92801-7063-4162-8eec-a04840832469/sentence-shout-out-loud.mp3",
+        "How about going out now?": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/a8a92801-7063-4162-8eec-a04840832469/sentence-how-about-going-out-now.mp3",
+        "The house is down in town.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/a8a92801-7063-4162-8eec-a04840832469/sentence-the-house-is-down-in-town.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "now",
+        "meaning": "bây giờ",
+        "phonetic": "/naʊ/"
+      },
+      {
+        "text": "how",
+        "meaning": "như thế nào",
+        "phonetic": "/haʊ/"
+      },
+      {
+        "text": "out",
+        "meaning": "ngoài",
+        "phonetic": "/aʊt/"
+      },
+      {
+        "text": "about",
+        "meaning": "về",
+        "phonetic": "/əˈbaʊt/"
+      },
+      {
+        "text": "house",
+        "meaning": "ngôi nhà",
+        "phonetic": "/haʊs/"
+      },
+      {
+        "text": "down",
+        "meaning": "xuống",
+        "phonetic": "/daʊn/"
+      },
+      {
+        "text": "town",
+        "meaning": "thị trấn",
+        "phonetic": "/taʊn/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "How about going out now?",
+        "meaning": "Bây giờ đi ra ngoài nhé?"
+      },
+      {
+        "text": "The house is down in town.",
+        "meaning": "Ngôi nhà ở dưới thị trấn."
+      },
+      {
+        "text": "Shout out loud.",
+        "meaning": "Hét lên thật to."
+      }
+    ]
+  },
+  {
+    "id": "99b41769-3d40-40ef-b443-6c148ed77d16",
+    "lesson_id": "635859b5-7a05-4e99-ba6c-0977688708e3",
+    "title": "42 Ngày Phát Âm | Tập 41: /əʊ/",
+    "sound_symbol": "/əʊ/",
+    "youtube_url": "https://www.youtube.com/watch?v=hS6I--dmtkM",
+    "theory_vietnamese": "Âm /əʊ/ là nguyên âm đôi (British) / /oʊ/ (American).\\n\\nCách phát âm:\\n- Bắt đầu từ /ə/ rồi trượt lên /ʊ/\\n- Miệng từ mở vừa chuyển sang tròn\\n\\nLưu ý cho người Việt:\\n- Gần giống \"âu\" nhưng bắt đầu bằng schwa\\n- Viết là o-e, oa, ow",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/schwau_short.png",
+    "example_words": [
+      "go",
+      "home",
+      "no",
+      "phone",
+      "show",
+      "old",
+      "road"
+    ],
+    "example_sentences": [
+      "Go home and phone me.",
+      "No old road to show.",
+      "He drove slowly on the road."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/635859b5-7a05-4e99-ba6c-0977688708e3/sound.mp3",
+      "words": {
+        "go": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/635859b5-7a05-4e99-ba6c-0977688708e3/word-go.mp3",
+        "no": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/635859b5-7a05-4e99-ba6c-0977688708e3/word-no.mp3",
+        "old": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/635859b5-7a05-4e99-ba6c-0977688708e3/word-old.mp3",
+        "home": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/635859b5-7a05-4e99-ba6c-0977688708e3/word-home.mp3",
+        "road": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/635859b5-7a05-4e99-ba6c-0977688708e3/word-road.mp3",
+        "show": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/635859b5-7a05-4e99-ba6c-0977688708e3/word-show.mp3",
+        "phone": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/635859b5-7a05-4e99-ba6c-0977688708e3/word-phone.mp3"
+      },
+      "sentences": {
+        "No old road to show.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/635859b5-7a05-4e99-ba6c-0977688708e3/sentence-no-old-road-to-show.mp3",
+        "Go home and phone me.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/635859b5-7a05-4e99-ba6c-0977688708e3/sentence-go-home-and-phone-me.mp3",
+        "He drove slowly on the road.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/635859b5-7a05-4e99-ba6c-0977688708e3/sentence-he-drove-slowly-on-the-road.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "go",
+        "meaning": "đi",
+        "phonetic": "/ɡəʊ/"
+      },
+      {
+        "text": "home",
+        "meaning": "nhà",
+        "phonetic": "/həʊm/"
+      },
+      {
+        "text": "no",
+        "meaning": "kh��ng",
+        "phonetic": "/nəʊ/"
+      },
+      {
+        "text": "phone",
+        "meaning": "điện thoại",
+        "phonetic": "/fəʊn/"
+      },
+      {
+        "text": "show",
+        "meaning": "cho xem",
+        "phonetic": "/ʃəʊ/"
+      },
+      {
+        "text": "old",
+        "meaning": "cũ",
+        "phonetic": "/əʊld/"
+      },
+      {
+        "text": "road",
+        "meaning": "con đường",
+        "phonetic": "/rəʊd/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "Go home and phone me.",
+        "meaning": "Về nhà và gọi cho tôi."
+      },
+      {
+        "text": "No old road to show.",
+        "meaning": "Không có con đường cũ nào để chỉ."
+      },
+      {
+        "text": "He drove slowly on the road.",
+        "meaning": "Anh ấy lái xe chậm trên đường."
+      }
+    ]
+  },
+  {
+    "id": "f490d9f0-954b-4f07-8f35-b799c4ee4331",
+    "lesson_id": "ab587ba4-cae4-4d03-9f9b-01332f76fcaa",
+    "title": "42 Ngày Phát Âm | Tập 42: /ɪə/",
+    "sound_symbol": "/ɪə/",
+    "youtube_url": "https://www.youtube.com/watch?v=HiwVDA-tjfo",
+    "theory_vietnamese": "Âm /ɪə/ là nguyên âm đôi (diphthong).\\n\\nCách phát âm:\\n- Bắt đầu từ /ɪ/ rồi trượt xuống /ə/\\n- Lưỡi từ cao chuyển sang giữa\\n\\nLưu ý cho người Việt:\\n- Gần giống \"ia\" hoặc \"iơ\"\\n- Viết là ear, eer, ere",
+    "mouth_diagram_url": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/mouth-diagrams/i_shortschwa.png",
+    "example_words": [
+      "here",
+      "near",
+      "beer",
+      "dear",
+      "clear",
+      "idea",
+      "fear"
+    ],
+    "example_sentences": [
+      "Come here, my dear.",
+      "The idea is clear and near.",
+      "I fear the beer is here."
+    ],
+    "audio_cache": {
+      "sound": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ab587ba4-cae4-4d03-9f9b-01332f76fcaa/sound.mp3",
+      "words": {
+        "beer": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ab587ba4-cae4-4d03-9f9b-01332f76fcaa/word-beer.mp3",
+        "dear": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ab587ba4-cae4-4d03-9f9b-01332f76fcaa/word-dear.mp3",
+        "fear": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ab587ba4-cae4-4d03-9f9b-01332f76fcaa/word-fear.mp3",
+        "here": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ab587ba4-cae4-4d03-9f9b-01332f76fcaa/word-here.mp3",
+        "idea": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ab587ba4-cae4-4d03-9f9b-01332f76fcaa/word-idea.mp3",
+        "near": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ab587ba4-cae4-4d03-9f9b-01332f76fcaa/word-near.mp3",
+        "clear": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ab587ba4-cae4-4d03-9f9b-01332f76fcaa/word-clear.mp3"
+      },
+      "sentences": {
+        "Come here, my dear.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ab587ba4-cae4-4d03-9f9b-01332f76fcaa/sentence-come-here-my-dear.mp3",
+        "I fear the beer is here.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ab587ba4-cae4-4d03-9f9b-01332f76fcaa/sentence-i-fear-the-beer-is-here.mp3",
+        "The idea is clear and near.": "https://qfhmnlvgweznzcsoijyr.supabase.co/storage/v1/object/public/course-assets/pronunciation/ab587ba4-cae4-4d03-9f9b-01332f76fcaa/sentence-the-idea-is-clear-and-near.mp3"
+      }
+    },
+    "created_at": "2026-03-10T21:01:15.498136+00:00",
+    "words_enriched": [
+      {
+        "text": "here",
+        "meaning": "ở đây",
+        "phonetic": "/hɪə/"
+      },
+      {
+        "text": "near",
+        "meaning": "gần",
+        "phonetic": "/nɪə/"
+      },
+      {
+        "text": "beer",
+        "meaning": "bia",
+        "phonetic": "/bɪə/"
+      },
+      {
+        "text": "dear",
+        "meaning": "thân mến",
+        "phonetic": "/dɪə/"
+      },
+      {
+        "text": "clear",
+        "meaning": "rõ ràng",
+        "phonetic": "/klɪə/"
+      },
+      {
+        "text": "idea",
+        "meaning": "ý tưởng",
+        "phonetic": "/aɪˈdɪə/"
+      },
+      {
+        "text": "fear",
+        "meaning": "sợ",
+        "phonetic": "/fɪə/"
+      }
+    ],
+    "sentences_enriched": [
+      {
+        "text": "Come here, my dear.",
+        "meaning": "Đến đây, bạn thân mến."
+      },
+      {
+        "text": "The idea is clear and near.",
+        "meaning": "Ý tưởng rõ ràng và gần gũi."
+      },
+      {
+        "text": "I fear the beer is here.",
+        "meaning": "Tôi sợ bia ở đây rồi."
+      }
+    ]
+  }
+]

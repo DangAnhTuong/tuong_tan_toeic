@@ -1,0 +1,42 @@
+[
+  {
+    "docId": "6a8e71dbdc656c12b90ffcf1",
+    "title": "Level 3 — Trung bình (Part 7)",
+    "qNum": 169,
+    "prompt": "What is NOT mentioned about the boots?",
+    "correctAnswer": "A",
+    "correctOptionText": "Their color",
+    "options": [
+      {
+        "label": "(A)",
+        "text": "Their color",
+        "_id": "6a8e71dbdc656c12b9100694",
+        "translation": "Màu sắc của chúng",
+        "vietnamese": "Màu sắc của chúng"
+      },
+      {
+        "label": "(B)",
+        "text": "Their weight",
+        "_id": "6a8e71dbdc656c12b9100695",
+        "translation": "Trọng lượng của chúng",
+        "vietnamese": "Trọng lượng của chúng"
+      },
+      {
+        "label": "(C)",
+        "text": "Their durability",
+        "_id": "6a8e71dbdc656c12b9100696",
+        "translation": "Độ bền của chúng",
+        "vietnamese": "Độ bền của chúng"
+      },
+      {
+        "label": "(D)",
+        "text": "Their warmth",
+        "_id": "6a8e71dbdc656c12b9100697",
+        "translation": "Sự ấm áp của chúng",
+        "vietnamese": "Sự ấm áp của chúng"
+      }
+    ],
+    "passageText": "<div style=\"width: 100%; border: 1px solid black; padding: 10px; margin: auto;\">\n<p><strong>*E-mail*</strong></p>\n<hr>\n<p><strong>To:</strong> Lindsey Galloway <lgalloway@sportsupplies.com></p>\n<p><strong>From:</strong> Samuel Bains <samuelbains@exertreks.com></p>\n<p><strong>Date:</strong> August 16</p>\n<p><strong>Subject:</strong> Exertreks boots for winter activities</p>\n<hr>\n<p>Hello Ms. Galloway,</p>\n<p>I am sorry I missed your call this morning. The answers to your questions are given below.</p>\n<p>We here at Exertreks have recently completed the development of our Winter Hikers. Like our other models, they are waterproof, but the Winter Hikers are most appropriate for use in extreme cold. The boots are lined with a proprietary material that is highly effective at retaining body heat. They are also durable, light, and comfortable. For orders of 50 pairs or more of the Winter Hikers, the wholesale price per pair is $65. The recommended retail price is $89. We can deliver your order in two weeks.</p>\n<p>Presale reviews of the boots by experts in outdoor sports have been enthusiastic. You can expect the Winter Hikers to be a big hit with your customers this year. I look forward to hearing from you soon to answer any other questions and to help you with your first order.</p>\n<p>Sincerely,</p>\n<p>Samuel Bains</p>\n</div>",
+    "explanation": "🎯 ĐÁP ÁN ĐÚNG: (A) \"Their color\" (Màu sắc của chúng)\n\n💡 PHÂN TÍCH TỪ LOẠI (WORD FORM):\n- Dựa vào cấu trúc ngữ pháp của câu, chỗ trống cần một từ loại phù hợp (danh từ, động từ, tính từ hoặc trạng từ) để bổ nghĩa chính xác cho các thành phần xung quanh.\n- Phương án (A) là từ loại chính xác duy nhất đáp ứng cấu trúc ngữ pháp chuẩn ETS.\n\n📚 CÁC PHƯƠNG ÁN LỰA CHỌN:\n• (A) Their color: Màu sắc của chúng\n• (B) Their weight: Trọng lượng của chúng\n• (C) Their durability: Độ bền của chúng\n• (D) Their warmth: Sự ấm áp của chúng"
+  }
+]

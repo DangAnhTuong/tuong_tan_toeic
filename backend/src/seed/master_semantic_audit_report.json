@@ -1,0 +1,97 @@
+{
+  "summary": {
+    "mockTests": {
+      "totalQuestions": 2000,
+      "corruptedCount": 0
+    },
+    "readingExercises": {
+      "totalQuestions": 13596,
+      "corruptedCount": 0
+    },
+    "listeningExercises": {
+      "totalQuestions": 31615,
+      "corruptedCount": 6
+    }
+  },
+  "mockTests": {
+    "total": 2000,
+    "corruptedQuestions": 0,
+    "issues": []
+  },
+  "readingExercises": {
+    "total": 13596,
+    "corruptedQuestions": 0,
+    "issues": []
+  },
+  "listeningExercises": {
+    "total": 31615,
+    "corruptedQuestions": 6,
+    "issues": [
+      {
+        "docTitle": "Level 3 — Trung bình (Part 3 Đậu TOEIC VIP)",
+        "docId": "6a8e66b06d9aa3d19854513d",
+        "part": 3,
+        "level": 3,
+        "qNum": 62,
+        "issues": [
+          "Fallback option: [(B) The amount of money raised] => [số tiền quyên góp được]"
+        ]
+      },
+      {
+        "docTitle": "Level 5 — Rất khó (Part 4 Đậu TOEIC VIP)",
+        "docId": "6a8e66cf6d9aa3d19854d0cc",
+        "part": 4,
+        "level": 5,
+        "qNum": 419,
+        "issues": [
+          "Fallback option: [(D) Registering for a newsletter] => [đăng ký nhận bản tin]"
+        ]
+      },
+      {
+        "docTitle": "Nhà ở & dịch vụ đời sống",
+        "docId": "6a8e6c3913756d387ee0274f",
+        "part": 3,
+        "level": 1,
+        "qNum": 41,
+        "issues": [
+          "Fallback option: [(B) The amount of money raised] => [số tiền quyên góp được]"
+        ]
+      },
+      {
+        "docTitle": "Hội thoại 3 người nói",
+        "docId": "6a8e6c3c13756d387ee09b17",
+        "part": 3,
+        "level": 1,
+        "qNum": 20,
+        "issues": [
+          "Fallback option: [(B) The amount of money raised] => [số tiền quyên góp được]"
+        ]
+      },
+      {
+        "docTitle": "Kế toán, hoá đơn & ngân sách",
+        "docId": "6a8e6c5913756d387ee0eed9",
+        "part": 4,
+        "level": 1,
+        "qNum": 20,
+        "issues": [
+          "Fallback option: [(D) Registering for a newsletter] => [đăng ký nhận bản tin]"
+        ]
+      },
+      {
+        "docTitle": "Có hình / bảng biểu",
+        "docId": "6a8e6c5a13756d387ee0fe2a",
+        "part": 4,
+        "level": 1,
+        "qNum": 134,
+        "issues": [
+          "Fallback option: [(D) Registering for a newsletter] => [đăng ký nhận bản tin]"
+        ]
+      }
+    ]
+  },
+  "vocabularyTopics": {
+    "total": 0,
+    "corruptedWords": 0,
+    "issues": []
+  }
+}

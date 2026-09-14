@@ -1,0 +1,421 @@
+{
+  "timestamp": "2026-09-11T06:12:44.401Z",
+  "collectionsCount": 19,
+  "mockTests": {
+    "total": 10,
+    "questions": 2000,
+    "missingOptTrans": [],
+    "missingExpl": 0,
+    "sampleAudioLive": 5,
+    "sampleAudioTotal": 5
+  },
+  "reading": {
+    "total": 76,
+    "questions": 13596,
+    "missingOptTrans": [
+      {
+        "title": "Level 2 — Cơ bản (Part 7)",
+        "qNum": 157,
+        "text": "Krokushaus AG",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 2 — Cơ bản (Part 7)",
+        "qNum": 158,
+        "text": "Sigrun",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 2 — Cơ bản (Part 7)",
+        "qNum": 158,
+        "text": "Orkestia",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 2 — Cơ bản (Part 7)",
+        "qNum": 159,
+        "text": "Portland",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 2 — Cơ bản (Part 7)",
+        "qNum": 159,
+        "text": "Fairview",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 2 — Cơ bản (Part 7)",
+        "qNum": 160,
+        "text": "Internet",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 3 — Trung bình (Part 7)",
+        "qNum": 165,
+        "text": "Canada",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 3 — Trung bình (Part 7)",
+        "qNum": 165,
+        "text": "Kenya",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 3 — Trung bình (Part 7)",
+        "qNum": 165,
+        "text": "Scotland",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 3 — Trung bình (Part 7)",
+        "qNum": 173,
+        "text": "Grenville",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 3 — Trung bình (Part 7)",
+        "qNum": 173,
+        "text": "Nesterport",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 3 — Trung bình (Part 7)",
+        "qNum": 173,
+        "text": "Belmere",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 3 — Trung bình (Part 7)",
+        "qNum": 173,
+        "text": "Cincinnati",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 4 — Khó (Part 7)",
+        "qNum": 176,
+        "text": "Johanna Greenblatt",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 4 — Khó (Part 7)",
+        "qNum": 176,
+        "text": "The Rolling Dozen",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 4 — Khó (Part 7)",
+        "qNum": 178,
+        "text": "Home Run Pavilion",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 4 — Khó (Part 7)",
+        "qNum": 182,
+        "text": "Toronto",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 4 — Khó (Part 7)",
+        "qNum": 182,
+        "text": "Ottawa",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 4 — Khó (Part 7)",
+        "qNum": 182,
+        "text": "Winnipeg",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 4 — Khó (Part 7)",
+        "qNum": 182,
+        "text": "Regina",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 4 — Khó (Part 7)",
+        "qNum": 190,
+        "text": "Josie's Joint",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 4 — Khó (Part 7)",
+        "qNum": 187,
+        "text": "Liverpool",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 4 — Khó (Part 7)",
+        "qNum": 187,
+        "text": "Lancaster",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 4 — Khó (Part 7)",
+        "qNum": 187,
+        "text": "York",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 4 — Khó (Part 7)",
+        "qNum": 188,
+        "text": "Jaxon McDonald",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 4 — Khó (Part 7)",
+        "qNum": 188,
+        "text": "Lucy Xi",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 4 — Khó (Part 7)",
+        "qNum": 188,
+        "text": "Peter Landers",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 4 — Khó (Part 7)",
+        "qNum": 188,
+        "text": "Kai Noble",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 4 — Khó (Part 7)",
+        "qNum": 187,
+        "text": "Erin Begg",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 4 — Khó (Part 7)",
+        "qNum": 187,
+        "text": "Mark Lillo",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 4 — Khó (Part 7)",
+        "qNum": 187,
+        "text": "Jun-Seo Kil",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 4 — Khó (Part 7)",
+        "qNum": 187,
+        "text": "Donna Gawason",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 4 — Khó (Part 7)",
+        "qNum": 187,
+        "text": "Brunswick",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 4 — Khó (Part 7)",
+        "qNum": 187,
+        "text": "Valdosta",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 4 — Khó (Part 7)",
+        "qNum": 187,
+        "text": "Artemis",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 4 — Khó (Part 7)",
+        "qNum": 187,
+        "text": "Hera",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 4 — Khó (Part 7)",
+        "qNum": 187,
+        "text": "Janus",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 5 — Rất khó (Part 7)",
+        "qNum": 193,
+        "text": "Brian Healey",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 5 — Rất khó (Part 7)",
+        "qNum": 193,
+        "text": "Shinji Hasegawa",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 5 — Rất khó (Part 7)",
+        "qNum": 193,
+        "text": "Kim Cheung",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 5 — Rất khó (Part 7)",
+        "qNum": 193,
+        "text": "Belmont",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 5 — Rất khó (Part 7)",
+        "qNum": 193,
+        "text": "Abbott Heights",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 5 — Rất khó (Part 7)",
+        "qNum": 192,
+        "text": "Elondell",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 5 — Rất khó (Part 7)",
+        "qNum": 192,
+        "text": "Stuart Kaplan",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 5 — Rất khó (Part 7)",
+        "qNum": 192,
+        "text": "Amanda Mueller",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 5 — Rất khó (Part 7)",
+        "qNum": 192,
+        "text": "Carla Phillips",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 5 — Rất khó (Part 7)",
+        "qNum": 192,
+        "text": "Lillian Cathey",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 5 — Rất khó (Part 7)",
+        "qNum": 200,
+        "text": "Bydgoszcz",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 5 — Rất khó (Part 7)",
+        "qNum": 200,
+        "text": "Katowice",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 5 — Rất khó (Part 7)",
+        "qNum": 200,
+        "text": "Cracow",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 5 — Rất khó (Part 7)",
+        "qNum": 200,
+        "text": "Wroclaw",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 5 — Rất khó (Part 7)",
+        "qNum": 198,
+        "text": "Eco Keeper Plus",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 5 — Rất khó (Part 7)",
+        "qNum": 200,
+        "text": "Hubert Wong",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 5 — Rất khó (Part 7)",
+        "qNum": 200,
+        "text": "Claire Ladner",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 5 — Rất khó (Part 7)",
+        "qNum": 200,
+        "text": "Isaac Tineo",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 5 — Rất khó (Part 7)",
+        "qNum": 197,
+        "text": "Xenon",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Level 5 — Rất khó (Part 7)",
+        "qNum": 187,
+        "text": "Sligo",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Kiến thức ngữ pháp cơ bản",
+        "text": "Động từ",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Kiến thức ngữ pháp cơ bản",
+        "text": "Động từ",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Kiến thức ngữ pháp cơ bản",
+        "text": "Động từ",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Kiến thức ngữ pháp cơ bản",
+        "text": "Động từ",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Kiến thức ngữ pháp cơ bản",
+        "text": "Động từ",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Kiến thức ngữ pháp cơ bản",
+        "text": "Động từ",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Kiến thức ngữ pháp cơ bản",
+        "text": "Động từ",
+        "reason": "untranslated_word"
+      },
+      {
+        "title": "Kiến thức ngữ pháp cơ bản",
+        "text": "Động từ",
+        "reason": "untranslated_word"
+      }
+    ],
+    "missingExpl": 0,
+    "sampleImagesLive": 0,
+    "sampleImagesTotal": 0
+  },
+  "listening": {
+    "total": 225,
+    "questions": 31615,
+    "missingOptTrans": [],
+    "missingAudio": 0,
+    "sampleAudioLive": 5,
+    "sampleAudioTotal": 5
+  },
+  "vocab": {
+    "topics": 83,
+    "totalWords": 7551,
+    "missingDefs": 0,
+    "missingIPA": 0
+  },
+  "users": {
+    "realUsersCount": 194,
+    "sampleTopXp": 13045
+  }
+}

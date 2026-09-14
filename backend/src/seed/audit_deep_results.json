@@ -1,0 +1,954 @@
+{
+  "listeningEnglishCount": 1084,
+  "listeningEmptyCount": 0,
+  "readingEnglishCount": 1819,
+  "readingEmptyCount": 0,
+  "mockEnglishCount": 86,
+  "mockEmptyCount": 0,
+  "sampleListeningEnglish": [
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 3,
+      "label": "(B)",
+      "text": "A fund-raiser",
+      "trans": "Người gây quỹ",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 26,
+      "label": "(A)",
+      "text": "Her manager is not available.",
+      "trans": "Người quản lý của cô ấy không có sẵn.",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 38,
+      "label": "(C)",
+      "text": "Donating some furniture",
+      "trans": "đang quyên góp một số đồ nội thất",
+      "reason": "dang_english_syntax"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 47,
+      "label": "(C)",
+      "text": "Senior citizen",
+      "trans": "Người cao tuổi",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 64,
+      "label": "(D)",
+      "text": "Decorators",
+      "trans": "Người trang trí nội thất",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 68,
+      "label": "(A)",
+      "text": "Updating a handbook",
+      "trans": "đang cập nhật một cuốn sổ tay hướng dẫn",
+      "reason": "dang_english_syntax"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 68,
+      "label": "(B)",
+      "text": "Donating some furniture",
+      "trans": "đang quyên góp một số đồ nội thất",
+      "reason": "dang_english_syntax"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 68,
+      "label": "(C)",
+      "text": "Creating a schedule",
+      "trans": "đang lập một lịch trình",
+      "reason": "dang_english_syntax"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 68,
+      "label": "(D)",
+      "text": "Downloading a software program",
+      "trans": "đang tải xuống một phần mềm",
+      "reason": "dang_english_syntax"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 70,
+      "label": "(C)",
+      "text": "A fund-raiser",
+      "trans": "Người gây quỹ",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 172,
+      "label": "(D)",
+      "text": "A podcast host",
+      "trans": "Người dẫn chương trình podcast",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 178,
+      "label": "(C)",
+      "text": "A fund-raiser",
+      "trans": "Người gây quỹ",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 300,
+      "label": "(C)",
+      "text": "A winner will be announced.",
+      "trans": "Người thắng cuộc sẽ được công bố.",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 505,
+      "label": "(A)",
+      "text": "Workshop participants",
+      "trans": "Người tham gia hội thảo",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 544,
+      "label": "(C)",
+      "text": "Employees",
+      "trans": "Người lao động",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 565,
+      "label": "(A)",
+      "text": "Richard",
+      "trans": "MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  19 HOURS 20 MINUTES 10 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE",
+      "reason": "mymemory_warning"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 565,
+      "label": "(B)",
+      "text": "Alison",
+      "trans": "MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  19 HOURS 20 MINUTES 10 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE",
+      "reason": "mymemory_warning"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 565,
+      "label": "(C)",
+      "text": "Tomas",
+      "trans": "MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  19 HOURS 20 MINUTES 10 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE",
+      "reason": "mymemory_warning"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 565,
+      "label": "(D)",
+      "text": "Janet",
+      "trans": "MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  19 HOURS 20 MINUTES 09 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE",
+      "reason": "mymemory_warning"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 568,
+      "label": "(C)",
+      "text": "8C",
+      "trans": "8C",
+      "reason": "identical_to_english"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 583,
+      "label": "(C)",
+      "text": "Event planners",
+      "trans": "Người tổ chức sự kiện",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 614,
+      "label": "(A)",
+      "text": "Frame 1",
+      "trans": "Khung 1",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 614,
+      "label": "(B)",
+      "text": "Frame 2",
+      "trans": "Khung 2",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 614,
+      "label": "(C)",
+      "text": "Frame 3",
+      "trans": "Khung 3",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 614,
+      "label": "(D)",
+      "text": "Frame 4",
+      "trans": "Khung 4",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 650,
+      "label": "(B)",
+      "text": "Stadium vendors",
+      "trans": "Người bán hàng trong sân vận động",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 697,
+      "label": "(C)",
+      "text": "Purchasing",
+      "trans": "Đang mua",
+      "reason": "dang_english_syntax"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 940,
+      "label": "(A)",
+      "text": "Building managers",
+      "trans": "Người quản lý tòa nhà",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 965,
+      "label": "(C)",
+      "text": "Interior planners",
+      "trans": "Người quy hoạch nội thất",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a8e66ad6d9aa3d198541e62",
+      "part": 3,
+      "qNum": 1028,
+      "label": "(A)",
+      "text": "Purchasing",
+      "trans": "Đang mua",
+      "reason": "dang_english_syntax"
+    }
+  ],
+  "sampleReadingEnglish": [
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(C)",
+      "text": "is meeting",
+      "trans": "đang họp",
+      "reason": "dang_english_syntax"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(B)",
+      "text": "purchaser",
+      "trans": "Người mua hàng",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(A)",
+      "text": "after",
+      "trans": "Sau khi / Sau",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(B)",
+      "text": "after",
+      "trans": "Sau khi / Sau",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(B)",
+      "text": "buying",
+      "trans": "mua",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(D)",
+      "text": "working",
+      "trans": "đang làm việc",
+      "reason": "dang_english_syntax"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(A)",
+      "text": "in",
+      "trans": "trong",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(A)",
+      "text": "buying",
+      "trans": "mua",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(D)",
+      "text": "winner",
+      "trans": "Người chiến thắng",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(A)",
+      "text": "bottle",
+      "trans": "chai",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(C)",
+      "text": "in",
+      "trans": "trong",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(D)",
+      "text": "winner",
+      "trans": "Người chiến thắng",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(A)",
+      "text": "participate",
+      "trans": "Tham gia",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(C)",
+      "text": "tasty",
+      "trans": "ngon",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(D)",
+      "text": "were promoting",
+      "trans": "đang quảng cáo",
+      "reason": "dang_english_syntax"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(C)",
+      "text": "after",
+      "trans": "Sau khi / Sau",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(C)",
+      "text": "After",
+      "trans": "Sau khi / Sau",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(A)",
+      "text": "flower",
+      "trans": "hoa",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(A)",
+      "text": "dividing",
+      "trans": "chia",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(D)",
+      "text": "canceler",
+      "trans": "người hủy bỏ",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(D)",
+      "text": "attending",
+      "trans": "đang tham dự",
+      "reason": "dang_english_syntax"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(B)",
+      "text": "updating",
+      "trans": "đang cập nhật",
+      "reason": "dang_english_syntax"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(D)",
+      "text": "in",
+      "trans": "trong",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(A)",
+      "text": "seeking",
+      "trans": "đang tìm kiếm",
+      "reason": "dang_english_syntax"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(B)",
+      "text": "growing",
+      "trans": "đang phát triển",
+      "reason": "dang_english_syntax"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(C)",
+      "text": "buy",
+      "trans": "mua",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(B)",
+      "text": "participates",
+      "trans": "tham gia",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(A)",
+      "text": "was asking",
+      "trans": "đang hỏi",
+      "reason": "dang_english_syntax"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(D)",
+      "text": "in",
+      "trans": "trong",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(B)",
+      "text": "model",
+      "trans": "người mẫu",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(B)",
+      "text": "linker",
+      "trans": "người liên kết",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(C)",
+      "text": "After",
+      "trans": "Sau khi / Sau",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(A)",
+      "text": "presenter",
+      "trans": "người dẫn chương trình",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(B)",
+      "text": "model",
+      "trans": "người mẫu",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(D)",
+      "text": "in",
+      "trans": "trong",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(B)",
+      "text": "linker",
+      "trans": "người liên kết",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(A)",
+      "text": "cover",
+      "trans": "che",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(D)",
+      "text": "in",
+      "trans": "trong",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(C)",
+      "text": "after",
+      "trans": "Sau khi / Sau",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(A)",
+      "text": "enroll",
+      "trans": "ghi danh",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(C)",
+      "text": "enrolling",
+      "trans": "ghi danh",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(B)",
+      "text": "inspector",
+      "trans": "thanh tra",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(C)",
+      "text": "in",
+      "trans": "trong",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(A)",
+      "text": "after",
+      "trans": "Sau khi / Sau",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(A)",
+      "text": "seeking",
+      "trans": "đang tìm kiếm",
+      "reason": "dang_english_syntax"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(C)",
+      "text": "working",
+      "trans": "đang làm việc",
+      "reason": "dang_english_syntax"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(A)",
+      "text": "As soon as",
+      "trans": "Ngay khi",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(D)",
+      "text": "in",
+      "trans": "trong",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(B)",
+      "text": "after",
+      "trans": "Sau khi / Sau",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a8e69a8d3fb5cf5d58ea1cd",
+      "part": "Part 5",
+      "label": "(C)",
+      "text": "films",
+      "trans": "phim",
+      "reason": "english_without_vietnamese_accent"
+    }
+  ],
+  "sampleMockEnglish": [
+    {
+      "docId": "6a91b92f6d1938ebacd999fb",
+      "test": "ETS TOEIC 2026 — Test 9 (Full 200 Câu)",
+      "qNum": 18,
+      "label": "(C)",
+      "text": "There's heavy traffic near the terminal.",
+      "trans": "Đang có ùn tắc giao thông nghiêm trọng gần nhà ga.",
+      "reason": "dang_english_syntax"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd999fb",
+      "test": "ETS TOEIC 2026 — Test 9 (Full 200 Câu)",
+      "qNum": 60,
+      "label": "(A)",
+      "text": "Purchasing",
+      "trans": "Đang mua",
+      "reason": "dang_english_syntax"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd999fb",
+      "test": "ETS TOEIC 2026 — Test 9 (Full 200 Câu)",
+      "qNum": 118,
+      "label": "(D)",
+      "text": "as soon as",
+      "trans": "Ngay khi",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd999fb",
+      "test": "ETS TOEIC 2026 — Test 9 (Full 200 Câu)",
+      "qNum": 171,
+      "label": "(A)",
+      "text": "nearing",
+      "trans": "đang tiến lại gần",
+      "reason": "dang_english_syntax"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd99e14",
+      "test": "ETS TOEIC 2026 — Test 3 (Full 200 Câu)",
+      "qNum": 82,
+      "label": "(A)",
+      "text": "The host of a cooking show",
+      "trans": "Người dẫn một chương trình nấu ăn",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd99e14",
+      "test": "ETS TOEIC 2026 — Test 3 (Full 200 Câu)",
+      "qNum": 91,
+      "label": "(D)",
+      "text": "Someone else will lock up the shop.",
+      "trans": "Người khác sẽ khóa cửa quán.",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd99e14",
+      "test": "ETS TOEIC 2026 — Test 3 (Full 200 Câu)",
+      "qNum": 100,
+      "label": "(D)",
+      "text": "Denton",
+      "trans": "Denton",
+      "reason": "identical_to_english"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd99e14",
+      "test": "ETS TOEIC 2026 — Test 3 (Full 200 Câu)",
+      "qNum": 109,
+      "label": "(B)",
+      "text": "after",
+      "trans": "Sau khi / Sau",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd99e14",
+      "test": "ETS TOEIC 2026 — Test 3 (Full 200 Câu)",
+      "qNum": 135,
+      "label": "(A)",
+      "text": "is making",
+      "trans": "đang làm",
+      "reason": "dang_english_syntax"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd99e14",
+      "test": "ETS TOEIC 2026 — Test 3 (Full 200 Câu)",
+      "qNum": 138,
+      "label": "(B)",
+      "text": "beginner",
+      "trans": "người mới bắt đầu",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd99e14",
+      "test": "ETS TOEIC 2026 — Test 3 (Full 200 Câu)",
+      "qNum": 151,
+      "label": "(A)",
+      "text": "Camera operators",
+      "trans": "Người vận hành máy quay",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd99e14",
+      "test": "ETS TOEIC 2026 — Test 3 (Full 200 Câu)",
+      "qNum": 189,
+      "label": "(A)",
+      "text": "An event host",
+      "trans": "Người dẫn chương trình",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd99e14",
+      "test": "ETS TOEIC 2026 — Test 3 (Full 200 Câu)",
+      "qNum": 189,
+      "label": "(C)",
+      "text": "An award presenter",
+      "trans": "Người trao giải",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd9a251",
+      "test": "ETS TOEIC 2026 — Test 4 (Full 200 Câu)",
+      "qNum": 86,
+      "label": "(C)",
+      "text": "The listeners should make time",
+      "trans": "Người nghe nên thu xếp thời gian",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd9a251",
+      "test": "ETS TOEIC 2026 — Test 4 (Full 200 Câu)",
+      "qNum": 132,
+      "label": "(B)",
+      "text": "was repaving",
+      "trans": "đang lát lại",
+      "reason": "dang_english_syntax"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd9a251",
+      "test": "ETS TOEIC 2026 — Test 4 (Full 200 Câu)",
+      "qNum": 139,
+      "label": "(D)",
+      "text": "is delivering",
+      "trans": "đang giao hàng",
+      "reason": "dang_english_syntax"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd9a251",
+      "test": "ETS TOEIC 2026 — Test 4 (Full 200 Câu)",
+      "qNum": 141,
+      "label": "(B)",
+      "text": "for",
+      "trans": "cho",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd9a251",
+      "test": "ETS TOEIC 2026 — Test 4 (Full 200 Câu)",
+      "qNum": 193,
+      "label": "(A)",
+      "text": "Priya Anand",
+      "trans": "Priya Anand",
+      "reason": "identical_to_english"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd9a251",
+      "test": "ETS TOEIC 2026 — Test 4 (Full 200 Câu)",
+      "qNum": 193,
+      "label": "(B)",
+      "text": "Ana Sorrentino",
+      "trans": "Ana Sorrentino",
+      "reason": "identical_to_english"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd9a251",
+      "test": "ETS TOEIC 2026 — Test 4 (Full 200 Câu)",
+      "qNum": 193,
+      "label": "(C)",
+      "text": "Bram de Wit",
+      "trans": "Bram de Wit",
+      "reason": "identical_to_english"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd9a251",
+      "test": "ETS TOEIC 2026 — Test 4 (Full 200 Câu)",
+      "qNum": 193,
+      "label": "(D)",
+      "text": "Hugo Marchetti",
+      "trans": "Hugo Marchetti",
+      "reason": "identical_to_english"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd9a622",
+      "test": "ETS TOEIC 2026 — Test 5 (Full 200 Câu)",
+      "qNum": 3,
+      "label": "(D)",
+      "text": "The woman is climbing a tree.",
+      "trans": "Người phụ nữ đang trèo cây.",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd9a622",
+      "test": "ETS TOEIC 2026 — Test 5 (Full 200 Câu)",
+      "qNum": 38,
+      "label": "(C)",
+      "text": "Purchasing",
+      "trans": "Đang mua",
+      "reason": "dang_english_syntax"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd9a622",
+      "test": "ETS TOEIC 2026 — Test 5 (Full 200 Câu)",
+      "qNum": 75,
+      "label": "(A)",
+      "text": "Callers must give their full names.",
+      "trans": "Người gọi phải cung cấp họ tên đầy đủ.",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd9a622",
+      "test": "ETS TOEIC 2026 — Test 5 (Full 200 Câu)",
+      "qNum": 118,
+      "label": "(D)",
+      "text": "after",
+      "trans": "Sau khi / Sau",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd9a622",
+      "test": "ETS TOEIC 2026 — Test 5 (Full 200 Câu)",
+      "qNum": 125,
+      "label": "(C)",
+      "text": "participate",
+      "trans": "Tham gia",
+      "reason": "english_without_vietnamese_accent"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd9a622",
+      "test": "ETS TOEIC 2026 — Test 5 (Full 200 Câu)",
+      "qNum": 134,
+      "label": "(C)",
+      "text": "Tenants should report to work at the usual time.",
+      "trans": "Người thuê nhà nên đi làm vào thời gian bình thường.",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd9a622",
+      "test": "ETS TOEIC 2026 — Test 5 (Full 200 Câu)",
+      "qNum": 153,
+      "label": "(C)",
+      "text": "Their employees are underpaid.",
+      "trans": "Người lao động của họ bị trả lương thấp.",
+      "reason": "nguoi_english_syntax"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd9a622",
+      "test": "ETS TOEIC 2026 — Test 5 (Full 200 Câu)",
+      "qNum": 192,
+      "label": "(A)",
+      "text": "Duncan Reyes",
+      "trans": "Duncan Reyes",
+      "reason": "identical_to_english"
+    },
+    {
+      "docId": "6a91b92f6d1938ebacd9a622",
+      "test": "ETS TOEIC 2026 — Test 5 (Full 200 Câu)",
+      "qNum": 192,
+      "label": "(B)",
+      "text": "Gerald Ngata",
+      "trans": "Gerald Ngata",
+      "reason": "identical_to_english"
+    }
+  ]
+}

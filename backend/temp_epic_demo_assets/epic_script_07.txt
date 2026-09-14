@@ -1,0 +1,1 @@
+Đối với kỹ năng Đọc hiểu, phòng làm bài 2 cột tối ưu tuyệt đối: Văn bản bài đọc hiển thị sắc nét bên trái, câu hỏi và đáp án bên phải, hỗ trợ tra từ điển bôi đen trực tiếp và hiển thị lời giải chi tiết ngay khi chọn đáp án.

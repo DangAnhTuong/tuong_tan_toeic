@@ -1,0 +1,30 @@
+# Robots.txt for Tường Tận TOEIC (toeic.danganhtuong.dev)
+User-agent: *
+Allow: /
+Allow: /hub
+Allow: /hub/
+Allow: /listen
+Allow: /listen/
+Allow: /read
+Allow: /read/
+Allow: /vocabulary
+Allow: /vocabulary/
+Allow: /tests
+Allow: /tests/
+Allow: /leaderboard
+Allow: /leaderboard/
+
+# Allow public rendering APIs for Googlebot WRS (Web Rendering Service)
+Allow: /api/v1/mocktest/tests
+Allow: /api/v1/user/profile
+Allow: /api/v1/vocab/
+
+# Disallow private & authenticated APIs from crawlers
+Disallow: /api/v1/auth/
+Disallow: /api/v1/payment/
+Disallow: /api/v1/admin/
+Disallow: /api/v1/user/sync-study-time
+Disallow: /tests/room/
+Disallow: /reset-password
+
+Sitemap: https://toeic.danganhtuong.dev/sitemap.xml
