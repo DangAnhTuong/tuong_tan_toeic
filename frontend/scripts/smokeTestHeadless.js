@@ -82,6 +82,7 @@ async function runSmokeTest() {
     { name: 'Trang Chủ', path: '/' },
     { name: 'Luyện Nghe', path: '/listen' },
     { name: 'Luyện Nghe Level 4', path: '/listen?tab=level&part=4&year=2026' },
+    { name: 'Phòng Luyện Part 1 Topic', path: '/listen/level-practice?part=1&mode=topic&topic=Tranh%20nhi%E1%BB%81u%20ng%C6%B0%E1%BB%9Di' },
     { name: 'Luyện Đọc', path: '/read' },
     { name: 'Từ Vựng SRS', path: '/vocabulary' },
     { name: 'Đề Thi ETS Full', path: '/tests' }

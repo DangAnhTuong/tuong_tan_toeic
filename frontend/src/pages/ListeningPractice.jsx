@@ -233,23 +233,53 @@ export default function ListeningPractice() {
   const audioRef = useRef(null);
 
   const fallbackTTS = () => {
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(currentQ.sentence);
-      utterance.rate = playbackSpeed;
-      utterance.lang = 'en-US';
-      utterance.onstart = () => setIsPlaying(true);
-      utterance.onend = () => setIsPlaying(false);
-      utterance.onerror = () => setIsPlaying(false);
-      window.speechSynthesis.speak(utterance);
-    }
+    const textToSpeak = currentQ?.sentence || '';
+    if (!textToSpeak) return;
+
+    // Use high-definition backend Azure Neural Voice streaming first
+    const ttsUrl = `/api/v1/audio/tts?text=${encodeURIComponent(textToSpeak)}`;
+    const audio = new Audio(ttsUrl);
+    audioRef.current = audio;
+    audio.playbackRate = playbackSpeed;
+    setIsPlaying(true);
+    audio.play().catch(() => {
+      // Fallback to browser Web Speech API
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(textToSpeak);
+        utterance.rate = playbackSpeed;
+        utterance.lang = 'en-US';
+        utterance.onstart = () => setIsPlaying(true);
+        utterance.onend = () => setIsPlaying(false);
+        utterance.onerror = () => setIsPlaying(false);
+        window.speechSynthesis.speak(utterance);
+      } else {
+        setIsPlaying(false);
+      }
+    });
+    audio.onended = () => setIsPlaying(false);
+    audio.onerror = () => {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(textToSpeak);
+        utterance.rate = playbackSpeed;
+        utterance.lang = 'en-US';
+        utterance.onstart = () => setIsPlaying(true);
+        utterance.onend = () => setIsPlaying(false);
+        utterance.onerror = () => setIsPlaying(false);
+        window.speechSynthesis.speak(utterance);
+      } else {
+        setIsPlaying(false);
+      }
+    };
   };
 
   const playAudio = () => {
-    if (currentQ?.audioUrl && currentQ.audioUrl.startsWith('http')) {
-      if (audioRef.current) {
-        audioRef.current.pause();
-      }
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
+
+    if (currentQ?.audioUrl && currentQ.audioUrl.startsWith('http') && !currentQ.audioUrl.includes('supabase.co')) {
       const audio = new Audio(currentQ.audioUrl);
       audioRef.current = audio;
       audio.playbackRate = playbackSpeed;

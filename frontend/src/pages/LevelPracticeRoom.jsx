@@ -1145,6 +1145,26 @@ export default function LevelPracticeRoom() {
             <span className="text-[11px] font-mono text-cyan-600 dark:text-cyan-400 font-bold">Part {partNum}</span>
           </div>
 
+          {/* Part 1 Picture or Part 3/4 Chart Image (RENDERED ON TOP FOR PROMINENT VISIBILITY) */}
+          {(currentPassageImageUrl || partNum === 1) && (
+            <div className="rounded-3xl overflow-hidden border dark:border-slate-800 border-slate-200 dark:bg-slate-900/60 bg-white shadow-md relative group">
+              <div className="aspect-[16/10] w-full relative dark:bg-slate-950 bg-slate-100 flex items-center justify-center overflow-hidden p-2">
+                <img 
+                  src={currentPassageImageUrl || `/media/listening/part1/photo_${(currentIdx % 45) + 1}.jpg`} 
+                  alt={currentPassageTitle}
+                  className="w-full h-full object-contain rounded-2xl transition-transform duration-500 group-hover:scale-105"
+                  loading="eager"
+                  onError={(e) => {
+                    const fallback = `/media/listening/part1/photo_${(currentIdx % 45) + 1}.jpg`;
+                    if (!e.currentTarget.src.includes(fallback)) {
+                      e.currentTarget.src = fallback;
+                    }
+                  }}
+                />
+              </div>
+            </div>
+          )}
+
           {/* Audio Player Card with Waveform */}
           <div className="p-5 rounded-3xl glass-panel border dark:border-slate-800 border-slate-200 dark:bg-slate-900/70 bg-white space-y-4 shadow-md">
             <div className="flex items-center justify-between">
@@ -1253,30 +1273,6 @@ export default function LevelPracticeRoom() {
               </div>
             </div>
           </div>
-
-          {/* Part 1 Picture or Part 3/4 Chart Image if available */}
-          {currentPassageImageUrl && (
-            <div className="rounded-3xl overflow-hidden border dark:border-slate-800 border-slate-200 dark:bg-slate-900/60 bg-white shadow-md relative group">
-              <div className="aspect-[16/10] w-full relative dark:bg-slate-950 bg-slate-100 flex items-center justify-center overflow-hidden p-2">
-                <img 
-                  src={currentPassageImageUrl} 
-                  alt={currentPassageTitle}
-                  className="w-full h-full object-contain rounded-2xl transition-transform duration-500 group-hover:scale-105"
-                  loading="lazy"
-                  onError={(e) => {
-                    if (partNum === 1) {
-                      const fallbackImg = getPart1ImageUrl(currentPassageQ, (currentIdx + 1), topicParam);
-                      if (e.currentTarget.src !== fallbackImg) {
-                        e.currentTarget.src = fallbackImg;
-                        return;
-                      }
-                    }
-                    e.currentTarget.parentElement.parentElement.style.display = 'none';
-                  }}
-                />
-              </div>
-            </div>
-          )}
 
           {/* TRANSCRIPT & DẪN CHỨNG KHUNG LỜI THOẠI (Chỉ mở khóa sau khi người dùng đã chọn đáp án) */}
           {anyCurrentPassageAnswered ? (
