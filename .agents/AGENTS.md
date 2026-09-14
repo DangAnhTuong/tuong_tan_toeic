@@ -6,7 +6,7 @@ Whenever working on this project (Tường Tận TOEIC), AI agents MUST adhere t
 - **Project Name**: Tường Tận TOEIC (`tuong_tan_toeic`)
 - **Location**: `a:\frontend\tuong_tan_toeic`
 - **Tech Stack**:
-  - **Frontend**: React 18/19, Vite 5, TailwindCSS, Lucide React, Axios, React Router v6. Port `3000`.
+  - **Frontend**: React 18, Vite 5, TailwindCSS, Lucide React, Axios, React Router v6. Port `3000`.
   - **Backend**: Node.js Express API. Port `5000`. Global prefix `/api/v1`.
   - **Database**: MongoDB (Mongoose Models at `backend/src/models/`).
   - **Authentication**: Custom JWT Auth + `@react-oauth/google` integration.
@@ -29,8 +29,8 @@ Whenever working on this project (Tường Tận TOEIC), AI agents MUST adhere t
      - Chi tiết kỹ thuật: Xem [`docs/KI_LISTENING_PASSAGE_ARCHITECTURE.md`](file:///a:/frontend/tuong_tan_toeic/docs/KI_LISTENING_PASSAGE_ARCHITECTURE.md).
 
 3. **Mô-đun Đọc & Ngữ Pháp (`/read`, `/read/practice/:id`, `/grammar/:id`, `/reading/article/:id`):** 
-   - Đã nạp và làm sạch **13.622 câu hỏi Reading ETS** (Part 5: 7.888 câu, Part 6: 1.296 câu, Part 7: 4.438 câu) với 100% giải thích tiếng Việt và dịch nghĩa từng câu.
-   - **Part 5 (7.888 câu)**: 4-part Pedagogical Grammar Explanations (Ngữ pháp trọng tâm, Mẹo 3 giây, Phân tích 4 đáp án, Bản dịch hoàn chỉnh).
+   - Đã cào và nạp **100% trọn bộ 5 Level của Part 5, Part 6 và Part 7** (Tổng cộng **8.164 câu hỏi ETS thật** với 100% giải thích tiếng Việt và dịch nghĩa từng câu).
+   - **Part 5 (2.430 câu)**: 5 Levels x 486 câu/level.
    - **Part 6 (1.296 câu / 324 đoạn)**: 5 Levels (Lv1-4: 260 câu / 65 đoạn, Lv5: 256 câu / 64 đoạn).
    - **Part 7 (4.438 câu / 1.215 đoạn)**: 5 Levels (Lv1: 498 câu, Lv2: 698 câu, Lv3: 960 câu, Lv4: 1.193 câu, Lv5: 1.089 câu).
    - **Tab Ngữ Pháp — 14 chuyên đề chuẩn Đậu TOEIC (997 câu)**: Kiến thức cơ bản (50), Danh từ (62), Động từ (45), Bị động (20), Tính từ (45), Trạng từ (48), Đại từ (50), So sánh (38), Liên từ/giới từ (24), Mệnh đề quan hệ (40), Bài tập từ loại (50), BT động từ hỗn hợp (30), BT ngữ pháp tổng hợp (60), Câu hỏi đề thi thật (435).
@@ -50,6 +50,9 @@ Whenever working on this project (Tường Tận TOEIC), AI agents MUST adhere t
 10. **Hệ Thống Hòm Thông Báo & Chuông Navbar Toàn Sàn (`/api/v1/notifications`):**
     - Admin phát thông báo qua `AdminDashboard.jsx` (Tab 📢 Phát Thông Báo): Phân loại tin tức (`announcement`, `update`, `promo`, `system`), mức ưu tiên (`normal`, `high`, `urgent`), đối tượng đích (`all`, `free`, `pro`), ghim lên đầu và đính kèm link chuyển hướng.
     - Học viên nhận thông báo thời gian thực qua biểu tượng Chuông Bell 🔔 trên `Navbar.jsx` (`NotificationDropdown.jsx`): Badge unread đỏ, popover dropdown mượt mà, phân loại Tất cả / Chưa đọc, nút "Đã đọc hết", click xem chi tiết và chuyển hướng.
+11. **Hệ Thống Portfolio & CV Full-Stack Intern Chuẩn ATS (`https://www.danganhtuong.dev`):**
+    - Dự án #1 Flagship: Tường Tận TOEIC (`toeic.danganhtuong.dev`) với link `GitHub (Private)` bảo vệ bản quyền đề thi ETS, 18.200 câu hỏi, 11.785 câu dictation, phòng thi 100vh, VietQR webhooks và CI/CD VPS Linux.
+    - CV 1 trang chuẩn quốc tế ATS (Jake's Resume 10pt) được đồng bộ tại `A:\frontend\portfolio\public\Dang_Anh_Tuong_CV.pdf` và `a:\frontend\tuong_tan_toeic\Dang_Anh_Tuong_CV.pdf`. Chi tiết kỹ thuật: Xem [`docs/KI_PORTFOLIO_AND_CV_FULLSTACK_INTERN_ARCHITECTURE.md`](file:///a:/frontend/tuong_tan_toeic/docs/KI_PORTFOLIO_AND_CV_FULLSTACK_INTERN_ARCHITECTURE.md).
 
 ## 3. Critical Fixes & Memory (DO NOT REVERT)
 - **Single Source of Truth cho Progress Index**: Luôn lấy `learnedCount` từ Backend MongoDB làm nguồn dữ liệu chuẩn duy nhất.

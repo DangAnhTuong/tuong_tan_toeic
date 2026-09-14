@@ -50,6 +50,9 @@ Whenever working on this project (Tường Tận TOEIC), AI agents MUST adhere t
 10. **Hệ Thống Hòm Thông Báo & Chuông Navbar Toàn Sàn (`/api/v1/notifications`):**
     - Admin phát thông báo qua `AdminDashboard.jsx` (Tab 📢 Phát Thông Báo): Phân loại tin tức (`announcement`, `update`, `promo`, `system`), mức ưu tiên (`normal`, `high`, `urgent`), đối tượng đích (`all`, `free`, `pro`), ghim lên đầu và đính kèm link chuyển hướng.
     - Học viên nhận thông báo thời gian thực qua biểu tượng Chuông Bell 🔔 trên `Navbar.jsx` (`NotificationDropdown.jsx`): Badge unread đỏ, popover dropdown mượt mà, phân loại Tất cả / Chưa đọc, nút "Đã đọc hết", click xem chi tiết và chuyển hướng.
+11. **Hệ Thống Portfolio & CV Full-Stack Intern Chuẩn ATS (`https://www.danganhtuong.dev`):**
+    - Dự án #1 Flagship: Tường Tận TOEIC (`toeic.danganhtuong.dev`) với link `GitHub (Private)` bảo vệ bản quyền đề thi ETS, 18.200 câu hỏi, 11.785 câu dictation, phòng thi 100vh, VietQR webhooks và CI/CD VPS Linux.
+    - CV 1 trang chuẩn quốc tế ATS (Jake's Resume 10pt) được đồng bộ tại `A:\frontend\portfolio\public\Dang_Anh_Tuong_CV.pdf` và `a:\frontend\tuong_tan_toeic\Dang_Anh_Tuong_CV.pdf`. Chi tiết kỹ thuật: Xem [`docs/KI_PORTFOLIO_AND_CV_FULLSTACK_INTERN_ARCHITECTURE.md`](file:///a:/frontend/tuong_tan_toeic/docs/KI_PORTFOLIO_AND_CV_FULLSTACK_INTERN_ARCHITECTURE.md).
 
 ## 3. Critical Fixes & Memory (DO NOT REVERT)
 - **Single Source of Truth cho Progress Index**: Luôn lấy `learnedCount` từ Backend MongoDB làm nguồn dữ liệu chuẩn duy nhất.
