@@ -366,6 +366,7 @@ export default function MockTestRoom() {
 
   const currentPartNum = currentGroup?.part || currentGroup?.questions?.[0]?.part || (isCurrentListeningSection ? '1' : '5');
   const currentTestTitle = testData?.title ? testData.title.replace(/—.*/, '').trim() : 'ETS TOEIC';
+  const currentTestNumber = testData?.testNumber || (testData?.title?.match(/Test\s*(\d+)/i)?.[1]) || 1;
   const currentDeckName = `Part ${currentPartNum} ${currentTestTitle}`;
 
   // Sync contextual deck name with global DictionaryContext
@@ -1102,6 +1103,25 @@ export default function MockTestRoom() {
             {getDirectionText(currentGroup?.part)}
           </div>
 
+          {/* Part 1 High-Res Photograph (ALWAYS ON TOP ABOVE AUDIO PLAYER - STRICT ETS & AGENTS STANDARD) */}
+          {currentGroup?.part === 1 && (currentGroup?.imageUrl || true) && (
+            <div className="w-full flex items-center justify-center">
+              <img 
+                src={currentGroup?.imageUrl || `/media/mocktests/test${currentTestNumber}/q${currentGroup?.questions?.[0]?.questionNum || 1}.jpg`} 
+                alt="TOEIC Part 1 Photograph"
+                className="max-h-[460px] w-auto max-w-full object-contain rounded-2xl shadow-xl border dark:border-slate-800 border-slate-200/90 dark:bg-slate-950/80 bg-white"
+                loading="eager"
+                onError={(e) => {
+                  const qNum = currentGroup?.questions?.[0]?.questionNum || 1;
+                  const fallback = `/media/listening/part1/photo_${((qNum - 1) % 45) + 1}.jpg`;
+                  if (!e.currentTarget.src.includes(fallback)) {
+                    e.currentTarget.src = fallback;
+                  }
+                }}
+              />
+            </div>
+          )}
+
           {/* PRACTICE MODE INTERACTIVE AUDIO PLAYER (Only in Practice Mode) */}
           {isPracticeMode && currentGroup?.audioUrl && (
             <div className="p-4 rounded-2xl dark:bg-slate-900/90 bg-white border dark:border-slate-800 border-slate-200/90 space-y-3 shadow-sm">
@@ -1175,13 +1195,16 @@ export default function MockTestRoom() {
           {/* Middle Stimulus Display */}
           <div className="flex-1 flex flex-col items-center justify-center">
             
-            {/* 1. Part 1: Centered High-Res Photograph OR Part 3/4/7 Graphic Charts */}
-            {currentGroup?.imageUrl && (
+            {/* 1. Part 3/4/7 Graphic Charts (Part 1 is already rendered above on top) */}
+            {currentGroup?.part !== 1 && currentGroup?.imageUrl && (
               <div className="w-full flex items-center justify-center">
                 <img 
                   src={currentGroup.imageUrl} 
-                  alt="TOEIC Question Photograph"
+                  alt="TOEIC Graphic Stimulus"
                   className="max-h-[480px] w-auto max-w-full object-contain rounded-2xl shadow-xl border dark:border-slate-800 border-slate-200/90 dark:bg-slate-950/80 bg-white"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                  }}
                 />
               </div>
             )}
@@ -1332,7 +1355,15 @@ export default function MockTestRoom() {
                       <div className="flex items-center justify-between gap-2">
                         <div className="text-sm sm:text-base font-semibold dark:text-white text-slate-900 leading-snug">
                           <span className="font-mono text-sky-600 dark:text-sky-400 font-bold">{q.questionNum}. </span>
-                          {cleanPrompt && <span className="dark:text-slate-200 text-slate-800">{cleanPrompt}</span>}
+                          {q.part === 1 ? (
+                            <span className="dark:text-slate-200 text-slate-800">Chọn một câu miêu tả đúng nhất những gì bạn nhìn thấy trong bức tranh.</span>
+                          ) : q.part === 2 ? (
+                            <span className="dark:text-slate-200 text-slate-800">
+                              {isAnswered || isReviewMode ? cleanPrompt : 'Nghe câu hỏi và chọn câu trả lời thích hợp nhất.'}
+                            </span>
+                          ) : (
+                            cleanPrompt && <span className="dark:text-slate-200 text-slate-800">{cleanPrompt}</span>
+                          )}
                         </div>
 
                         {/* Exam Mode Mark for Review Button */}
@@ -1408,6 +1439,7 @@ export default function MockTestRoom() {
                             const cleanLabel = opt.label.replace(/[()]/g, '').trim().toUpperCase();
                             const isSelected = userChoice === cleanLabel;
                             const isCorrect = q.correctAnswer === cleanLabel;
+                            const shouldHideOptionText = (q.part === 1 || q.part === 2) && isPracticeMode && !isAnswered && !isReviewMode;
 
                             let optionStyle = 'dark:border-slate-800 border-slate-200/90 dark:bg-slate-900/80 bg-white hover:border-sky-500 dark:text-slate-300 text-slate-700 hover:dark:text-white hover:text-slate-900 shadow-sm';
                             
@@ -1440,7 +1472,7 @@ export default function MockTestRoom() {
                                   </div>
 
                                   <span className="font-semibold font-mono self-start mt-0.5">({cleanLabel})</span>
-                                  {opt.text && (
+                                  {opt.text && !shouldHideOptionText && (
                                     <div className="flex-1 space-y-0.5">
                                       <div className="dark:text-slate-200 text-slate-800">{opt.text}</div>
                                       {(() => {
