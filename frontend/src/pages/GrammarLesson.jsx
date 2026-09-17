@@ -354,7 +354,10 @@ export default function GrammarLesson() {
     qs.forEach((q, idx) => {
       const userAns = ans[idx];
       if (userAns !== undefined) {
-        if (userAns === q?.correctAnswer) {
+        const cleanUser = String(userAns || '').replace(/[\(\)]/g, '').trim().toUpperCase();
+        const cleanCor = String(q?.correctAnswer || '').replace(/[\(\)]/g, '').trim().toUpperCase();
+        const isCor = cleanUser === cleanCor || q?.options?.find(o => String(o.label || '').replace(/[\(\)]/g, '').trim().toUpperCase() === cleanUser)?.isCorrect;
+        if (isCor) {
           cor++;
         } else {
           wrg++;
@@ -455,13 +458,18 @@ export default function GrammarLesson() {
 
   const handleAnswer = (label) => {
     if (answeredQ[currentQIdx] !== undefined) return;
-    const nextAnswers = { ...answeredQ, [currentQIdx]: label };
+    const clean = String(label || '').replace(/[\(\)]/g, '').trim().toUpperCase();
+    const nextAnswers = { ...answeredQ, [currentQIdx]: clean };
     setAnsweredQ(nextAnswers);
     syncGrammarProgress(nextAnswers).catch(() => {});
     if (speedMode && currentQIdx < totalQ - 1) setTimeout(() => setCurrentQIdx(i=>i+1), 700);
   };
 
-  const correctCount = Object.keys(answeredQ).filter(i => answeredQ[i] === questions[i]?.correctAnswer).length;
+  const correctCount = Object.keys(answeredQ).filter(i => {
+    const userAns = String(answeredQ[i] || '').replace(/[\(\)]/g, '').trim().toUpperCase();
+    const cor = String(questions[i]?.correctAnswer || '').replace(/[\(\)]/g, '').trim().toUpperCase();
+    return userAns === cor || questions[i]?.options?.find(o => String(o.label || '').replace(/[\(\)]/g, '').trim().toUpperCase() === userAns)?.isCorrect;
+  }).length;
   const answeredCount = Object.keys(answeredQ).length;
 
   if (loading) return (
@@ -636,8 +644,10 @@ export default function GrammarLesson() {
                       <div className="px-5 pb-5 space-y-2.5">
                         {(currentQ.options||[]).map(opt => {
                           const userAns = answeredQ[currentQIdx];
-                          const isSelected = userAns === opt.label;
-                          const isCorrect = opt.label === currentQ.correctAnswer;
+                          const optClean = String(opt.label || '').replace(/[\(\)]/g, '').trim().toUpperCase();
+                          const ansClean = String(currentQ.correctAnswer || '').replace(/[\(\)]/g, '').trim().toUpperCase();
+                          const isSelected = userAns === optClean || userAns === opt.label;
+                          const isCorrect = opt.isCorrect || optClean === ansClean;
                           const isAnswered = userAns !== undefined;
                           let s = 'dark:border-slate-800 border-slate-200 dark:bg-slate-900 bg-slate-50/80 dark:text-slate-300 text-slate-800 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-white dark:hover:bg-slate-800 cursor-pointer shadow-sm';
                           if (isAnswered) {
@@ -646,8 +656,8 @@ export default function GrammarLesson() {
                             else s='dark:border-slate-800 border-slate-100 dark:bg-slate-900 bg-slate-50/50 dark:text-slate-600 text-slate-400 opacity-40 cursor-default';
                           }
                           return (
-                            <button key={opt.label} onClick={()=>handleAnswer(opt.label)} className={`w-full p-4 rounded-2xl border-2 text-left text-sm transition-all flex items-center gap-3.5 ${s}`}>
-                              <span className={`w-8 h-8 rounded-xl flex items-center justify-center font-bold text-sm shrink-0 ${isAnswered&&isCorrect?'bg-emerald-500 text-slate-950':isAnswered&&isSelected?'bg-rose-500 text-white':'dark:bg-slate-800 bg-slate-200 dark:text-slate-400 text-slate-600'}`}>{opt.label}</span>
+                            <button key={opt.label} onClick={()=>handleAnswer(optClean)} className={`w-full p-4 rounded-2xl border-2 text-left text-sm transition-all flex items-center gap-3.5 ${s}`}>
+                              <span className={`w-8 h-8 rounded-xl flex items-center justify-center font-bold text-sm shrink-0 ${isAnswered&&isCorrect?'bg-emerald-500 text-slate-950':isAnswered&&isSelected?'bg-rose-500 text-white':'dark:bg-slate-800 bg-slate-200 dark:text-slate-400 text-slate-600'}`}>{optClean}</span>
                               <span className="flex-1">{opt.text}</span>
                               {isAnswered && isCorrect && <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0"/>}
                             </button>

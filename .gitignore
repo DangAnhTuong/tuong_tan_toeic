@@ -45,6 +45,15 @@ scribd_download/
 reference_screenshots/
 backend/cache/
 *.mp3
+cropped_ets_photos*/
+ets_download/
+inspect_pages/
+inspect_answer_keys/
+temp_anki/
+test_extract/
+test_thumbs/
+media/
+
 
 # Sensitive batch / bash upload scripts with credentials
 upload_patch_to_vps.bat
@@ -60,3 +69,4 @@ yarn-error.log*
 # System
 .DS_Store
 Thumbs.db
+

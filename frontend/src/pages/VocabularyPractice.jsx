@@ -1026,9 +1026,52 @@ export default function VocabularyPractice() {
   }, [currentPartWords, completedSet, masteredWords]);
 
   const learnedProgressCount = Math.min(learnedWordsSet.size, currentPartWords.length);
-
   const newWordsCount = Math.max(0, currentPartWords.length - learnedProgressCount);
   const dueWordsCount = currentPartWords.filter(w => w.isDue).length;
+
+  // Review Mode & Active Learn Session Progress Calculation
+  const totalSessionCards = totalInitialCards > 0 ? totalInitialCards : currentPartWords.length;
+  const reviewedSessionCount = Math.max(0, totalSessionCards - sessionCards.length);
+  const currentSessionStep = isLearnCompleted
+    ? totalSessionCards
+    : totalSessionCards > 0
+      ? Math.min(totalSessionCards, Math.max(1, reviewedSessionCount + 1))
+      : 0;
+
+  let displayProgressCount = 0;
+  let displayProgressTotal = 0;
+  let displayProgressPercent = 0;
+
+  if (isReviewMode) {
+    if (activeTab === 'view') {
+      displayProgressTotal = currentPartWords.length;
+      displayProgressCount = currentPartWords.length > 0 ? Math.min(currentPartWords.length, viewIndex + 1) : 0;
+      displayProgressPercent = currentPartWords.length > 0
+        ? Math.min(100, Math.round((displayProgressCount / currentPartWords.length) * 100))
+        : 0;
+    } else {
+      displayProgressCount = currentSessionStep;
+      displayProgressTotal = totalSessionCards;
+      displayProgressPercent = totalSessionCards > 0
+        ? Math.min(100, Math.round((currentSessionStep / totalSessionCards) * 100))
+        : 0;
+    }
+  } else {
+    // Normal Topic Mode
+    if (activeTab === 'view') {
+      displayProgressTotal = currentPartWords.length;
+      displayProgressCount = currentPartWords.length > 0 ? Math.min(currentPartWords.length, viewIndex + 1) : 0;
+      displayProgressPercent = currentPartWords.length > 0
+        ? Math.min(100, Math.round((displayProgressCount / currentPartWords.length) * 100))
+        : 0;
+    } else {
+      displayProgressCount = learnedProgressCount;
+      displayProgressTotal = currentPartWords.length;
+      displayProgressPercent = currentPartWords.length > 0
+        ? Math.min(100, Math.round((learnedProgressCount / currentPartWords.length) * 100))
+        : 0;
+    }
+  }
 
   // Filtered Words List for Tab 1
   const filteredWordsList = currentPartWords.filter(w => {
@@ -1277,7 +1320,7 @@ export default function VocabularyPractice() {
               +{sessionXp}
             </span>
             <span className="dark:text-slate-400 text-slate-600 font-bold">
-              {learnedProgressCount}/{currentPartWords.length} từ
+              {displayProgressCount}/{displayProgressTotal} từ
             </span>
           </div>
 
@@ -1739,27 +1782,32 @@ export default function VocabularyPractice() {
                   <div className="relative z-10 space-y-2">
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-mono font-extrabold uppercase tracking-wider">
                       <Sparkles className="w-4 h-4 text-emerald-400" />
-                      <span>Hoàn thành bài học</span>
+                      <span>{isReviewMode ? 'Hoàn thành ôn tập' : 'Hoàn thành bài học'}</span>
                     </div>
 
                     <h2 className="text-3xl sm:text-4xl font-extrabold font-heading text-white tracking-tight">
-                      Xuất Sắc! Bạn Đã Hoàn Thành Chủ Đề
+                      {isReviewMode ? 'Xuất Sắc! Bạn Đã Hoàn Thành Ôn Tập Đến Hạn' : 'Xuất Sắc! Bạn Đã Hoàn Thành Chủ Đề'}
                     </h2>
 
                     <p className="text-base text-slate-300 font-medium max-w-lg mx-auto">
-                      Chủ đề: <strong className="text-emerald-400">{topic?.title || 'Chủ đề từ vựng'}</strong> 
-                      {parts[activePartIndex]?.name ? ` — ${parts[activePartIndex].name}` : ''}
+                      {isReviewMode ? (
+                        'Bạn đã hoàn thành xuất sắc toàn bộ từ vựng đến hạn ôn tập hôm nay. Hệ thống Spaced Repetition (SM-2) sẽ tiếp tục theo dõi và tự động nhắc bạn khi có từ đến hạn tiếp theo!'
+                      ) : (
+                        <>Chủ đề: <strong className="text-emerald-400">{topic?.title || 'Chủ đề từ vựng'}</strong> {parts[activePartIndex]?.name ? ` — ${parts[activePartIndex].name}` : ''}</>
+                      )}
                     </p>
                   </div>
 
                   {/* 3 Metric Cards */}
                   <div className="relative z-10 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-xl mx-auto">
                     <div className="p-4 rounded-2xl dark:bg-slate-950/80 bg-slate-50 border dark:border-slate-800 border-slate-200 space-y-1 shadow-sm">
-                      <span className="text-[11px] font-mono dark:text-slate-400 text-slate-500 uppercase">Từ đã học</span>
+                      <span className="text-[11px] font-mono dark:text-slate-400 text-slate-500 uppercase">
+                        {isReviewMode ? 'Từ đã ôn tập' : 'Từ đã học'}
+                      </span>
                       <div className="text-2xl font-black font-mono dark:text-white text-slate-900 flex items-center justify-center gap-1.5">
                         <BookOpen className="w-5 h-5 text-emerald-500" />
-                        <span>{currentPartWords.length}</span>
-                        <span className="text-xs text-slate-400 dark:text-slate-500 font-normal">/ {currentPartWords.length}</span>
+                        <span>{displayProgressTotal}</span>
+                        <span className="text-xs text-slate-400 dark:text-slate-500 font-normal">/ {displayProgressTotal}</span>
                       </div>
                     </div>
 
@@ -1783,7 +1831,12 @@ export default function VocabularyPractice() {
                   {/* SM-2 Notification */}
                   <div className="relative z-10 p-3.5 rounded-2xl dark:bg-slate-950/70 bg-slate-50 border dark:border-slate-800 border-slate-200 text-xs dark:text-slate-400 text-slate-600 max-w-md mx-auto flex items-center justify-center gap-2 shadow-sm">
                     <Clock className="w-4 h-4 text-sky-500 shrink-0" />
-                    <span>Toàn bộ từ đã được lưu vào thuật toán lặp lại ngắt quãng SM-2 để nhắc bạn ôn tập đúng ngày.</span>
+                    <span>
+                      {isReviewMode
+                        ? 'Toàn bộ từ đã được cập nhật chu kỳ lặp lại ngắt quãng SM-2 mới và sẽ tiếp tục xuất hiện khi tới hạn ôn tập tiếp theo.'
+                        : 'Toàn bộ từ đã được lưu vào thuật toán lặp lại ngắt quãng SM-2 để nhắc bạn ôn tập đúng ngày.'
+                      }
+                    </span>
                   </div>
 
                   {/* Auto-redirect Countdown Notice */}
@@ -1810,8 +1863,8 @@ export default function VocabularyPractice() {
                       <span>Trở về danh sách từ vựng</span>
                     </button>
 
-                    {/* Next Part Button (if available) */}
-                    {activePartIndex < parts.length - 1 && (
+                    {/* Next Part Button (if available and not review mode) */}
+                    {!isReviewMode && activePartIndex < parts.length - 1 && (
                       <button
                         onClick={() => {
                           setActivePartIndex(p => p + 1);
@@ -1832,20 +1885,24 @@ export default function VocabularyPractice() {
                     {/* Replay / Review Part */}
                     <button
                       onClick={() => {
-                        setSessionCards([...currentPartWords]);
-                        setCompletedSet(new Set());
-                        setTotalInitialCards(currentPartWords.length);
-                        setLearnIndex(0);
-                        setIsLearnCompleted(false);
-                        setCountdown(null);
-                        setLearnStep('flashcard');
-                        setIsLearnFlipped(false);
-                        setShowRatingButtons(false);
+                        if (isReviewMode) {
+                          handleResetAllToStart();
+                        } else {
+                          setSessionCards([...currentPartWords]);
+                          setCompletedSet(new Set());
+                          setTotalInitialCards(currentPartWords.length);
+                          setLearnIndex(0);
+                          setIsLearnCompleted(false);
+                          setCountdown(null);
+                          setLearnStep('flashcard');
+                          setIsLearnFlipped(false);
+                          setShowRatingButtons(false);
+                        }
                       }}
                       className="w-full sm:w-auto px-5 py-4 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-bold text-sm border border-slate-700 transition-all flex items-center justify-center gap-2"
                     >
                       <RotateCcw className="w-4 h-4" />
-                      <span>Học lại phần này</span>
+                      <span>{isReviewMode ? 'Ôn lại lượt này' : 'Học lại phần này'}</span>
                     </button>
 
                     {/* Play Mini Games */}
@@ -1886,7 +1943,7 @@ export default function VocabularyPractice() {
                           +{sessionXp} XP
                         </span>
                         <span className="text-slate-400 font-bold">
-                          {learnedProgressCount}/{currentPartWords.length} từ
+                          {displayProgressCount}/{displayProgressTotal} từ
                         </span>
                       </div>
                     </div>
@@ -1894,7 +1951,7 @@ export default function VocabularyPractice() {
                     {/* Progress Bar (Purple Gradient) - Đậu TOEIC Standard */}
                     <div className="h-1.5 w-full bg-slate-900 rounded-full overflow-hidden border border-slate-800">
                       <div 
-                        style={{ width: `${Math.min(100, Math.round((learnedProgressCount / Math.max(1, currentPartWords.length)) * 100))}%` }}
+                        style={{ width: `${displayProgressPercent}%` }}
                         className="h-full bg-gradient-to-r from-purple-500 via-indigo-500 to-sky-400 rounded-full transition-all duration-300"
                       />
                     </div>
@@ -2639,15 +2696,31 @@ export default function VocabularyPractice() {
 
                             {/* Session stats: Từ mới, Đã học, Ôn tập */}
                             <div className="flex items-center justify-center gap-4 text-xs font-mono pt-1">
-                              <span className="text-sky-400">
-                                <strong className="font-bold">{newWordsCount}</strong> Từ mới
-                              </span>
-                              <span className="text-emerald-400">
-                                <strong className="font-bold">{learnedProgressCount}</strong> Đã học
-                              </span>
-                              <span className="text-amber-400">
-                                <strong className="font-bold">{dueWordsCount}</strong> Ôn tập
-                              </span>
+                              {isReviewMode ? (
+                                <>
+                                  <span className="text-sky-400">
+                                    <strong className="font-bold">0</strong> Từ mới
+                                  </span>
+                                  <span className="text-emerald-400">
+                                    <strong className="font-bold">{reviewedSessionCount}</strong> Đã ôn
+                                  </span>
+                                  <span className="text-amber-400">
+                                    <strong className="font-bold">{sessionCards.length}</strong> Cần ôn
+                                  </span>
+                                </>
+                              ) : (
+                                <>
+                                  <span className="text-sky-400">
+                                    <strong className="font-bold">{newWordsCount}</strong> Từ mới
+                                  </span>
+                                  <span className="text-emerald-400">
+                                    <strong className="font-bold">{learnedProgressCount}</strong> Đã học
+                                  </span>
+                                  <span className="text-amber-400">
+                                    <strong className="font-bold">{dueWordsCount}</strong> Ôn tập
+                                  </span>
+                                </>
+                              )}
                             </div>
                           </div>
                         </>

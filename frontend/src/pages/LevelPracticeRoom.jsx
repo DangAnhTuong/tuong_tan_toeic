@@ -446,7 +446,15 @@ export default function LevelPracticeRoom() {
         spokenText = currentPassageQ.transcript;
       }
     } else if (partNum === 2) {
-      const prompt = currentPassageQ.promptText || '';
+      let prompt = currentPassageQ.promptText || '';
+      if (!prompt || /^listen to the question/i.test(prompt)) {
+        if (currentPassageQ.transcript) {
+          const aIdx = currentPassageQ.transcript.search(/\(?A\)?[\s.:]/);
+          if (aIdx > -1) {
+            prompt = currentPassageQ.transcript.substring(0, aIdx).replace(/^[MW]-[A-Za-z0-9_-]+[:\s]+/gmi, '').trim();
+          }
+        }
+      }
       const opts = (currentPassageQ.options || []).map(o => `${o.label} ${o.text}`).join('. ');
       spokenText = `${prompt}. ${opts}`.trim();
     } else {
@@ -1150,14 +1158,18 @@ export default function LevelPracticeRoom() {
             <div className="rounded-3xl overflow-hidden border dark:border-slate-800 border-slate-200 dark:bg-slate-900/60 bg-white shadow-md relative group">
               <div className="aspect-[16/10] w-full relative dark:bg-slate-950 bg-slate-100 flex items-center justify-center overflow-hidden p-2">
                 <img 
-                  src={currentPassageImageUrl || `/media/listening/part1/photo_${(currentIdx % 45) + 1}.jpg`} 
+                  src={partNum === 1 ? getPart1ImageUrl(currentPassageQ, currentIdx, topicParam) : currentPassageImageUrl} 
                   alt={currentPassageTitle}
                   className="w-full h-full object-contain rounded-2xl transition-transform duration-500 group-hover:scale-105"
                   loading="eager"
                   onError={(e) => {
-                    const fallback = `/media/listening/part1/photo_${(currentIdx % 45) + 1}.jpg`;
-                    if (!e.currentTarget.src.includes(fallback)) {
-                      e.currentTarget.src = fallback;
+                    if (partNum === 1) {
+                      const fallback = getPart1ImageUrl(currentPassageQ, currentIdx, topicParam);
+                      if (e.currentTarget.src !== fallback) {
+                        e.currentTarget.src = fallback;
+                      }
+                    } else {
+                      e.currentTarget.style.display = 'none';
                     }
                   }}
                 />
@@ -1458,10 +1470,10 @@ export default function LevelPracticeRoom() {
                       <div className="space-y-1">
                         <span className="text-sm sm:text-base font-semibold dark:text-slate-100 text-slate-900 leading-snug block">
                           {partNum === 1 
-                            ? (qItem.promptText && !/listen to the|statement that best describes/i.test(qItem.promptText) 
-                                ? qItem.promptText 
-                                : 'Chọn một câu miêu tả đúng nhất những gì bạn nhìn thấy trong bức tranh.')
-                            : qItem.promptText
+                            ? 'Chọn một câu miêu tả đúng nhất những gì bạn nhìn thấy trong bức tranh.'
+                            : (partNum === 2 
+                                ? (isThisQAnswered ? qItem.promptText : 'Nghe câu hỏi và chọn câu trả lời thích hợp nhất.')
+                                : qItem.promptText)
                           }
                         </span>
                         {/* Vietnamese Translation of Question Prompt (Chỉ hiển thị khi đã làm câu hỏi VÀ bật Song ngữ VÀ là tiếng Việt thực sự) */}
@@ -1487,11 +1499,13 @@ export default function LevelPracticeRoom() {
                     </button>
                   </div>
 
-                  {/* BUBBLE OPTIONS (A, B, C, D) - IN PART 3 & 4, OPTION TEXT IS ALWAYS VISIBLE! */}
+                  {/* BUBBLE OPTIONS (A, B, C, D) - IN PART 1 & 2, OPTION TEXT REVEALS ONLY AFTER ANSWERING! */}
                   <div className="space-y-2.5 pt-1">
                     {qItem.options?.map((opt) => {
-                      const isSelected = qUserChoice === opt.label;
+                      const cleanOptLabel = opt.label.replace(/[\(\)]/g, '').trim().toUpperCase();
+                      const isSelected = qUserChoice === opt.label || qUserChoice === cleanOptLabel;
                       const isThisCorrect = opt.isCorrect;
+                      const showOptionText = isPassageMode || isThisQAnswered;
 
                       let cardStyles = 'dark:bg-slate-900/80 bg-white dark:border-slate-800 border-slate-200 dark:text-slate-300 text-slate-700 hover:border-slate-300 dark:hover:border-slate-700 dark:hover:bg-slate-800/60 hover:bg-slate-50 shadow-sm';
                       let bubbleStyles = 'dark:bg-slate-800 bg-slate-100 dark:text-slate-400 text-slate-600 font-bold';
@@ -1520,18 +1534,24 @@ export default function LevelPracticeRoom() {
                         <button
                           key={opt.label}
                           onClick={() => handleSelectOption(qGlobalIdx, opt.label)}
-                          className={`w-full p-3.5 sm:p-4 rounded-2xl border text-left transition-all flex flex-col gap-1.5 ${cardStyles}`}
+                          className={`w-full ${showOptionText ? 'p-3.5 sm:p-4' : 'py-3 px-4'} rounded-2xl border text-left transition-all flex flex-col gap-1.5 cursor-pointer ${cardStyles}`}
                         >
                           <div className="flex items-center justify-between gap-3 w-full">
-                            <div className="flex items-center gap-3">
-                              <span className={`w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shrink-0 ${bubbleStyles}`}>
-                                {opt.label.replace(/[\(\)]/g, '')}
+                            <div className="flex items-center gap-3 flex-1">
+                              <span className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shrink-0 ${bubbleStyles}`}>
+                                {cleanOptLabel}
                               </span>
                               
-                              {/* Option text: Always visible in Part 3/4, or if answered */}
-                              <span className="text-sm sm:text-base font-medium dark:text-slate-100 text-slate-800 leading-snug">
-                                {isPassageMode ? opt.text : (isThisQAnswered ? opt.text : `Phương án ${opt.label}`)}
-                              </span>
+                              {/* Option text: ONLY visible in Part 3/4 passage mode OR after user has chosen an answer! */}
+                              {showOptionText ? (
+                                <span className="text-sm sm:text-base font-medium dark:text-slate-100 text-slate-800 leading-snug">
+                                  {opt.text}
+                                </span>
+                              ) : (
+                                <span className="text-sm font-semibold dark:text-slate-300 text-slate-700 font-mono">
+                                  ({cleanOptLabel})
+                                </span>
+                              )}
                             </div>
 
                             {isThisQAnswered && isThisCorrect && (
