@@ -489,7 +489,8 @@ export function getPart1ImageUrl(q, index = 0, topicName = '') {
     return `${BASE_URL}/${sceneryFile}`;
   }
 
-  // 5. Diverse Authentic ETS Photo Rotation Fallback
-  const fallbackNum = (index % 45) + 1;
-  return `${BASE_URL}/photo_${fallbackNum}.jpg`;
+  // 5. Dedicated 538 Authentic ETS Photo Engine Fallback
+  const qNum = (index % 538) + 1;
+  return `${BASE_URL}/p1_q${qNum}.jpg`;
 }
+
