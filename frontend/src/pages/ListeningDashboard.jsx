@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import usePageTitle from '../hooks/usePageTitle';
@@ -149,10 +149,10 @@ export default function ListeningDashboard() {
     return match?.attemptsCount || fallback;
   };
 
-  // Load user practice progress for level cards & basket words
+  // Load user practice progress for level cards, dictation & basket words
   const loadPracticeProgress = async () => {
     try {
-      const { map } = await getPracticeProgress({ category: 'listening' });
+      const { map } = await getPracticeProgress();
       if (map) setPracticeProgressMap(map);
     } catch (e) {}
     try {
@@ -335,13 +335,79 @@ export default function ListeningDashboard() {
   const p3Counts = [156, 142, 138, 148, 150, 144, 140, 146, 152, 145];
   const p4Counts = [106, 101, 98, 104, 102, 100, 105, 103, 108, 100];
 
-  const dictationTests = Array.from({ length: 10 }, (_, i) => ({
-    testNum: i + 1,
-    p1: { count: 24, completed: i === 0 ? 2 : 0 },
-    p2: { count: 100, completed: 0 },
-    p3: { count: p3Counts[i] || 140, completed: 0 },
-    p4: { count: p4Counts[i] || 100, completed: 0 }
-  }));
+  const getCurrentUserId = () => {
+    const user = getStoredUser();
+    return user?.userId || user?._id || user?.id || user?.email || 'guest';
+  };
+
+  const getDictationProgress = (year, part, testOrTopic, totalCount) => {
+    const stdKey = `dictation_p${part}_${year}_${testOrTopic}`;
+    const altKey = `dictation_p${part}_${year}_test${testOrTopic}`;
+    
+    let progress = practiceProgressMap[stdKey] || practiceProgressMap[altKey];
+    
+    // Fallback: check localStorage mirror tuongtan_dictation_resume_*
+    if (!progress || !progress.completedCount) {
+      try {
+        const userId = getCurrentUserId();
+        const localKey1 = `tuongtan_dictation_resume_${userId}_part${part}_${year}_${testOrTopic}`;
+        const localKey2 = `tuongtan_dictation_resume_${userId}_part${part}_${year}_test${testOrTopic}`;
+        const localKey3 = `tuongtan_practice_progress_${userId}_${stdKey}`;
+        const raw = localStorage.getItem(localKey1) || localStorage.getItem(localKey2) || localStorage.getItem(localKey3);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed) {
+            const completedLen = typeof parsed.completedCount === 'number'
+              ? parsed.completedCount
+              : (Array.isArray(parsed.completedSentences)
+                ? parsed.completedSentences.length
+                : (Array.isArray(parsed.completedList)
+                  ? parsed.completedList.length
+                  : (Array.isArray(parsed.userAnswersMap?.completedList) ? parsed.userAnswersMap.completedList.length : 0)));
+            return {
+              completed: completedLen,
+              total: totalCount,
+              isCompleted: completedLen >= totalCount && totalCount > 0
+            };
+          }
+        }
+      } catch (e) {}
+    }
+
+    if (progress) {
+      const completed = Number(progress.completedCount) || 0;
+      return {
+        completed,
+        total: progress.totalQuestions || totalCount,
+        isCompleted: Boolean(progress.isCompleted) || (completed >= totalCount && totalCount > 0)
+      };
+    }
+
+    return { completed: 0, total: totalCount, isCompleted: false };
+  };
+
+  const dictationTests = useMemo(() => {
+    return Array.from({ length: 10 }, (_, i) => {
+      const testNum = i + 1;
+      const p1Count = 24;
+      const p2Count = 100;
+      const p3Count = p3Counts[i] || 140;
+      const p4Count = p4Counts[i] || 100;
+
+      const p1Prog = getDictationProgress(dictationYear, 1, testNum, p1Count);
+      const p2Prog = getDictationProgress(dictationYear, 2, testNum, p2Count);
+      const p3Prog = getDictationProgress(dictationYear, 3, testNum, p3Count);
+      const p4Prog = getDictationProgress(dictationYear, 4, testNum, p4Count);
+
+      return {
+        testNum,
+        p1: { count: p1Count, completed: p1Prog.completed, isCompleted: p1Prog.isCompleted },
+        p2: { count: p2Count, completed: p2Prog.completed, isCompleted: p2Prog.isCompleted },
+        p3: { count: p3Count, completed: p3Prog.completed, isCompleted: p3Prog.isCompleted },
+        p4: { count: p4Count, completed: p4Prog.completed, isCompleted: p4Prog.isCompleted }
+      };
+    });
+  }, [dictationYear, practiceProgressMap]);
 
   const handleStartPractice = (modeName, testNumber = 1, part = 1, level = null) => {
     let url = `/listen/practice/test${testNumber}?mode=${modeName}&test=${testNumber}&part=${part}`;
@@ -1088,16 +1154,29 @@ export default function ListeningDashboard() {
                               </h5>
                             </div>
 
-                            <div className="flex items-center justify-between pt-3 border-t dark:border-slate-800/80 border-slate-100">
-                              <span className="text-xs font-mono dark:text-slate-400 text-slate-500">Chưa bắt đầu</span>
-                              <button
-                                onClick={() => navigate(`/listen/dictation?year=topic&part=3&topic=${encodeURIComponent(item.title)}`)}
-                                className="px-4 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-heading font-black text-xs shadow-md shadow-sky-500/20 transition-all flex items-center gap-1 active:scale-95"
-                              >
-                                <span>Luyện tập</span>
-                                <ArrowRight className="w-3 h-3" />
-                              </button>
-                            </div>
+                            {(() => {
+                              const prog = getDictationProgress('topic', 3, item.title, item.count);
+                              return (
+                                <div className="flex items-center justify-between pt-3 border-t dark:border-slate-800/80 border-slate-100">
+                                  <span className="text-xs font-mono">
+                                    {prog.completed > 0 ? (
+                                      <span className={prog.isCompleted ? "text-emerald-500 font-bold" : "text-sky-500 font-bold"}>
+                                        {prog.isCompleted ? `✓ Hoàn thành (${prog.completed}/${item.count})` : `${prog.completed}/${item.count} câu`}
+                                      </span>
+                                    ) : (
+                                      <span className="dark:text-slate-400 text-slate-500">Chưa bắt đầu</span>
+                                    )}
+                                  </span>
+                                  <button
+                                    onClick={() => navigate(`/listen/dictation?year=topic&part=3&topic=${encodeURIComponent(item.title)}`)}
+                                    className="px-4 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-heading font-black text-xs shadow-md shadow-sky-500/20 transition-all flex items-center gap-1 active:scale-95 cursor-pointer"
+                                  >
+                                    <span>{prog.completed > 0 ? (prog.isCompleted ? 'Luyện lại' : 'Luyện tiếp') : 'Luyện tập'}</span>
+                                    <ArrowRight className="w-3 h-3" />
+                                  </button>
+                                </div>
+                              );
+                            })()}
                           </div>
                         </VipLockOverlay>
                       );
@@ -1162,16 +1241,29 @@ export default function ListeningDashboard() {
                               </h5>
                             </div>
 
-                            <div className="flex items-center justify-between pt-3 border-t dark:border-slate-800/80 border-slate-100">
-                              <span className="text-xs font-mono dark:text-slate-400 text-slate-500">Chưa bắt đầu</span>
-                              <button
-                                onClick={() => navigate(`/listen/dictation?year=topic&part=4&topic=${encodeURIComponent(item.title)}`)}
-                                className="px-4 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-heading font-black text-xs shadow-md shadow-sky-500/20 transition-all flex items-center gap-1 active:scale-95"
-                              >
-                                <span>Luyện tập</span>
-                                <ArrowRight className="w-3 h-3" />
-                              </button>
-                            </div>
+                            {(() => {
+                              const prog = getDictationProgress('topic', 4, item.title, item.count);
+                              return (
+                                <div className="flex items-center justify-between pt-3 border-t dark:border-slate-800/80 border-slate-100">
+                                  <span className="text-xs font-mono">
+                                    {prog.completed > 0 ? (
+                                      <span className={prog.isCompleted ? "text-emerald-500 font-bold" : "text-sky-500 font-bold"}>
+                                        {prog.isCompleted ? `✓ Hoàn thành (${prog.completed}/${item.count})` : `${prog.completed}/${item.count} câu`}
+                                      </span>
+                                    ) : (
+                                      <span className="dark:text-slate-400 text-slate-500">Chưa bắt đầu</span>
+                                    )}
+                                  </span>
+                                  <button
+                                    onClick={() => navigate(`/listen/dictation?year=topic&part=4&topic=${encodeURIComponent(item.title)}`)}
+                                    className="px-4 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-heading font-black text-xs shadow-md shadow-sky-500/20 transition-all flex items-center gap-1 active:scale-95 cursor-pointer"
+                                  >
+                                    <span>{prog.completed > 0 ? (prog.isCompleted ? 'Luyện lại' : 'Luyện tiếp') : 'Luyện tập'}</span>
+                                    <ArrowRight className="w-3 h-3" />
+                                  </button>
+                                </div>
+                              );
+                            })()}
                           </div>
                         </VipLockOverlay>
                       );
@@ -1239,16 +1331,29 @@ export default function ListeningDashboard() {
                             </h5>
                           </div>
 
-                          <div className="flex items-center justify-between pt-3 border-t dark:border-slate-800/80 border-slate-100">
-                            <span className="text-xs font-mono dark:text-slate-400 text-slate-500">Chưa bắt đầu</span>
-                            <button
-                              onClick={() => navigate(`/listen/dictation?year=master&part=${item.part}&topic=${encodeURIComponent(item.title)}`)}
-                              className="px-4 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-heading font-black text-xs shadow-md shadow-sky-500/20 transition-all flex items-center gap-1 active:scale-95"
-                            >
-                              <span>Luyện tập</span>
-                              <ArrowRight className="w-3 h-3" />
-                            </button>
-                          </div>
+                          {(() => {
+                            const prog = getDictationProgress('master', item.part, item.title, item.count);
+                            return (
+                              <div className="flex items-center justify-between pt-3 border-t dark:border-slate-800/80 border-slate-100">
+                                <span className="text-xs font-mono">
+                                  {prog.completed > 0 ? (
+                                    <span className={prog.isCompleted ? "text-emerald-500 font-bold" : "text-sky-500 font-bold"}>
+                                      {prog.isCompleted ? `✓ Hoàn thành (${prog.completed}/${item.count})` : `${prog.completed}/${item.count} câu`}
+                                    </span>
+                                  ) : (
+                                    <span className="dark:text-slate-400 text-slate-500">Chưa bắt đầu</span>
+                                  )}
+                                </span>
+                                <button
+                                  onClick={() => navigate(`/listen/dictation?year=master&part=${item.part}&topic=${encodeURIComponent(item.title)}`)}
+                                  className="px-4 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-heading font-black text-xs shadow-md shadow-sky-500/20 transition-all flex items-center gap-1 active:scale-95 cursor-pointer"
+                                >
+                                  <span>{prog.completed > 0 ? (prog.isCompleted ? 'Luyện lại' : 'Luyện tiếp') : 'Luyện tập'}</span>
+                                  <ArrowRight className="w-3 h-3" />
+                                </button>
+                              </div>
+                            );
+                          })()}
                         </div>
                       </VipLockOverlay>
                     );
@@ -1322,12 +1427,20 @@ export default function ListeningDashboard() {
                           </div>
 
                           <div className="flex items-center justify-between pt-3 border-t dark:border-slate-800/80 border-slate-100">
-                            <span className="text-xs font-mono dark:text-slate-400 text-slate-500">{t.p1.completed ? `${t.p1.completed}/${t.p1.count}` : 'Chưa bắt đầu'}</span>
+                            <span className="text-xs font-mono">
+                              {t.p1.completed > 0 ? (
+                                <span className={t.p1.isCompleted ? "text-emerald-500 font-bold" : "text-sky-500 font-bold"}>
+                                  {t.p1.isCompleted ? `✓ Hoàn thành (${t.p1.completed}/${t.p1.count})` : `${t.p1.completed}/${t.p1.count} câu`}
+                                </span>
+                              ) : (
+                                <span className="dark:text-slate-400 text-slate-500">Chưa bắt đầu</span>
+                              )}
+                            </span>
                             <button
                               onClick={() => navigate(`/listen/dictation?year=${dictationYear}&test=${t.testNum}&part=1`)}
-                              className="px-4 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-heading font-black text-xs shadow-md shadow-sky-500/20 transition-all flex items-center gap-1 active:scale-95"
+                              className="px-4 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-heading font-black text-xs shadow-md shadow-sky-500/20 transition-all flex items-center gap-1 active:scale-95 cursor-pointer"
                             >
-                              <span>Luyện tập</span>
+                              <span>{t.p1.completed > 0 ? (t.p1.isCompleted ? 'Luyện lại' : 'Luyện tiếp') : 'Luyện tập'}</span>
                               <ArrowRight className="w-3 h-3" />
                             </button>
                           </div>
@@ -1357,12 +1470,20 @@ export default function ListeningDashboard() {
                           </div>
 
                           <div className="flex items-center justify-between pt-3 border-t dark:border-slate-800/80 border-slate-100">
-                            <span className="text-xs font-mono dark:text-slate-400 text-slate-500">{t.p2.completed ? `${t.p2.completed}/${t.p2.count}` : 'Chưa bắt đầu'}</span>
+                            <span className="text-xs font-mono">
+                              {t.p2.completed > 0 ? (
+                                <span className={t.p2.isCompleted ? "text-emerald-500 font-bold" : "text-sky-500 font-bold"}>
+                                  {t.p2.isCompleted ? `✓ Hoàn thành (${t.p2.completed}/${t.p2.count})` : `${t.p2.completed}/${t.p2.count} câu`}
+                                </span>
+                              ) : (
+                                <span className="dark:text-slate-400 text-slate-500">Chưa bắt đầu</span>
+                              )}
+                            </span>
                             <button
                               onClick={() => navigate(`/listen/dictation?year=${dictationYear}&test=${t.testNum}&part=2`)}
-                              className="px-4 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-heading font-black text-xs shadow-md shadow-sky-500/20 transition-all flex items-center gap-1 active:scale-95"
+                              className="px-4 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-heading font-black text-xs shadow-md shadow-sky-500/20 transition-all flex items-center gap-1 active:scale-95 cursor-pointer"
                             >
-                              <span>Luyện tập</span>
+                              <span>{t.p2.completed > 0 ? (t.p2.isCompleted ? 'Luyện lại' : 'Luyện tiếp') : 'Luyện tập'}</span>
                               <ArrowRight className="w-3 h-3" />
                             </button>
                           </div>
@@ -1392,12 +1513,20 @@ export default function ListeningDashboard() {
                           </div>
 
                           <div className="flex items-center justify-between pt-3 border-t dark:border-slate-800/80 border-slate-100">
-                            <span className="text-xs font-mono dark:text-slate-400 text-slate-500">{t.p3.completed ? `${t.p3.completed}/${t.p3.count}` : 'Chưa bắt đầu'}</span>
+                            <span className="text-xs font-mono">
+                              {t.p3.completed > 0 ? (
+                                <span className={t.p3.isCompleted ? "text-emerald-500 font-bold" : "text-sky-500 font-bold"}>
+                                  {t.p3.isCompleted ? `✓ Hoàn thành (${t.p3.completed}/${t.p3.count})` : `${t.p3.completed}/${t.p3.count} câu`}
+                                </span>
+                              ) : (
+                                <span className="dark:text-slate-400 text-slate-500">Chưa bắt đầu</span>
+                              )}
+                            </span>
                             <button
                               onClick={() => navigate(`/listen/dictation?year=${dictationYear}&test=${t.testNum}&part=3`)}
-                              className="px-4 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-heading font-black text-xs shadow-md shadow-sky-500/20 transition-all flex items-center gap-1 active:scale-95"
+                              className="px-4 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-heading font-black text-xs shadow-md shadow-sky-500/20 transition-all flex items-center gap-1 active:scale-95 cursor-pointer"
                             >
-                              <span>Luyện tập</span>
+                              <span>{t.p3.completed > 0 ? (t.p3.isCompleted ? 'Luyện lại' : 'Luyện tiếp') : 'Luyện tập'}</span>
                               <ArrowRight className="w-3 h-3" />
                             </button>
                           </div>
@@ -1427,12 +1556,20 @@ export default function ListeningDashboard() {
                           </div>
 
                           <div className="flex items-center justify-between pt-3 border-t dark:border-slate-800/80 border-slate-100">
-                            <span className="text-xs font-mono dark:text-slate-400 text-slate-500">{t.p4.completed ? `${t.p4.completed}/${t.p4.count}` : 'Chưa bắt đầu'}</span>
+                            <span className="text-xs font-mono">
+                              {t.p4.completed > 0 ? (
+                                <span className={t.p4.isCompleted ? "text-emerald-500 font-bold" : "text-sky-500 font-bold"}>
+                                  {t.p4.isCompleted ? `✓ Hoàn thành (${t.p4.completed}/${t.p4.count})` : `${t.p4.completed}/${t.p4.count} câu`}
+                                </span>
+                              ) : (
+                                <span className="dark:text-slate-400 text-slate-500">Chưa bắt đầu</span>
+                              )}
+                            </span>
                             <button
                               onClick={() => navigate(`/listen/dictation?year=${dictationYear}&test=${t.testNum}&part=4`)}
-                              className="px-4 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-heading font-black text-xs shadow-md shadow-sky-500/20 transition-all flex items-center gap-1 active:scale-95"
+                              className="px-4 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-heading font-black text-xs shadow-md shadow-sky-500/20 transition-all flex items-center gap-1 active:scale-95 cursor-pointer"
                             >
-                              <span>Luyện tập</span>
+                              <span>{t.p4.completed > 0 ? (t.p4.isCompleted ? 'Luyện lại' : 'Luyện tiếp') : 'Luyện tập'}</span>
                               <ArrowRight className="w-3 h-3" />
                             </button>
                           </div>

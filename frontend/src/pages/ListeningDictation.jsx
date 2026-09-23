@@ -254,65 +254,88 @@ export default function ListeningDictation() {
   }, [yearParam, testNum, partNum, topicParam]);
 
   const currentUser = getStoredUser();
-  const currentUserId = currentUser?.userId || currentUser?.email || 'guest';
-  const resumeStorageKey = `tuongtan_dictation_resume_${currentUserId}_part${partNum}_${yearParam}_${topicParam || ('test' + testNum)}`;
+  const currentUserId = currentUser?.userId || currentUser?._id || currentUser?.id || currentUser?.email || 'guest';
+  const resumeStorageKey = `tuongtan_dictation_resume_${currentUserId}_part${partNum}_${yearParam}_${topicParam || testNum}`;
+  const legacyStorageKey = `tuongtan_dictation_resume_${currentUserId}_part${partNum}_${yearParam}_${topicParam || ('test' + testNum)}`;
 
-  // Auto-restore dictation progress from localStorage
+  // Unified Auto-Restore Dictation Progress
   useEffect(() => {
     if (loading || lessons.length === 0 || hasRestoredProgress) return;
-    try {
-      const savedRaw = localStorage.getItem(resumeStorageKey);
-      if (savedRaw) {
-        const saved = JSON.parse(savedRaw);
-        if (saved && typeof saved.currentLessonIndex === 'number' && saved.currentLessonIndex >= 0 && saved.currentLessonIndex < lessons.length) {
-          setCurrentLessonIndex(saved.currentLessonIndex);
-          setExpandedLessons(prev => ({ ...prev, [saved.currentLessonIndex]: true }));
-          const targetLesson = lessons[saved.currentLessonIndex];
-          if (saved && typeof saved.currentSentenceIndex === 'number' && saved.currentSentenceIndex >= 0 && saved.currentSentenceIndex < (targetLesson?.sentences?.length || 1)) {
-            setCurrentSentenceIndex(saved.currentSentenceIndex);
+
+    async function restoreProgress() {
+      try {
+        let restoredLesson = null;
+        let restoredSentence = null;
+        let restoredCompleted = null;
+        let restoredXp = null;
+
+        // 1. Try local mirror first for instant restoration
+        const savedRaw = localStorage.getItem(resumeStorageKey) || localStorage.getItem(legacyStorageKey);
+        if (savedRaw) {
+          const saved = JSON.parse(savedRaw);
+          if (saved) {
+            if (typeof saved.currentLessonIndex === 'number') restoredLesson = saved.currentLessonIndex;
+            if (typeof saved.currentSentenceIndex === 'number') restoredSentence = saved.currentSentenceIndex;
+            if (Array.isArray(saved.completedSentences)) restoredCompleted = saved.completedSentences;
+            if (typeof saved.earnedXp === 'number') restoredXp = saved.earnedXp;
+            if (saved.blankDensity) setBlankDensity(saved.blankDensity);
+            if (saved.accent) setAccent(saved.accent);
+            if (saved.activeMode) setActiveMode(saved.activeMode);
           }
         }
-        if (saved && Array.isArray(saved.completedSentences)) {
-          setCompletedSentences(new Set(saved.completedSentences));
-        }
-        if (saved && typeof saved.earnedXp === 'number') {
-          setEarnedXp(saved.earnedXp);
-        }
-        if (saved && saved.blankDensity) {
-          setBlankDensity(saved.blankDensity);
-        }
-        if (saved && saved.accent) {
-          setAccent(saved.accent);
-        }
-        if (saved && saved.activeMode) {
-          setActiveMode(saved.activeMode);
-        }
-      }
-    } catch (e) {
-      console.warn('Failed to restore dictation progress:', e);
-    } finally {
-      setHasRestoredProgress(true);
-    }
-  }, [loading, lessons, resumeStorageKey, hasRestoredProgress]);
 
-  // Auto-save dictation progress
-  useEffect(() => {
-    if (!hasRestoredProgress || loading || lessons.length === 0) return;
-    try {
-      localStorage.setItem(resumeStorageKey, JSON.stringify({
-        currentLessonIndex,
-        currentSentenceIndex,
-        completedSentences: Array.from(completedSentences),
-        earnedXp,
-        blankDensity,
-        accent,
-        activeMode,
-        updatedAt: Date.now()
-      }));
-    } catch (e) {
-      console.warn('Failed to save dictation progress:', e);
+        // 2. Query practiceProgressService (checks local mirror & backend MongoDB)
+        const remoteSaved = await getSingleProgress(computedExerciseKey);
+        if (remoteSaved) {
+          if (remoteSaved.userAnswersMap) {
+            if (restoredLesson === null && typeof remoteSaved.userAnswersMap.currentLessonIndex === 'number') {
+              restoredLesson = remoteSaved.userAnswersMap.currentLessonIndex;
+            }
+            if (restoredSentence === null && typeof remoteSaved.userAnswersMap.currentSentenceIndex === 'number') {
+              restoredSentence = remoteSaved.userAnswersMap.currentSentenceIndex;
+            }
+            if (!restoredCompleted && Array.isArray(remoteSaved.userAnswersMap.completedList)) {
+              restoredCompleted = remoteSaved.userAnswersMap.completedList;
+            }
+          }
+          if (restoredXp === null && typeof remoteSaved.practiceXp === 'number') {
+            restoredXp = remoteSaved.practiceXp;
+          }
+        }
+
+        // Apply safely within bounds
+        if (typeof restoredLesson === 'number' && restoredLesson >= 0 && restoredLesson < lessons.length) {
+          setCurrentLessonIndex(restoredLesson);
+          setExpandedLessons(prev => ({ ...prev, [restoredLesson]: true }));
+          const targetLesson = lessons[restoredLesson];
+          if (typeof restoredSentence === 'number' && restoredSentence >= 0 && restoredSentence < (targetLesson?.sentences?.length || 1)) {
+            setCurrentSentenceIndex(restoredSentence);
+          }
+        }
+        if (Array.isArray(restoredCompleted) && restoredCompleted.length > 0) {
+          setCompletedSentences(new Set(restoredCompleted));
+        }
+        if (typeof restoredXp === 'number') {
+          setEarnedXp(restoredXp);
+        }
+      } catch (err) {
+        console.warn('Failed to restore dictation progress:', err);
+      } finally {
+        setHasRestoredProgress(true);
+      }
     }
-  }, [currentLessonIndex, currentSentenceIndex, completedSentences, earnedXp, blankDensity, accent, activeMode, hasRestoredProgress, loading, lessons.length, resumeStorageKey]);
+
+    restoreProgress();
+  }, [loading, lessons, resumeStorageKey, legacyStorageKey, computedExerciseKey, hasRestoredProgress]);
+
+  // Auto-save on page exit / refresh
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      syncDictationProgress();
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [currentLessonIndex, currentSentenceIndex, completedSentences, earnedXp]);
 
   const handleResetDictation = () => {
     if (window.confirm('Bạn có muốn làm lại bài nghe chép này từ câu đầu tiên không?')) {
@@ -484,75 +507,98 @@ export default function ListeningDictation() {
     }
   };
 
-  // Navigation handlers
+  // Navigation handlers with instant position persistence
   const handleNextSentence = () => {
-    if (currentSentenceIndex < (currentLesson.sentences?.length || 1) - 1) {
-      setCurrentSentenceIndex(prev => prev + 1);
+    let nextLesson = currentLessonIndex;
+    let nextSentence = currentSentenceIndex;
+
+    if (currentSentenceIndex < (currentLesson?.sentences?.length || 1) - 1) {
+      nextSentence = currentSentenceIndex + 1;
+      setCurrentSentenceIndex(nextSentence);
     } else if (currentLessonIndex < lessons.length - 1) {
-      setCurrentLessonIndex(prev => prev + 1);
+      nextLesson = currentLessonIndex + 1;
+      nextSentence = 0;
+      setCurrentLessonIndex(nextLesson);
       setCurrentSentenceIndex(0);
-      setExpandedLessons(prev => ({ ...prev, [currentLessonIndex + 1]: true }));
+      setExpandedLessons(prev => ({ ...prev, [nextLesson]: true }));
     }
+
+    syncDictationProgress(completedSentences, earnedXp, {
+      currentLessonIndex: nextLesson,
+      currentSentenceIndex: nextSentence
+    }).catch(() => {});
   };
 
   const handlePrevSentence = () => {
+    let prevLesson = currentLessonIndex;
+    let prevSentence = currentSentenceIndex;
+
     if (currentSentenceIndex > 0) {
-      setCurrentSentenceIndex(prev => prev - 1);
+      prevSentence = currentSentenceIndex - 1;
+      setCurrentSentenceIndex(prevSentence);
     } else if (currentLessonIndex > 0) {
-      const prevLesson = lessons[currentLessonIndex - 1];
-      setCurrentLessonIndex(prev => prev - 1);
-      setCurrentSentenceIndex((prevLesson.sentences?.length || 1) - 1);
-      setExpandedLessons(prev => ({ ...prev, [currentLessonIndex - 1]: true }));
+      prevLesson = currentLessonIndex - 1;
+      const prevLessonObj = lessons[prevLesson];
+      prevSentence = (prevLessonObj?.sentences?.length || 1) - 1;
+      setCurrentLessonIndex(prevLesson);
+      setCurrentSentenceIndex(prevSentence);
+      setExpandedLessons(prev => ({ ...prev, [prevLesson]: true }));
     }
+
+    syncDictationProgress(completedSentences, earnedXp, {
+      currentLessonIndex: prevLesson,
+      currentSentenceIndex: prevSentence
+    }).catch(() => {});
   };
 
-  // Auto-restore dictation progress from practiceProgressService
-  useEffect(() => {
-    if (lessons.length === 0 || hasRestoredProgress) return;
-    async function restore() {
-      try {
-        const saved = await getSingleProgress(computedExerciseKey);
-        if (saved && saved.userAnswersMap) {
-          if (typeof saved.userAnswersMap.currentLessonIndex === 'number') {
-            setCurrentLessonIndex(saved.userAnswersMap.currentLessonIndex);
-          }
-          if (typeof saved.userAnswersMap.currentSentenceIndex === 'number') {
-            setCurrentSentenceIndex(saved.userAnswersMap.currentSentenceIndex);
-          }
-          if (Array.isArray(saved.userAnswersMap.completedList)) {
-            setCompletedSentences(new Set(saved.userAnswersMap.completedList));
-          }
-          if (typeof saved.practiceXp === 'number') {
-            setEarnedXp(saved.practiceXp);
-          }
-        }
-      } catch (e) {}
-      finally {
-        setHasRestoredProgress(true);
-      }
-    }
-    restore();
-  }, [lessons.length, computedExerciseKey, hasRestoredProgress]);
-
-  const syncDictationProgress = async (nextCompleted, nextXp) => {
+  const syncDictationProgress = async (nextCompleted, nextXp, overrides = {}) => {
     const compSet = nextCompleted || completedSentences;
-    await savePracticeProgress({
+    const lessonIdx = overrides.currentLessonIndex !== undefined ? overrides.currentLessonIndex : currentLessonIndex;
+    const sentenceIdx = overrides.currentSentenceIndex !== undefined ? overrides.currentSentenceIndex : currentSentenceIndex;
+    const xpVal = nextXp ?? earnedXp;
+    const totalQ = totalAllSentences || (lessons.reduce((acc, l) => acc + (l.sentences?.length || 0), 0) || 1);
+    const isDone = compSet.size >= totalQ && totalQ > 0;
+
+    const payload = {
       category: 'dictation',
       part: `Part ${partNum}`,
       level: 1,
       exerciseKey: computedExerciseKey,
-      totalQuestions: totalAllSentences || 1,
+      totalQuestions: totalQ,
       completedCount: compSet.size,
       correctCount: compSet.size,
       wrongCount: 0,
-      currentQuestionIdx: currentSentenceIndex,
+      currentQuestionIdx: sentenceIdx,
+      isCompleted: isDone,
       userAnswersMap: {
-        currentLessonIndex,
-        currentSentenceIndex,
+        currentLessonIndex: lessonIdx,
+        currentSentenceIndex: sentenceIdx,
         completedList: Array.from(compSet)
       },
-      practiceXp: nextXp ?? earnedXp
-    });
+      practiceXp: xpVal
+    };
+
+    // 1. Save to practiceProgressService (localStorage mirror + backend MongoDB API)
+    try {
+      await savePracticeProgress(payload);
+    } catch (e) {}
+
+    // 2. Mirror to resumeStorageKey
+    try {
+      const stateObj = JSON.stringify({
+        currentLessonIndex: lessonIdx,
+        currentSentenceIndex: sentenceIdx,
+        completedSentences: Array.from(compSet),
+        earnedXp: xpVal,
+        blankDensity,
+        accent,
+        activeMode,
+        isCompleted: isDone,
+        updatedAt: Date.now()
+      });
+      localStorage.setItem(resumeStorageKey, stateObj);
+      localStorage.setItem(legacyStorageKey, stateObj);
+    } catch (e) {}
   };
 
   const handleExit = async () => {
@@ -566,9 +612,15 @@ export default function ListeningDictation() {
     }, 1200);
   };
 
+  const isLastSentence = currentLessonIndex === lessons.length - 1 && currentSentenceIndex === (currentLesson?.sentences?.length || 1) - 1;
+
   const checkAnswersOrNext = () => {
     if (isSubmitted) {
-      handleNextSentence();
+      if (isLastSentence) {
+        handleExit();
+      } else {
+        handleNextSentence();
+      }
     } else {
       setIsSubmitted(true);
       if (activeMode === 'check') {
@@ -870,6 +922,10 @@ export default function ListeningDictation() {
                                 onClick={() => {
                                   setCurrentLessonIndex(lIdx);
                                   setCurrentSentenceIndex(sIdx);
+                                  syncDictationProgress(completedSentences, earnedXp, {
+                                    currentLessonIndex: lIdx,
+                                    currentSentenceIndex: sIdx
+                                  }).catch(() => {});
                                   setIsSidebarOpen(false);
                                 }}
                                 className={`w-full px-3 py-1.5 rounded-xl text-xs font-heading font-semibold transition-all flex items-center justify-between cursor-pointer ${isCurrentSentence
@@ -1515,7 +1571,7 @@ export default function ListeningDictation() {
             className="px-4 sm:px-6 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-heading font-black text-xs shadow-lg shadow-emerald-500/20 flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer"
           >
             <CheckCircle2 className="w-4 h-4" />
-            <span>{isSubmitted ? 'Câu tiếp theo' : 'Kiểm tra'}</span>
+            <span>{isSubmitted ? (isLastSentence ? '🎉 Hoàn thành bài nghe' : 'Câu tiếp theo') : 'Kiểm tra'}</span>
             <span className="hidden sm:inline font-mono font-normal opacity-80">(Enter)</span>
           </button>
 
