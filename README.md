@@ -16,3 +16,8 @@ Dự án Web App Luyện thi TOEIC Toàn Diện với công nghệ **React 19**,
 ## 🚀 Hướng Dẫn Khởi Chạy:
 - **Backend Node.js**: `cd backend && node src/server.js` (Cổng 5000).
 - **Frontend React Vite**: `cd frontend && npm run dev` (Cổng 3000).
+
+---
+
+### ⚖️ License & Educational Disclaimer
+> **Disclaimer**: This open-source repository is developed strictly for **academic research, educational testing, and portfolio demonstration purposes**. All TOEIC practice test materials, question prompts, and related audio assets are the intellectual property of their respective copyright holders (**Educational Testing Service (ETS)** and **YBM Korea**). No commercial infringement is intended.

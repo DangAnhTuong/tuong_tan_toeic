@@ -5,6 +5,14 @@ Whenever working on this project (Tường Tận TOEIC), AI agents MUST adhere t
 ## 0. Absolute Autonomous Execution & Zero-Permission Standard (DO NOT INTERRUPT)
 - **Full Privilege Pre-Authorization**: The user has permanently granted 100% full authorization for all tasks, shell commands, database updates, code builds, tests, and VPS deployments.
 - **Zero Interruption / No Permission Asking**: AI agents MUST NEVER stop or pause execution to ask the user for permission, step approval, or confirmation. Execute autonomously and continuously from start to finish until the entire task is 100% completed.
+- **Lorin Tan (SpaceX / Cursor) 8-Step Autonomous Standard**:
+  1. **Read Feature Map First**: Before modifying any code, the agent MUST read `FEATURE_MAP.md` to understand routes, UI landmarks, component files, and pedagogical invariants.
+  2. **Playbook & Regression Test Creation**: Whenever fixing a bug or adding a feature, the agent MUST create a regression test in `tests/regressions/` (using `node scripts/generate_regression_test.js`) to guarantee the bug never recurs.
+  3. **Hard Guardrails Compliance**: Code MUST pass `.agent_guardrails/guardrail_check.js` (AST scan: no eval, no secret leaks, no AI junk comments, no Supabase links, preserved navigation query params).
+  4. **Benny Headless Chrome Verification**: For any UI-related changes, run `node scripts/benny_reproduce_bug.mjs <route>` to launch headless Chrome, inspect DOM, take screenshot in `scratch/`, and prove 0 console errors.
+  5. **100/100 PTS Verification Scorecard**: The agent MUST run `npm run verify` (`node scripts/verify_toeic_system.js`) and achieve 100/100 PTS across all 7 rubrics (Guardrails, Unit Tests + Regressions, Controllers, Models, Imports, Media CDN, Headless Chrome).
+  6. **Self-Correction Loop**: If score < 100 PTS, the agent MUST self-correct and re-test. NEVER submit work with failing checks.
+
 
 ## 1. Project Overview & Core Features
 - **Project Name**: Tường Tận TOEIC (`tuong_tan_toeic`)
@@ -27,10 +35,15 @@ Whenever working on this project (Tường Tận TOEIC), AI agents MUST adhere t
    - **Phòng luyện theo Level (`/listen/level-practice`):**
      - **Part 1 & 2 (Single Mode)**: 1 câu hỏi/1 audio clip + Ảnh ETS + 4/3 bong bóng.
      - **Part 3 & 4 (Passage Mode)**: 1 Audio duy nhất điều khiển cụm 3 câu hỏi (e.g. Q32-34), hiển thị dọc 3 câu hỏi cùng lúc, 4 đáp án A-D luôn hiển thị chữ tiếng Anh, thanh điều hướng và ma trận nhóm 300 câu `[ ⊞ Nhóm X/300 ]`.
-   - **Part 1 (538 Câu hỏi ETS Thật — 538 Ảnh Scan Gốc Độc Lập 100%)**:
-     - **Zero Duplicate Standard (538 Ảnh = 538 MD5 Riêng Biệt)**: Tuyệt đối không dùng chung ảnh giữa các câu hỏi. 538 câu hỏi Part 1 được cấp đúng 538 file ảnh riêng biệt `p1_q1.jpg` đến `p1_q538.jpg` tại `/var/www/tuong-tan-toeic/media/listening/part1/` với 538 mã băm MD5 duy nhất (0% trùng lặp).
-     - **100% Pedagogical Coherence (Đồng Bộ Tuyệt Đối Audio - Ảnh - Đáp Án - Giải Thích)**: Bức ảnh của từng câu phản ánh chính xác hành động và bối cảnh được mô tả trong đáp án đúng và 4 phương án A-D. Audio phát đọc 4 phương án tương ứng, và lời giải thích tiếng Việt phân tích chi tiết hình ảnh và các bẫy ETS.
-     - **Bảo Toàn Giữa Level Mode & Topic Mode**: Cả 2 chế độ (5 Levels x 538 câu và 3 Topics x 538 câu) đều đồng bộ cùng 1 nguồn ảnh chuẩn xác từ CDN VPS.
+   - **Part 1 (Chuẩn Hóa Tuyệt Đối 175 Câu Hỏi ETS Thật — Khớp 100% Đậu TOEIC & Self-Hosted CDN)**:
+     - **Authentic ETS Dataset (175 Câu Hỏi Thật)**: Đã thanh lọc toàn diện, loại bỏ triệt để 363 câu rác và ảnh nhân bản xoay vòng cũ. Part 1 bao gồm đúng 175 câu hỏi ETS thật chuẩn xác 100% theo Đậu TOEIC (`dauenglish.com`).
+     - **Phân loại 4 Levels & 4 Topics**:
+       - 4 Levels: Level 1 (27 câu), Level 2 (65 câu), Level 3 (60 câu), Level 4 (23 câu) — TUYỆT ĐỐI không có Level 5.
+       - Topics: Tranh một người (67 câu), Tranh nhiều người (31 câu), Tranh cảnh vật (77 câu, gồm 14 tranh cảnh và 63 tranh vật).
+     - **100% Self-Hosted Authentic Media (Zero Broken Links, Zero Supabase Dependency)**: 175 ảnh scan gốc nét cao (`p1_ets_1` đến `p1_ets_175`) và 175 file audio MP3 gốc được tự host trực tiếp trên VPS tại `/var/www/tuong-tan-toeic/media/listening/part1/`, phục vụ qua Nginx với cache 1 năm.
+     - **100% Pedagogical Coherence (Chấm Dứt Hoàn Toàn Lỗi Râu Ông Nọ Cắm Cằm Bà Kia)**: Bức ảnh thể hiện chính xác hành động trong đáp án đúng, audio phát đọc 4 phương án tương ứng, và lời giải thích tiếng Việt phân tích chi tiết hình ảnh, kèm bản dịch tiếng Việt cho 100% phương án A-D và từ vựng CEFR.
+   - **Part 3 & Part 4 Authentic Graphic Questions (55 Ảnh Scan Bảng Biểu ETS Thật)**:
+     - Toàn bộ 55 câu hỏi có hình ảnh/bảng biểu/sơ đồ (33 câu Part 3, 22 câu Part 4) được trang bị 100% ảnh scan gốc ETS thật tự host tại `/var/www/tuong-tan-toeic/media/listening/graphics/` (thay thế hoàn toàn các file SVG giả lập cũ).
    - **Part 3 Level 1 Dataset (300 Passages = 900 Questions)**:
      - 100 đoạn đầu (Q1 - 300): Bảo toàn 100% dữ liệu gốc từ Web Đậu TOEIC.
      - 200 đoạn sau (Q301 - 900): 200 đoạn ETS bổ sung độc lập 100% (0% trùng lặp nội dung hay kịch bản).
@@ -59,8 +72,13 @@ Whenever working on this project (Tường Tận TOEIC), AI agents MUST adhere t
     - Admin phát thông báo qua `AdminDashboard.jsx` (Tab 📢 Phát Thông Báo): Phân loại tin tức (`announcement`, `update`, `promo`, `system`), mức ưu tiên (`normal`, `high`, `urgent`), đối tượng đích (`all`, `free`, `pro`), ghim lên đầu và đính kèm link chuyển hướng.
     - Học viên nhận thông báo thời gian thực qua biểu tượng Chuông Bell 🔔 trên `Navbar.jsx` (`NotificationDropdown.jsx`): Badge unread đỏ, popover dropdown mượt mà, phân loại Tất cả / Chưa đọc, nút "Đã đọc hết", click xem chi tiết và chuyển hướng.
 11. **Hệ Thống Portfolio & CV Full-Stack Intern Chuẩn ATS (`https://www.danganhtuong.dev`):**
-    - Dự án #1 Flagship: Tường Tận TOEIC (`toeic.danganhtuong.dev`) với link `GitHub (Private)` bảo vệ bản quyền đề thi ETS, 18.200 câu hỏi, 11.785 câu dictation, phòng thi 100vh, VietQR webhooks và CI/CD VPS Linux.
+    - Dự án #1 Flagship: Tường Tận TOEIC (`toeic.danganhtuong.dev`) với link `GitHub (Public)` bảo vệ bản quyền đề thi ETS, 18.200 câu hỏi, 11.785 câu dictation, phòng thi 100vh, VietQR webhooks và CI/CD VPS Linux.
     - CV 1 trang chuẩn quốc tế ATS (Jake's Resume 10pt) được đồng bộ tại `A:\frontend\portfolio\public\Dang_Anh_Tuong_CV.pdf` và `a:\frontend\tuong_tan_toeic\Dang_Anh_Tuong_CV.pdf`. Chi tiết kỹ thuật: Xem [`docs/KI_PORTFOLIO_AND_CV_FULLSTACK_INTERN_ARCHITECTURE.md`](file:///a:/frontend/tuong_tan_toeic/docs/KI_PORTFOLIO_AND_CV_FULLSTACK_INTERN_ARCHITECTURE.md).
+12. **Hệ Thống Creative Portfolio, WebGL 3D Dinosaur & Khung Hoàng Gia Arsenal (`http://localhost:3001/` / `danganhtuong.dev`):**
+    - **Mô hình Khủng Long 3D (Aardonyx) & Liquid Shader**: Raycasting con trỏ chuột thời gian thực, tương tác tháo mũ hé lộ chân dung thật Đặng Anh Tường (`[ RÊ CHUỘT QUA ĐỂ HIỆN MẶT ✦ CLICK THÁO MŨ ]`).
+    - **Khung Hoàng Gia (Royal Luxury Frame) & Dual-Angle Hover Engine**: 16 món vũ khí công nghệ bọc viền vàng kim kép, 4 góc chạm đỉnh kim cương 45°, huy hiệu hoa bách hợp Fleur-de-lis (`⚜`), và cơ chế crossfade hiển thị 2 góc ảnh thực tế của cùng một sản phẩm.
+    - **GPU 60/120 FPS Performance Architecture**: Giảm tải VRAM 85.7% (469.5 MB -> 67.2 MB) và dung lượng 82.6% (33.1 MB -> 5.8 MB) qua Pillow Lanczos downscaling 850px; loại bỏ triệt để `filter: drop-shadow(...)` trên ảnh động và kích hoạt GPU hardware compositing layer (`transform: translateZ(0)`).
+    - **100% Localization & Zero-F1 Standard**: Dọn sạch 100% tàn dư đua xe F1, thay bằng châm ngôn kỹ sư phần mềm (Brier Serif lime highlights: `ARCHITECTING`, `PERFECTION`, `LEGACY`). Chi tiết kỹ thuật: Xem [`docs/KI_DANGANHTUONG_CREATIVE_PORTFOLIO_AND_ROYAL_ARSENAL.md`](file:///a:/frontend/tuong_tan_toeic/docs/KI_DANGANHTUONG_CREATIVE_PORTFOLIO_AND_ROYAL_ARSENAL.md).
 
 ## 3. Critical Fixes & Memory (DO NOT REVERT)
 - **Single Source of Truth cho Progress Index**: Luôn lấy `learnedCount` từ Backend MongoDB làm nguồn dữ liệu chuẩn duy nhất.
@@ -511,3 +529,49 @@ Whenever working on this project (Tường Tận TOEIC), AI agents MUST adhere t
        - Reloads Nginx, restarts PM2 `tuong-tan-toeic-api`, and pings `https://toeic.danganhtuong.dev/` to confirm HTTP 200 OK.
 
 
+
+
+## 13. Quy Trình Càn Quét Tuyển Dụng & Rải CV Số Lượng Lớn (High-Volume Auto-Apply Standard)
+
+- **Quy tắc ngôn ngữ trả lời (Language Matching Invariant)**:
+  - Câu hỏi tuyển dụng bằng tiếng gì -> BẮT BUỘC trả lời 100% bằng thứ tiếng đó.
+  - Form tiếng Anh -> Viết câu trả lời / Cover Letter tiếng Anh chuyên nghiệp. Tuyệt đối không dùng tiếng Việt trả lời câu hỏi tiếng Anh.
+- **Ưu tiên LinkedIn Premium/Gold**:
+  - Tài khoản LinkedIn của Đặng Anh Tường đang kích hoạt gói Gold/Premium (ưu tiên hiển thị hồ sơ ứng viên hàng đầu). Cần tập trung càn quét tối đa các job có nút Easy Apply trên LinkedIn TP.HCM.
+- **Quy chuẩn điền form (No Search-and-Leave)**:
+  - Tuyệt đối không mở trang tìm kiếm rồi để người dùng tự làm. Phải click trực tiếp vào từng bài đăng, bấm Apply, điền đầy đủ 100% thông tin và để sẵn ở bước cuối cùng (Review / Submit).
+
+- **Thực tế ứng viên (Đặng Anh Tường)**: Đang trong giai đoạn nước rút tìm việc thực tập, chưa có thư mời phỏng vấn, cần tối đa hóa phễu chuyển đổi bằng cách **ứng tuyển số lượng lớn (Volume Game)**, tuyệt đối KHÔNG chọn lọc nhỏ giọt từng job lẻ tẻ (1-2 job/phiên).
+- **Nguyên tắc phân loại theo hạng mục (CHỈ TẬP TRUNG 2 MẢNG CỐT LÕI - CẬP NHẬT 19/10/2026)**:
+  1. **Mảng 1: Full-Stack Web Developer** (React, Next.js, Node.js Express, MongoDB, MERN Stack, JavaScript, TypeScript, Web 3D Three.js/WebGL).
+  2. **Mảng 2: AI Vibe Coding / AI Developer / LLM / Agentic AI / Prompt Engineering** (RAG Retrieval, AI Plugins, Tool Harness, Agentic Backend, LLM Fine-Tuning, AI Code Evaluation, AI-native web).
+  - 🛑 **DANH MỤC CẤM TUYỆT ĐỐI (KHÔNG BAO GIỜ ĐƯỢC TÌM HAY ĐỀ XUẤT):**
+    * ❌ CẤM IT Support, Helpdesk, Service Desk, IT Technician (sửa máy in, cài win, tài sản IT).
+    * ❌ CẤM Kỹ thuật phần cứng, sửa chữa mạng văn phòng, bấm dây mạng.
+    * ❌ CẤM Vi mạch, bán dẫn, điện tử phần cứng (Semiconductor, RTL Design, SoC, Analog/Digital Hardware).
+    * ❌ CẤM Tự động hóa nhà máy, công nghiệp (PLC, Siemens, cơ khí chế tạo máy).
+    * ❌ CẤM QA Manual nhập liệu chay không đụng code / không liên quan AI.
+    * ❌ CẤM mọi công việc phi kỹ thuật: Kế toán, Tuyển dụng/HR, Sales, Marketing, C&B, Admin.
+  - 📍 **ĐỊA BÀN BẮT BUỘC:** 100% TP. Hồ Chí Minh (hoặc Remote Việt Nam). Tuyệt đối KHÔNG nộp Hà Nội, Đà Nẵng, nước ngoài.
+  - 🛡️ **KINH NGHIỆM:** Intern / Fresher / Junior (< 1-2 năm). Sinh viên năm cuối ĐH Thủy Lợi CS2 (0 năm kn thương mại, đồ án thực chiến lớn). Loại bỏ job đòi 3-5+ năm kn thương mại.
+  - 🚫 **CHỐNG TRÙNG LẶP:** 0% trùng với 360+ công ty đã nộp trong `job_search_strategy_and_tracker.md`.
+- **Quy trình càn quét tự động (Auto-Fill & Submit Proof)**:
+  - Agent quét vét cạn TẤT CẢ các job intern/fresher chuẩn Fullstack & AI đang mở tại TP.HCM trên LinkedIn, TopCV, ITviec.
+  - Tự động mở tab trình duyệt, bấm Apply, tự động điền form, tự động viết câu trả lời câu hỏi phụ (screening questions) bằng tiếng Anh/Việt bám sát JD và CV của Tường, đính kèm file CV `A:\DANGANHTUONG_CV.pdf`.
+  - Nộp đơn và chụp ảnh xác nhận lưu vào artifacts/proof.
+  - Tường kiểm soát toàn diện và không bị làm phiền bởi các câu hỏi thủ công thông thường.
+
+
+## 14. Học Liệu Đề Thi, Thẩm Định Nguồn Gốc & Hồ Sơ Báo Cáo Chuyên Đề CNTT (DO NOT REVERT)
+- **Hồ Sơ Báo Cáo Word Chuyên Đề CNTT**:
+  - File chính thức: `A:\anhapp\Bao_cao_de_tai_cdcntt_danganhtuong.docx` (9 chương, 36.135 ký tự, 7.276 từ).
+  - Tác giả: Đặng Anh Tường — MSSV: `2351067120` — Lớp: `S26-65CNTT` — Trường Đại học Thủy Lợi.
+  - GVHD: ThS. Hoàng Văn Qúy.
+  - Tên đề tài chốt: *"XÂY DỰNG HỆ THỐNG HỌC VÀ THI TOEIC TRỰC TUYẾN TOÀN DIỆN ỨNG DỤNG CÔNG NGHỆ WEB HIỆN ĐẠI"* (hoặc các phương án thực tế: MERN Stack, 'Tường Tận TOEIC' + SM-2, Nghe Chép Chính Tả + Ghi Nhớ Ngắt Quãng).
+- **Minh Chứng Nguồn Gốc Học Liệu (Data Provenance)**:
+  - Bản quyền ETS & YBM Books: ETS nắm giữ bản quyền đề thi; YBM phát hành sách in và phát hành miễn phí Audio MP3 chính thức tại `ybmbooks.com` (도서자료실).
+  - Benchmark Học thuật: Kaggle Riiid AIEd Challenge / EdNet (`questions.csv` 13.523 câu ETS thật, `train.csv` 100M+ tương tác).
+  - Học liệu mở OER & Kho Drive: `https://drive.google.com/drive/folders/1SpDCZmoVs1idOouoEtQ069o9SYJKCGy3` (`tailieutoeictuvo` chia sẻ trọn bộ ETS 2024 Audio/Script), Halo English, Tiếng Anh Thầy Quý. Bản scan sách gốc lưu tại `A:\frontend\tuong_tan_toeic\ets_download\`.
+  - Tham chiếu thực nghiệm: Đối soát và lấy dữ liệu bóc tách, transcript và 100% giải thích tiếng Việt từ Đậu TOEIC (`dauenglish.com`).
+  - Tự chủ Media: 100% Audio và ảnh scan tự host tại `/var/www/tuong-tan-toeic/media/` trên VPS Linux, zero-dependency.
+  - Chi tiết kỹ thuật: Xem [`docs/KI_ACADEMIC_DEFENSE_DATA_PROVENANCE_AND_REPORT.md`](file:///a:/frontend/tuong_tan_toeic/docs/KI_ACADEMIC_DEFENSE_DATA_PROVENANCE_AND_REPORT.md).
