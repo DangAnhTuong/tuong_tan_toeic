@@ -42,6 +42,7 @@ export default function TraTuPage() {
   // Audio / Mic state
   const [isListening, setIsListening] = useState(false);
   const [speechSupported, setSpeechSupported] = useState(true);
+  const [micErrorMsg, setMicErrorMsg] = useState('');
   const [isSpeakingSource, setIsSpeakingSource] = useState(false);
   const [isSpeakingTarget, setIsSpeakingTarget] = useState(false);
 
@@ -74,6 +75,7 @@ export default function TraTuPage() {
 
   const recognitionRef = useRef(null);
   const debounceTimerRef = useRef(null);
+  const silenceTimerRef = useRef(null);
   const textareaRef = useRef(null);
 
   // Check Web Speech API support
@@ -82,6 +84,28 @@ export default function TraTuPage() {
     if (!SpeechRecognition) {
       setSpeechSupported(false);
     }
+  }, []);
+
+  // Cleanup microphone on tab blur, visibility change, or page unmount
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden && recognitionRef.current) {
+        try { recognitionRef.current.stop(); } catch (e) {}
+        setIsListening(false);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('beforeunload', handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('beforeunload', handleVisibilityChange);
+      if (recognitionRef.current) {
+        try { recognitionRef.current.stop(); } catch (e) {}
+      }
+      if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
+    };
   }, []);
 
   // Sync history to localStorage
@@ -251,50 +275,81 @@ export default function TraTuPage() {
     }
   };
 
-  // Speech-to-Text Microphone Handler
+  // Speech-to-Text Microphone Handler (Upgraded with Multi-Tab Protection & Buffer)
   const toggleListening = () => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
-      alert('Trình duyệt của bạn chưa hỗ trợ nhận diện giọng nói Web Speech API. Vui lòng dùng Google Chrome hoặc Microsoft Edge!');
+      setMicErrorMsg('Trình duyệt của bạn chưa hỗ trợ nhận diện giọng nói Web Speech API. Vui lòng dùng Google Chrome hoặc Microsoft Edge!');
       return;
     }
+
+    setMicErrorMsg('');
 
     if (isListening) {
       if (recognitionRef.current) {
         try { recognitionRef.current.stop(); } catch (e) {}
       }
       setIsListening(false);
+      if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
       return;
     }
 
     try {
+      // Abort any old hanging instance
+      if (recognitionRef.current) {
+        try { recognitionRef.current.abort(); } catch (e) {}
+      }
+
       const recognition = new SpeechRecognition();
-      recognition.continuous = false;
+      recognition.continuous = true;
       recognition.interimResults = true;
-      // Language: vi-VN for Vietnamese, en-US for English
-      recognition.lang = sourceLang === 'vi' ? 'vi-VN' : (sourceLang === 'en' ? 'en-US' : (detectedLang === 'vi' ? 'vi-VN' : 'en-US'));
+      recognition.maxAlternatives = 1;
+      
+      const langToUse = sourceLang === 'vi' ? 'vi-VN' : (sourceLang === 'en' ? 'en-US' : (detectedLang === 'vi' ? 'vi-VN' : 'en-US'));
+      recognition.lang = langToUse;
 
       recognition.onstart = () => {
         setIsListening(true);
+        setMicErrorMsg('');
       };
 
       recognition.onresult = (event) => {
-        let transcript = '';
-        for (let i = event.resultIndex; i < event.results.length; ++i) {
-          transcript += event.results[i][0].transcript;
+        let fullTranscript = '';
+        for (let i = 0; i < event.results.length; ++i) {
+          fullTranscript += event.results[i][0].transcript;
         }
-        if (transcript) {
-          setInputText(transcript);
+
+        if (fullTranscript) {
+          setInputText(fullTranscript);
+
+          // Reset silence timer on every new speech piece (auto-stop after 2.2s silence)
+          if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
+          silenceTimerRef.current = setTimeout(() => {
+            if (recognitionRef.current) {
+              try { recognitionRef.current.stop(); } catch (e) {}
+            }
+          }, 2200);
         }
       };
 
       recognition.onerror = (event) => {
         console.warn('Speech recognition error:', event.error);
+        if (event.error === 'not-allowed') {
+          setMicErrorMsg('⚠️ Quyền Microphone bị chặn. Vui lòng bấm vào biểu tượng ổ khóa 🔒 trên thanh địa chỉ để Cho phép (Allow) Microphone!');
+        } else if (event.error === 'audio-capture') {
+          setMicErrorMsg('⚠️ Không thể bắt tín hiệu Microphone: Thiết bị đang bị một Tab trình duyệt khác hoặc ứng dụng khác chiếm dụng. Vui lòng đóng/tắt mic ở tab kia!');
+        } else if (event.error === 'no-speech') {
+          setMicErrorMsg('Chưa nghe thấy giọng nói. Vui lòng thử nói to hơn hoặc ghé sát micro!');
+        } else if (event.error !== 'aborted') {
+          setMicErrorMsg(`Lỗi nhận diện âm thanh: ${event.error}`);
+        }
         setIsListening(false);
+        if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
       };
 
       recognition.onend = () => {
         setIsListening(false);
+        if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
         // Translate immediately after speech stops
         if (textareaRef.current && textareaRef.current.value.trim()) {
           executeTranslate(textareaRef.current.value.trim(), sourceLang, targetLang);
@@ -305,6 +360,7 @@ export default function TraTuPage() {
       recognition.start();
     } catch (err) {
       console.error('Cannot start SpeechRecognition:', err);
+      setMicErrorMsg('Không thể khởi động Microphone: ' + err.message);
       setIsListening(false);
     }
   };
@@ -576,6 +632,22 @@ export default function TraTuPage() {
                       className="px-2.5 py-1 rounded-lg bg-rose-500 text-white text-xs font-bold hover:bg-rose-600 transition-colors"
                     >
                       Dừng
+                    </button>
+                  </div>
+                )}
+
+                {/* Microphone Error Alert Banner */}
+                {micErrorMsg && (
+                  <div className="my-2 p-3 rounded-2xl bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs flex items-center justify-between gap-2 animate-fadeIn">
+                    <div className="flex items-center gap-2">
+                      <Info className="w-4 h-4 shrink-0 text-amber-400" />
+                      <span>{micErrorMsg}</span>
+                    </div>
+                    <button
+                      onClick={() => setMicErrorMsg('')}
+                      className="p-1 rounded-md hover:bg-amber-500/20 text-amber-400 transition-colors shrink-0"
+                    >
+                      <X className="w-3.5 h-3.5" />
                     </button>
                   </div>
                 )}
@@ -930,3 +1002,4 @@ export default function TraTuPage() {
     </div>
   );
 }
+
