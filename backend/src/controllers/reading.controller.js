@@ -77,11 +77,55 @@ exports.getReadingExerciseById = async (req, res) => {
     }
 
     if (!exercise) {
+      // Support topic slug like "p5topic_vocab", "p5topic_pos", "p5topic_verb", "p5topic_advanced"
+      if (id.startsWith('p5topic_') || id.includes('topic_')) {
+        exercise = await ReadingExercise.findOne({
+          part: 'Part 5',
+          slug: id,
+          'questions.0': { $exists: true }
+        });
+
+        if (!exercise) {
+          const topicKey = id.replace(/^p\d+topic_/, '').replace(/^topic_/, '').toLowerCase();
+          const topicMap = {
+            'vocab': /^từ vựng/i,
+            'pos': /^từ loại/i,
+            'verb': /động từ/i,
+            'advanced': /nâng cao/i
+          };
+          const topicRegex = topicMap[topicKey] || new RegExp(topicKey, 'i');
+          exercise = await ReadingExercise.findOne({
+            part: 'Part 5',
+            'questions.0': { $exists: true },
+            $or: [
+              { topic: topicRegex },
+              { title: topicRegex }
+            ]
+          });
+        }
+      }
+    }
+
+    if (!exercise && req.query.topic) {
+      const partNum = req.query.part ? String(req.query.part).replace(/[^0-9]/g, '') : '5';
+      exercise = await ReadingExercise.findOne({
+        part: `Part ${partNum}`,
+        'questions.0': { $exists: true },
+        $or: [
+          { slug: id },
+          { topic: new RegExp(req.query.topic, 'i') },
+          { title: new RegExp(req.query.topic, 'i') }
+        ]
+      });
+    }
+
+    if (!exercise) {
       exercise = await ReadingExercise.findOne({
         $or: [
           { slug: id },
           { topic: id },
-          { title: new RegExp(`^${id}`, 'i') }
+          { title: new RegExp(`^${id}`, 'i') },
+          { topic: new RegExp(id, 'i') }
         ]
       });
     }

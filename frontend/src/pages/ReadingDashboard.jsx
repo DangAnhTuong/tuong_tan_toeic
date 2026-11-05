@@ -36,10 +36,53 @@ import { getPracticeProgress, resetPracticeProgress } from '../services/practice
 import { getBasketWords, removeWordFromBasket } from '../services/vocabBasketService';
 import { getStoredUser, setStoredUser } from '../utils/auth';
 
+// ── 15 Authentic Grammar Topics across 3 Categories (1,843 questions total) ──
+export const GRAMMAR_CATEGORIES = [
+  {
+    id: 'tu-loai',
+    title: 'Từ loại',
+    topicsCount: 3,
+    totalQuestions: 554,
+    topics: [
+      { slug: 'nouns', title: 'Danh từ', total: 287 },
+      { slug: 'adjectives', title: 'Tính từ', total: 130 },
+      { slug: 'adverbs', title: 'Trạng từ', total: 137 }
+    ]
+  },
+  {
+    id: 'dong-tu',
+    title: 'Động từ',
+    topicsCount: 6,
+    totalQuestions: 582,
+    topics: [
+      { slug: 'verb-tenses', title: 'Thì', total: 113 },
+      { slug: 'subject-verb-agreement', title: 'Hòa hợp chủ ngữ – động từ', total: 129 },
+      { slug: 'active-and-passive-voice', title: 'Chủ động – bị động', total: 113 },
+      { slug: 'gerunds', title: 'Danh động từ', total: 76 },
+      { slug: 'imperatives', title: 'Câu mệnh lệnh', total: 14 },
+      { slug: 'verb-forms', title: 'Dạng động từ', total: 137 }
+    ]
+  },
+  {
+    id: 'ngu-phap-khac',
+    title: 'Ngữ pháp khác',
+    topicsCount: 6,
+    totalQuestions: 707,
+    topics: [
+      { slug: 'pronouns', title: 'Đại từ', total: 145 },
+      { slug: 'comparisons', title: 'So sánh', total: 164 },
+      { slug: 'conjunctions-and-prepositions', title: 'Liên từ giới từ', total: 151 },
+      { slug: 'relative-clauses', title: 'Mệnh đề quan hệ', total: 156 },
+      { slug: 'conditionals', title: 'Câu điều kiện', total: 37 },
+      { slug: 'adverb-clauses', title: 'Mệnh đề trạng ngữ', total: 54 }
+    ]
+  }
+];
+
 export default function ReadingDashboard() {
   usePageTitle(
-    'Luyện Đọc TOEIC Part 5 6 7 — 13.622 Câu Hỏi ETS Có Giải Thích Chi Tiết',
-    'Luyện thi TOEIC Reading toàn diện Part 5, Part 6 và Part 7 trọn bộ 5 level với mẹo 3 giây, giải thích ngữ pháp chi tiết tiếng Việt và dịch nghĩa từng câu.'
+    'Luyện Đọc TOEIC Part 5 6 7 — Ôn Ngữ Pháp & 8 Cấp Độ Đậu TOEIC',
+    'Chinh phục TOEIC Reading từ dễ đến khó. Ôn ngữ pháp theo chủ điểm và luyện Part 5–7 theo 8 level, từ dưới 300 tới trên 900 điểm.'
   );
 
   const { requireAuth, isPro: authIsPro, refreshProfile } = useAuth();
@@ -53,28 +96,55 @@ export default function ReadingDashboard() {
   const [searchParams, setSearchParams] = useSearchParams();
   
   // URL Params Synchronization on initial load & back button
-  const urlMode = searchParams.get('mode') || 'practice';
-  const urlPart = searchParams.get('part') || 'Part 5';
-  const urlSubTab = searchParams.get('subTab') || 'chudiem';
-  const urlLevel = parseInt(searchParams.get('level'), 10) || 1;
+  const getInitialState = () => {
+    const curMode = searchParams.get('mode') || searchParams.get('tab');
+    const curPart = searchParams.get('part');
+    if (curMode === 'grammar' || curPart === 'grammar') {
+      return { mode: 'grammar', part: 'Part 5' };
+    }
+    if (curMode === 'bilingual') {
+      return { mode: 'bilingual', part: 'Part 5' };
+    }
+    if (curPart) {
+      const num = curPart.replace(/[^0-9]/g, '');
+      let p = 'Part 5';
+      if (num === '6') p = 'Part 6';
+      else if (num === '7') p = 'Part 7';
+      return { mode: 'practice', part: p };
+    }
+    // Default to 'grammar' tab matching Dau English
+    return { mode: 'grammar', part: 'Part 5' };
+  };
 
-  const [activeMode, setActiveMode] = useState(urlMode); // 'practice' | 'grammar' | 'bilingual'
-  const [selectedPart, setSelectedPart] = useState(urlPart); // 'Part 5' | 'Part 6' | 'Part 7'
-  const [grammarSubTab, setGrammarSubTab] = useState(urlSubTab); // 'chudiem' | 'tonghop' | 'capdo' | 'tiendo'
-  const [bilingualLevel, setBilingualLevel] = useState(urlLevel); // 1 | 2 | 3 | 4 | 5
+  const initial = getInitialState();
+  const [activeMode, setActiveMode] = useState(initial.mode); // 'practice' | 'grammar' | 'bilingual'
+  const [selectedPart, setSelectedPart] = useState(initial.part); // 'Part 5' | 'Part 6' | 'Part 7'
+  const [grammarFilter, setGrammarFilter] = useState(searchParams.get('filter') || searchParams.get('subTab') || 'all');
+  const [bilingualLevel, setBilingualLevel] = useState(parseInt(searchParams.get('level'), 10) || 1);
   const [searchTerm, setSearchTerm] = useState('');
-  const [targetBand, setTargetBand] = useState('all'); // 'all' | '350-500' | '500-650' | '650-800' | '800-990'
 
   // Keep state synced on browser Back / Forward buttons
   useEffect(() => {
-    const curMode = searchParams.get('mode') || 'practice';
-    const curPart = searchParams.get('part') || 'Part 5';
-    const curSubTab = searchParams.get('subTab') || 'chudiem';
+    const curMode = searchParams.get('mode') || searchParams.get('tab');
+    const curPart = searchParams.get('part');
+    const curFilter = searchParams.get('filter') || searchParams.get('subTab') || 'all';
     const curLevel = parseInt(searchParams.get('level'), 10) || 1;
 
-    setActiveMode(curMode);
-    setSelectedPart(curPart);
-    setGrammarSubTab(curSubTab);
+    if (curMode === 'grammar' || curPart === 'grammar') {
+      setActiveMode('grammar');
+    } else if (curMode === 'bilingual') {
+      setActiveMode('bilingual');
+    } else if (curPart) {
+      setActiveMode('practice');
+      const num = curPart.replace(/[^0-9]/g, '');
+      if (num === '6') setSelectedPart('Part 6');
+      else if (num === '7') setSelectedPart('Part 7');
+      else setSelectedPart('Part 5');
+    } else {
+      setActiveMode('grammar');
+    }
+
+    setGrammarFilter(curFilter);
     setBilingualLevel(curLevel);
   }, [searchParams]);
 
@@ -161,24 +231,33 @@ export default function ReadingDashboard() {
   }, []);
 
   // Sync mode & sub-filters with URL
-  const handleModeChange = (mode) => {
-    setActiveMode(mode);
-    setSearchParams({ mode, part: selectedPart, subTab: grammarSubTab, level: bilingualLevel }, { replace: true });
-  };
-
-  const handlePartChange = (part) => {
+  const handlePartSelect = (part) => {
+    setActiveMode('practice');
     setSelectedPart(part);
-    setSearchParams({ mode: activeMode, part, subTab: grammarSubTab, level: bilingualLevel }, { replace: true });
+    const num = part.replace(/[^0-9]/g, '');
+    setSearchParams({ part: num }, { replace: true });
   };
 
-  const handleGrammarSubTabChange = (subTab) => {
-    setGrammarSubTab(subTab);
-    setSearchParams({ mode: activeMode, part: selectedPart, subTab, level: bilingualLevel }, { replace: true });
+  const handleModeSelect = (mode) => {
+    setActiveMode(mode);
+    if (mode === 'grammar') {
+      setSearchParams({ mode: 'grammar', filter: grammarFilter }, { replace: true });
+    } else if (mode === 'bilingual') {
+      setSearchParams({ mode: 'bilingual', level: bilingualLevel }, { replace: true });
+    } else {
+      const num = selectedPart.replace(/[^0-9]/g, '');
+      setSearchParams({ part: num }, { replace: true });
+    }
+  };
+
+  const handleGrammarFilterChange = (filter) => {
+    setGrammarFilter(filter);
+    setSearchParams({ mode: 'grammar', filter }, { replace: true });
   };
 
   const handleBilingualLevelChange = (level) => {
     setBilingualLevel(level);
-    setSearchParams({ mode: activeMode, part: selectedPart, subTab: grammarSubTab, level }, { replace: true });
+    setSearchParams({ mode: 'bilingual', level }, { replace: true });
   };
 
   // 1. Fetch Practice Levels for Part 5, 6, 7
@@ -237,86 +316,38 @@ export default function ReadingDashboard() {
     }
   }, [bilingualLevel, activeMode]);
 
+  // Exact question totals matching authentic Đậu TOEIC question bank
   const defaultTotals = {
-    'Part 5': [462, 462, 462, 462, 462],
-    'Part 6': [248, 248, 248, 248, 244],
-    'Part 7': [661, 782, 862, 901, 952]
+    'Part 5': [282, 217, 284, 348, 396, 315, 242, 166],
+    'Part 6': [4, 20, 48, 288, 416, 260, 132, 32],
+    'Part 7': [13, 67, 248, 558, 1207, 1276, 603, 78]
   };
 
   const defaultAttempts = {
-    'Part 5': [785, 492, 284, 142, 64],
-    'Part 6': [458, 312, 194, 105, 42],
-    'Part 7': [396, 264, 168, 86, 31]
+    'Part 5': [2124, 1934, 2634, 1838, 2890, 2210, 1640, 1080],
+    'Part 6': [932, 879, 1028, 727, 1420, 1150, 890, 640],
+    'Part 7': [788, 723, 1111, 545, 1870, 1540, 1190, 820]
   };
 
-  const levelCards = [
-    { 
-      id: 1, 
-      name: 'Level 1 — Dễ', 
-      rate: 'Tỉ lệ sai 2% - 17%', 
-      isPro: false, 
-      completed: 0, 
-      correct: 0, 
-      wrong: 0, 
-      total: levelData.find(e => e.level === 1)?.totalQuestions || defaultTotals[selectedPart]?.[0] || 462, 
-      attempts: levelData.find(e => e.level === 1)?.attemptsCount || defaultAttempts[selectedPart]?.[0] || 785,
-      color: 'emerald' 
-    },
-    { 
-      id: 2, 
-      name: 'Level 2 — Cơ bản', 
-      rate: 'Tỉ lệ sai 17% - 27%', 
-      isPro: false, 
-      completed: 0, 
-      correct: 0, 
-      wrong: 0, 
-      total: levelData.find(e => e.level === 2)?.totalQuestions || defaultTotals[selectedPart]?.[1] || 462, 
-      attempts: levelData.find(e => e.level === 2)?.attemptsCount || defaultAttempts[selectedPart]?.[1] || 492,
-      color: 'blue' 
-    },
-    { 
-      id: 3, 
-      name: 'Level 3 — Trung bình', 
-      rate: 'Tỉ lệ sai 27% - 38%', 
-      isPro: true, 
-      completed: 0, 
-      correct: 0, 
-      wrong: 0, 
-      total: levelData.find(e => e.level === 3)?.totalQuestions || defaultTotals[selectedPart]?.[2] || 462, 
-      attempts: levelData.find(e => e.level === 3)?.attemptsCount || defaultAttempts[selectedPart]?.[2] || 284,
-      color: 'amber' 
-    },
-    { 
-      id: 4, 
-      name: 'Level 4 — Khó', 
-      rate: 'Tỉ lệ sai 38% - 51%', 
-      isPro: true, 
-      completed: 0, 
-      correct: 0, 
-      wrong: 0, 
-      total: levelData.find(e => e.level === 4)?.totalQuestions || defaultTotals[selectedPart]?.[3] || 462, 
-      attempts: levelData.find(e => e.level === 4)?.attemptsCount || defaultAttempts[selectedPart]?.[3] || 142,
-      color: 'orange' 
-    },
-    { 
-      id: 5, 
-      name: 'Level 5 — Rất khó', 
-      rate: 'Tỉ lệ sai 51% - 87%', 
-      isPro: true, 
-      completed: 0, 
-      correct: 0, 
-      wrong: 0, 
-      total: levelData.find(e => e.level === 5)?.totalQuestions || defaultTotals[selectedPart]?.[4] || 462, 
-      attempts: levelData.find(e => e.level === 5)?.attemptsCount || defaultAttempts[selectedPart]?.[4] || 64,
-      color: 'rose' 
-    }
+  const levelConfigs = [
+    { id: 1, name: 'Level 1', rate: 'Dưới 300 điểm', isPro: false, color: 'emerald' },
+    { id: 2, name: 'Level 2', rate: '300–400 điểm', isPro: true, color: 'blue' },
+    { id: 3, name: 'Level 3', rate: '400–500 điểm', isPro: false, color: 'amber' },
+    { id: 4, name: 'Level 4', rate: '500–600 điểm', isPro: false, color: 'orange' },
+    { id: 5, name: 'Level 5', rate: '600–700 điểm', isPro: true, color: 'purple' },
+    { id: 6, name: 'Level 6', rate: '700–800 điểm', isPro: false, color: 'cyan' },
+    { id: 7, name: 'Level 7', rate: '800–900 điểm', isPro: true, color: 'rose' },
+    { id: 8, name: 'Level 8', rate: 'Trên 900 điểm', isPro: false, color: 'indigo' }
   ];
 
-  // Filter grammar by search
-  const filteredGrammar = grammarList.filter(g => 
-    g.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    (g.subTitle && g.subTitle.toLowerCase().includes(searchTerm.toLowerCase()))
-  );
+  const levelCards = levelConfigs.map((cfg, idx) => ({
+    ...cfg,
+    completed: 0,
+    correct: 0,
+    wrong: 0,
+    total: levelData.find(e => e.level === cfg.id)?.totalQuestions || defaultTotals[selectedPart]?.[idx] || 100,
+    attempts: levelData.find(e => e.level === cfg.id)?.attemptsCount || defaultAttempts[selectedPart]?.[idx] || 1500
+  }));
 
   return (
     <div className="min-h-screen dark:bg-[#0b1120] bg-[#f8fafc] dark:text-slate-100 text-slate-900 flex flex-col font-sans pb-12 transition-colors duration-200">
@@ -324,111 +355,72 @@ export default function ReadingDashboard() {
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         
-        {/* HERO BANNER READING */}
-        <div className="relative overflow-hidden rounded-3xl glass-panel border dark:border-slate-800 border-slate-200 p-8 md:p-10 dark:bg-gradient-to-r dark:from-emerald-950/40 dark:via-[#0f172a] dark:to-[#0b1120] bg-gradient-to-r from-emerald-50 via-white to-teal-50/60 shadow-xl dark:shadow-2xl">
-          <div className="absolute top-0 right-0 -mt-12 -mr-12 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+        {/* HERO BANNER READING — EXACT MATCH ĐẬU TOEIC */}
+        <div className="relative overflow-hidden rounded-3xl glass-panel border dark:border-slate-800 border-slate-200 p-8 md:p-10 dark:bg-gradient-to-r dark:from-blue-950/30 dark:via-[#0f172a] dark:to-[#0b1120] bg-gradient-to-r from-blue-50/70 via-white to-sky-50/50 shadow-xl dark:shadow-2xl">
+          <div className="absolute top-0 right-0 -mt-12 -mr-12 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
           
           <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="space-y-3 text-center md:text-left">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full dark:bg-emerald-500/10 bg-emerald-100 border dark:border-emerald-500/30 border-emerald-300 text-emerald-700 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full dark:bg-blue-500/10 bg-blue-100 border dark:border-blue-500/30 border-blue-300 text-blue-700 dark:text-blue-400 text-xs font-bold uppercase tracking-wider">
                 <BookOpen className="w-3.5 h-3.5" />
-                <span>LUYỆN ĐỌC TOEIC TOÀN DIỆN</span>
+                <span>Luyện đọc TOEIC</span>
               </div>
               <h1 className="text-3xl md:text-4xl font-extrabold font-heading dark:text-white text-slate-900 tracking-tight">
-                Chinh phục <span className="text-emerald-600 dark:text-emerald-400">TOEIC Reading</span> từ dễ đến khó
+                Chinh phục <span className="text-blue-600 dark:text-blue-400">TOEIC Reading</span> từ dễ đến khó
               </h1>
               <p className="dark:text-slate-400 text-slate-600 text-sm max-w-xl">
-                13.622 câu hỏi ETS Part 5–7 theo 5 cấp độ, 14 chuyên đề ngữ pháp trọng điểm (997 câu) và 31 bài đọc song ngữ Anh–Việt.
+                Ôn ngữ pháp theo chủ điểm và luyện Part 5–7 theo 8 level, từ dưới 300 tới trên 900 điểm.
               </p>
             </div>
 
-            {/* Target Score Selector in Hero */}
-            <div className="flex flex-col items-center sm:items-end gap-2 shrink-0">
-              <span className="text-[10px] font-bold dark:text-slate-400 text-slate-500 uppercase tracking-wider">Lọc Theo Mục Tiêu:</span>
-              <div className="flex items-center gap-1.5 p-1 rounded-2xl dark:bg-slate-900 bg-white border dark:border-slate-800 border-slate-200 shadow-sm">
-                {[
-                  { id: 'all', label: 'Tất cả' },
-                  { id: '350-500', label: '350-500' },
-                  { id: '500-650', label: '500-650' },
-                  { id: '650-800', label: '650-800' },
-                  { id: '800-990', label: '800+' }
-                ].map((band) => (
-                  <button
-                    key={band.id}
-                    onClick={() => setTargetBand(band.id)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                      targetBand === band.id
-                        ? 'bg-emerald-500 text-slate-950 font-extrabold shadow-md'
-                        : 'dark:text-slate-400 text-slate-600 hover:text-emerald-600 dark:hover:text-white'
-                    }`}
-                  >
-                    {band.label}
-                  </button>
-                ))}
-              </div>
+            {/* Book Icon matching Dau English */}
+            <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-blue-600 dark:bg-blue-500 shadow-xl shadow-blue-500/30 flex items-center justify-center shrink-0">
+              <BookOpen className="w-8 h-8 md:w-10 md:h-10 text-white" />
             </div>
           </div>
         </div>
 
-        {/* 3 MAIN MODE TABS (Luyện đề vs Ngữ pháp vs Đọc song ngữ) */}
-        <div className="flex items-center gap-3 border-b dark:border-slate-800 border-slate-200 pb-4 overflow-x-auto">
+        {/* SINGLE ROW TABS BAR — EXACT MATCH ĐẬU TOEIC [Ngữ pháp] [Part 5] [Part 6] [Part 7] [Đọc song ngữ] */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-1">
           {[
-            { id: 'practice', label: '📄 Luyện đề', badge: '13.622 câu ETS' },
-            { id: 'grammar', label: '📖 Ngữ pháp', badge: '14 chuyên đề' },
-            { id: 'bilingual', label: '🔤 Đọc song ngữ', badge: '31 bài đọc' }
-          ].map((mode) => (
-            <button
-              key={mode.id}
-              onClick={() => handleModeChange(mode.id)}
-              className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shrink-0 ${
-                activeMode === mode.id
-                  ? 'bg-emerald-500 text-slate-950 shadow-lg shadow-emerald-500/20 font-extrabold'
-                  : 'dark:bg-slate-900 bg-white border dark:border-slate-800 border-slate-200 dark:text-slate-400 text-slate-600 hover:text-emerald-600 dark:hover:text-white hover:border-emerald-500/40 shadow-sm'
-              }`}
-            >
-              <span>{mode.label}</span>
-              <span className={`px-1.5 py-0.5 rounded text-[10px] ${activeMode === mode.id ? 'bg-emerald-600 text-white' : 'dark:bg-slate-800 bg-slate-100 dark:text-slate-400 text-slate-600'}`}>
-                {mode.badge}
-              </span>
-            </button>
-          ))}
+            { id: 'grammar', label: 'Ngữ pháp', isMode: true },
+            { id: 'Part 5', label: 'Part 5', part: 'Part 5' },
+            { id: 'Part 6', label: 'Part 6', part: 'Part 6' },
+            { id: 'Part 7', label: 'Part 7', part: 'Part 7' },
+            { id: 'bilingual', label: 'Đọc song ngữ', isMode: true }
+          ].map((tab) => {
+            const isActive = tab.isMode
+              ? activeMode === tab.id
+              : activeMode === 'practice' && selectedPart === tab.part;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => {
+                  if (tab.isMode) {
+                    handleModeSelect(tab.id);
+                  } else {
+                    handlePartSelect(tab.part);
+                  }
+                }}
+                className={`px-6 py-2 rounded-full text-sm font-bold transition-all shrink-0 cursor-pointer ${
+                  isActive
+                    ? 'bg-blue-600 text-white shadow-md shadow-blue-600/25'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
+                }`}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
         </div>
 
         {/* ========================================================================= */}
-        {/* MODE 1: LUYỆN ĐỀ (PART 5, 6, 7 & 5 LEVEL CARDS) */}
+        {/* MODE 1: LUYỆN ĐỀ (PART 5, 6, 7 & 4 LEVEL CARDS + LUYỆN THEO CHỦ ĐIỂM) */}
         {/* ========================================================================= */}
         {activeMode === 'practice' && (
-          <div className="space-y-6 animate-fadeIn">
+          <div className="space-y-8 animate-fadeIn">
             
-            {/* Part Sub-tabs */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                {[
-                  { part: 'Part 5', desc: 'Điền từ vào câu (2.430 câu)' },
-                  { part: 'Part 6', desc: 'Điền đoạn văn (1.296 câu)' },
-                  { part: 'Part 7', desc: 'Đọc hiểu đoạn văn (4.438 câu)' }
-                ].map((item) => (
-                  <button
-                    key={item.part}
-                    onClick={() => handlePartChange(item.part)}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold border transition-all ${
-                      selectedPart === item.part
-                        ? 'bg-emerald-500/20 border-emerald-500 text-emerald-600 dark:text-emerald-400 shadow-md font-extrabold'
-                        : 'dark:bg-slate-900 bg-white dark:border-slate-800 border-slate-200 dark:text-slate-400 text-slate-600 hover:text-slate-900 dark:hover:text-slate-200 shadow-sm'
-                    }`}
-                  >
-                    <span>{item.part}</span>
-                    <span className="ml-1.5 text-[10px] opacity-70">({item.desc.split('(')[1]}</span>
-                  </button>
-                ))}
-              </div>
-
-              <div className="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block">
-                Bộ đề ETS thật kèm giải thích và dịch nghĩa tiếng Việt 100%
-              </div>
-            </div>
-
-            {/* 5 LEVEL PRACTICE CARDS GRID (4-column grid matching Dau TOEIC) */}
+            {/* 4 LEVEL PRACTICE CARDS GRID (Exact Match Dau TOEIC) */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {levelCards.map((lvl) => {
                 const isLocked = !isProUser && lvl.id > 1;
@@ -438,8 +430,7 @@ export default function ReadingDashboard() {
                 const correct = prog?.correctCount || 0;
                 const wrong = prog?.wrongCount || 0;
                 const wrongCount = (prog?.wrongQuestions?.length) || wrong;
-                const total = lvl.total || 462;
-                const percent = total > 0 ? Math.min(100, Math.round((completed / total) * 100)) : 0;
+                const total = lvl.total || (defaultTotals[selectedPart]?.[lvl.id - 1] || 864);
 
                 return (
                   <VipLockOverlay
@@ -449,62 +440,44 @@ export default function ReadingDashboard() {
                     label={`Level ${lvl.id} (VIP)`}
                   >
                     <div 
-                      className="rounded-3xl dark:bg-slate-900/60 bg-white border dark:border-slate-800 border-slate-200 p-5 space-y-4 flex flex-col justify-between hover:border-emerald-500/50 hover:shadow-xl shadow-sm transition-all"
+                      className="rounded-3xl dark:bg-slate-900/60 bg-white border dark:border-slate-800 border-slate-200 p-5 space-y-4 flex flex-col justify-between hover:border-blue-500/50 dark:hover:border-blue-500/50 hover:shadow-xl shadow-sm transition-all"
                     >
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2.5">
-                            <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
-                              <BookOpen className="w-4 h-4" />
-                            </div>
-                            <div>
-                              <h3 className="font-heading font-extrabold text-sm text-slate-900 dark:text-white">{lvl.name}</h3>
-                              <div className="flex items-center gap-2 mt-0.5">
-                                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">{lvl.rate}</span>
-                                <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-500/10 px-1.5 py-0.2 rounded border border-emerald-500/20">
-                                  {lvl.attempts} lượt làm
-                                </span>
-                              </div>
-                            </div>
+                          <div>
+                            <h3 className="font-heading font-extrabold text-sm sm:text-base text-slate-900 dark:text-white">
+                              {lvl.name}
+                            </h3>
+                            <p className="text-xs text-slate-400 dark:text-slate-500 font-medium">
+                              {lvl.rate}
+                            </p>
                           </div>
-
                           {lvl.isPro && (
-                            <span className="px-2 py-0.5 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-500 dark:text-amber-300 font-bold text-[9px] uppercase flex items-center gap-1">
+                            <span className="px-2 py-0.5 rounded-md bg-amber-500 text-slate-950 font-black text-[9px] uppercase tracking-wider flex items-center gap-1 shadow-sm">
                               <Crown className="w-2.5 h-2.5" /> PRO
-                            </span>
-                          )}
-                          {!isProUser && lvl.id === 1 && (
-                            <span className="px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-black text-[9px] border border-emerald-500/30 flex items-center gap-1 shadow-sm">
-                              <Sparkles className="w-2.5 h-2.5" /> Free 20 câu
                             </span>
                           )}
                         </div>
 
-                        {/* Progress */}
-                        <div className="space-y-1.5 pt-1">
-                          <div className="flex items-center justify-between text-xs font-semibold">
-                            <div className="flex items-center gap-2">
-                              <span className="font-mono font-extrabold text-emerald-600 dark:text-emerald-400 text-sm">
+                        {/* Question Counts & Progress Stat Row matching Dau TOEIC */}
+                        <div className="py-1">
+                          {completed > 0 ? (
+                            <div className="flex items-center gap-3 text-xs font-bold font-mono">
+                              <span className="font-extrabold text-emerald-600 dark:text-emerald-400">
                                 {completed}/{total}
                               </span>
-                              <span className="flex items-center gap-0.5 text-[11px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">
-                                <CheckCircle2 className="w-3 h-3" /> {correct}
+                              <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-bold">
+                                <CheckCircle2 className="w-3.5 h-3.5" /> {correct}
                               </span>
-                              <span className="flex items-center gap-0.5 text-[11px] font-bold text-rose-600 dark:text-rose-400 bg-rose-500/10 px-1.5 py-0.5 rounded">
-                                <XCircle className="w-3 h-3" /> {wrong}
+                              <span className="flex items-center gap-1 text-rose-500 font-bold">
+                                <XCircle className="w-3.5 h-3.5" /> {wrongCount}
                               </span>
                             </div>
-                            <span className="text-[10px] text-slate-400 font-mono">
-                              {percent}%
-                            </span>
-                          </div>
-
-                          <div className="h-1.5 rounded-full dark:bg-slate-900 bg-slate-100 overflow-hidden border dark:border-slate-800 border-slate-200">
-                            <div 
-                              style={{ width: `${percent}%` }}
-                              className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-300" 
-                            />
-                          </div>
+                          ) : (
+                            <div className="text-xs text-slate-400 dark:text-slate-500 font-medium">
+                              Chưa luyện tập • {total} câu
+                            </div>
+                          )}
                         </div>
 
                         {/* Action Buttons Row matching Dau TOEIC */}
@@ -552,7 +525,7 @@ export default function ReadingDashboard() {
                               disabled={wrongCount === 0}
                               onClick={(e) => {
                                 e.stopPropagation();
-                                navigate(`/read/practice/p${selectedPart.replace('Part ', '')}lv${lvl.id}?part=${encodeURIComponent(selectedPart)}&level=${lvl.id}&redo=true`);
+                                navigate(`/read/practice/p${selectedPart.replace(/[^0-9]/g, '')}lv${lvl.id}?part=${encodeURIComponent(selectedPart)}&level=${lvl.id}&redo=true`);
                               }}
                               className={`w-6.5 h-6.5 rounded-lg flex items-center justify-center transition-all relative ${
                                 wrongCount > 0
@@ -588,13 +561,16 @@ export default function ReadingDashboard() {
                             </button>
                           </div>
 
-                          {/* Luyện tập / Tiếp tục Button */}
+                          {/* Học ngay Button matching Screenshot 1 */}
                           <button
-                            onClick={() => navigate(`/read/practice/p${selectedPart.replace('Part ', '')}lv${lvl.id}?part=${encodeURIComponent(selectedPart)}&level=${lvl.id}`)}
-                            className="ml-auto shrink-0 whitespace-nowrap h-8 sm:h-8.5 px-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-sm shadow-emerald-600/20 flex items-center justify-center gap-1 transition-all active:scale-95 cursor-pointer"
+                            onClick={() => navigate(`/read/practice/p${selectedPart.replace(/[^0-9]/g, '')}lv${lvl.id}?part=${encodeURIComponent(selectedPart)}&level=${lvl.id}`)}
+                            className={`ml-auto shrink-0 whitespace-nowrap h-8 sm:h-8.5 px-4 rounded-full font-bold text-xs flex items-center justify-center transition-all active:scale-95 cursor-pointer ${
+                              completed > 0
+                                ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm shadow-emerald-600/20'
+                                : 'border border-emerald-500/50 hover:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                            }`}
                           >
-                            <BookOpen className="w-3.5 h-3.5 shrink-0" />
-                            <span>{completed > 0 ? (completed >= total ? 'Luyện lại' : 'Luyện tiếp') : 'Luyện tập'}</span>
+                            <span>Học ngay</span>
                           </button>
                         </div>
 
@@ -605,207 +581,443 @@ export default function ReadingDashboard() {
               })}
             </div>
 
+            {/* Section: Luyện theo chủ điểm (Part 5 specific - 1.000 câu) */}
+            {selectedPart === 'Part 5' && (
+              <div className="pt-6 space-y-4">
+                <div>
+                  <h2 className="text-lg md:text-xl font-extrabold text-slate-900 dark:text-white font-heading">
+                    Luyện theo chủ điểm
+                  </h2>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                    Cùng bộ câu ở trên, chia theo chủ điểm ngữ pháp. Mỗi câu thuộc đúng một chủ điểm.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {[
+                    { 
+                      id: 'vocab', 
+                      topic: 'Từ vựng', 
+                      title: 'Từ vựng', 
+                      total: 428, 
+                      attempts: 2420, 
+                      desc: 'Danh từ, động từ, tính từ, trạng từ trong ngữ cảnh TOEIC' 
+                    },
+                    { 
+                      id: 'pos', 
+                      topic: 'Từ loại', 
+                      title: 'Từ loại', 
+                      total: 254, 
+                      attempts: 1980, 
+                      desc: 'Vị trí danh từ, tính từ, trạng từ, đại từ' 
+                    },
+                    { 
+                      id: 'verb', 
+                      topic: 'Động từ', 
+                      title: 'Động từ', 
+                      total: 88, 
+                      attempts: 1450, 
+                      desc: 'Thì & thể, động từ chia thì, chủ động & bị động' 
+                    },
+                    { 
+                      id: 'advanced', 
+                      topic: 'Ngữ pháp khác', 
+                      title: 'Ngữ pháp khác', 
+                      total: 230, 
+                      attempts: 1820, 
+                      desc: 'Mệnh đề quan hệ, liên từ, giới từ, câu so sánh' 
+                    }
+                  ].map(topicItem => {
+                    const tProg = practiceProgressMap[`reading_p5_topic_${topicItem.id}`];
+                    const tCompleted = tProg?.completedCount || 0;
+                    return (
+                      <div
+                        key={topicItem.id}
+                        className="rounded-3xl dark:bg-slate-900/60 bg-white border dark:border-slate-800 border-slate-200 p-5 flex flex-col justify-between hover:border-blue-500/50 dark:hover:border-blue-500/50 hover:shadow-xl shadow-sm transition-all space-y-4"
+                      >
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <h3 className="font-heading font-extrabold text-sm sm:text-base text-slate-900 dark:text-white">
+                              {topicItem.title}
+                            </h3>
+                            <span className="text-[10px] font-bold text-slate-400">
+                              {topicItem.total} câu
+                            </span>
+                          </div>
+                          <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">
+                            {topicItem.desc}
+                          </p>
+                        </div>
+
+                        <div className="flex items-center justify-between pt-2 border-t dark:border-slate-800/80 border-slate-100">
+                          <span className="text-[10px] text-slate-400 font-medium">
+                            {topicItem.attempts} lượt làm
+                          </span>
+                          <button
+                            onClick={() => navigate(`/read/practice/p5topic_${topicItem.id}?part=Part%205&topic=${encodeURIComponent(topicItem.topic)}`)}
+                            className={`h-8 px-4 rounded-full font-bold text-xs flex items-center justify-center transition-all active:scale-95 cursor-pointer ${
+                              tCompleted > 0
+                                ? 'bg-emerald-600 hover:bg-emerald-500 text-white'
+                                : 'border border-emerald-500/50 hover:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                            }`}
+                          >
+                            <span>Học ngay</span>
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Section: Luyện theo dạng bài (Part 6 specific - 1.616 câu) */}
+            {selectedPart === 'Part 6' && (
+              <div className="pt-6 space-y-4">
+                <div>
+                  <h2 className="text-lg md:text-xl font-extrabold text-slate-900 dark:text-white font-heading">
+                    Luyện theo dạng bài
+                  </h2>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                    404 đoạn văn chuẩn ETS chia theo 8 định dạng văn bản thường gặp nhất trong TOEIC Reading.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {[
+                    { id: 'email', title: 'Email', total: 508, attempts: 2150, desc: 'Thư điện tử trao đổi công việc, thông báo nội bộ' },
+                    { id: 'article', title: 'Bài báo', total: 272, attempts: 1820, desc: 'Bản tin kinh doanh, tài chính, đổi mới công nghệ' },
+                    { id: 'notice', title: 'Thông báo', total: 228, attempts: 1540, desc: 'Quy định công ty, bảo trì hệ thống, sự kiện' },
+                    { id: 'ad', title: 'Quảng cáo', total: 152, attempts: 1260, desc: 'Quảng bá sản phẩm, dịch vụ mới, chương trình ưu đãi' },
+                    { id: 'memo', title: 'Thư nội bộ', total: 128, attempts: 980, desc: 'Bản ghi nhớ công việc giữa các phòng ban' },
+                    { id: 'letter', title: 'Thư tín', total: 108, attempts: 870, desc: 'Thư tay trang trọng gửi đối tác và khách hàng' },
+                    { id: 'instructions', title: 'Hướng dẫn & thông tin', total: 112, attempts: 790, desc: 'Quy trình sử dụng thiết bị, sổ tay nhân viên' },
+                    { id: 'web', title: 'Trang web & đánh giá', total: 108, attempts: 920, desc: 'Giao diện web trực tuyến, phản hồi dịch vụ' }
+                  ].map(topicItem => (
+                    <div
+                      key={topicItem.id}
+                      className="rounded-3xl dark:bg-slate-900/60 bg-white border dark:border-slate-800 border-slate-200 p-5 flex flex-col justify-between hover:border-blue-500/50 dark:hover:border-blue-500/50 hover:shadow-xl shadow-sm transition-all space-y-4"
+                    >
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <h3 className="font-heading font-extrabold text-sm sm:text-base text-slate-900 dark:text-white">
+                            {topicItem.title}
+                          </h3>
+                          <span className="text-[10px] font-bold text-slate-400">
+                            {topicItem.total} câu
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">
+                          {topicItem.desc}
+                        </p>
+                      </div>
+
+                      <div className="flex items-center justify-between pt-2 border-t dark:border-slate-800/80 border-slate-100">
+                        <span className="text-[10px] text-slate-400 font-medium">
+                          {topicItem.attempts} lượt làm
+                        </span>
+                        <button
+                          onClick={() => navigate(`/read/practice/p6_${topicItem.id}?part=Part%206&type=${encodeURIComponent(topicItem.title)}`)}
+                          className="h-8 px-4 rounded-full font-bold text-xs border border-emerald-500/50 hover:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center transition-all active:scale-95 cursor-pointer"
+                        >
+                          <span>Học ngay</span>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Section: Luyện theo định dạng đoạn văn (Part 7 specific - 5.454 câu) */}
+            {selectedPart === 'Part 7' && (
+              <div className="pt-6 space-y-4">
+                <div>
+                  <h2 className="text-lg md:text-xl font-extrabold text-slate-900 dark:text-white font-heading">
+                    Luyện theo dạng bài
+                  </h2>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                    1.515 đoạn đọc chuẩn format ETS chia theo đoạn đơn, đoạn kép và đoạn ba.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {[
+                    { id: 'single', title: 'Đoạn đơn (Single Passage)', total: 3090, attempts: 4320, desc: 'Bài đọc 1 văn bản: Email, Memo, Bài báo, Thông báo' },
+                    { id: 'double', title: 'Đoạn kép (Double Passage)', total: 1180, attempts: 2890, desc: 'Tổ hợp 2 văn bản liên kết thông tin suy luận' },
+                    { id: 'triple', title: 'Đoạn ba (Triple Passage)', total: 1184, attempts: 2150, desc: 'Tổ hợp 3 văn bản đa chiều yêu cầu tốc độ đọc nhanh' }
+                  ].map(topicItem => (
+                    <div
+                      key={topicItem.id}
+                      className="rounded-3xl dark:bg-slate-900/60 bg-white border dark:border-slate-800 border-slate-200 p-5 flex flex-col justify-between hover:border-blue-500/50 dark:hover:border-blue-500/50 hover:shadow-xl shadow-sm transition-all space-y-4"
+                    >
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <h3 className="font-heading font-extrabold text-sm sm:text-base text-slate-900 dark:text-white">
+                            {topicItem.title}
+                          </h3>
+                          <span className="text-[10px] font-bold text-slate-400">
+                            {topicItem.total} câu
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-500 dark:text-slate-400">
+                          {topicItem.desc}
+                        </p>
+                      </div>
+
+                      <div className="flex items-center justify-between pt-2 border-t dark:border-slate-800/80 border-slate-100">
+                        <span className="text-[10px] text-slate-400 font-medium">
+                          {topicItem.attempts} lượt làm
+                        </span>
+                        <button
+                          onClick={() => navigate(`/read/practice/p7_${topicItem.id}?part=Part%207&format=${encodeURIComponent(topicItem.id)}`)}
+                          className="h-8 px-4 rounded-full font-bold text-xs border border-emerald-500/50 hover:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center transition-all active:scale-95 cursor-pointer"
+                        >
+                          <span>Học ngay</span>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
           </div>
         )}
 
         {/* ========================================================================= */}
-        {/* MODE 2: NGỮ PHÁP — REBUILT EXACT MATCH ĐẬU TOEIC */}
+        {/* MODE 2: NGỮ PHÁP — 15 CHỦ ĐIỂM CHUẨN XÁC ĐẬU TOEIC (1.843 CÂU) */}
         {/* ========================================================================= */}
         {activeMode === 'grammar' && (
-          <div className="space-y-6 animate-fadeIn">
+          <div className="space-y-8 animate-fadeIn">
 
-            {/* ── Sub-tabs (pill style giống Đậu TOEIC) ── */}
-            <div className="flex items-center gap-2 dark:bg-slate-900/60 bg-white border dark:border-slate-800 border-slate-200 shadow-sm rounded-2xl p-1.5 w-fit">
-              {[
-                { id: 'chudiem', icon: '📖', label: 'Theo chủ điểm' },
-                { id: 'tonghop', icon: '≡', label: 'Tổng hợp' },
-                { id: 'capdo',   icon: '◎', label: 'Theo cấp độ' },
-                { id: 'tiendo', icon: '📊', label: 'Tiến độ' }
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => handleGrammarSubTabChange(tab.id)}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap ${
-                    grammarSubTab === tab.id
-                      ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/30 font-extrabold'
-                      : 'dark:text-slate-400 text-slate-600 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
-                  }`}
-                >
-                  <span className="text-sm leading-none">{tab.icon}</span>
-                  <span>{tab.label}</span>
-                </button>
-              ))}
+            {/* Filter Pills Header (Matching Đậu TOEIC Screenshot 1) */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+                {[
+                  { id: 'all', label: 'Tất cả' },
+                  { id: 'tu-loai', label: 'Từ loại' },
+                  { id: 'dong-tu', label: 'Động từ' },
+                  { id: 'ngu-phap-khac', label: 'Ngữ pháp khác' },
+                  { id: 'tonghop', label: 'Đề thi theo năm' },
+                  { id: 'tiendo', label: 'Tiến độ' }
+                ].map((tab) => {
+                  const isActive = grammarFilter === tab.id;
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => handleGrammarFilterChange(tab.id)}
+                      className={`px-5 py-2 rounded-full text-xs sm:text-sm font-bold transition-all shrink-0 cursor-pointer ${
+                        isActive
+                          ? 'bg-blue-600 text-white shadow-md shadow-blue-600/25'
+                          : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
+                      }`}
+                    >
+                      {tab.label}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Search Bar for Grammar Topics */}
+              {['all', 'tu-loai', 'dong-tu', 'ngu-phap-khac'].includes(grammarFilter) && (
+                <div className="relative w-full sm:w-64 shrink-0">
+                  <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    placeholder="Tìm kiếm chủ điểm..."
+                    className="w-full pl-9 pr-3 py-2 rounded-full dark:bg-slate-900 bg-white border dark:border-slate-800 border-slate-200 text-xs font-medium text-slate-900 dark:text-white focus:border-blue-500 outline-none placeholder:text-slate-400 shadow-sm transition-colors"
+                  />
+                </div>
+              )}
             </div>
 
-            {/* ════════════════════════════════════════════
-                SUBTAB 1: THEO CHỦ ĐIỂM — 14 chuyên đề
-            ════════════════════════════════════════════ */}
-            {grammarSubTab === 'chudiem' && (() => {
-              // Color palette per topic (border-top accent colors)
-              const topicColors = [
-                { border: 'border-t-cyan-500',    icon: '🔤', badge: 'bg-cyan-500/15 text-cyan-500 dark:text-cyan-400 border-cyan-500/30' },
-                { border: 'border-t-blue-500',    icon: '🏷️', badge: 'bg-blue-500/15 text-blue-500 dark:text-blue-400 border-blue-500/30' },
-                { border: 'border-t-violet-500',  icon: '⚡', badge: 'bg-violet-500/15 text-violet-500 dark:text-violet-400 border-violet-500/30' },
-                { border: 'border-t-rose-500',    icon: '🔄', badge: 'bg-rose-500/15 text-rose-500 dark:text-rose-400 border-rose-500/30' },
-                { border: 'border-t-amber-500',   icon: '✨', badge: 'bg-amber-500/15 text-amber-500 dark:text-amber-400 border-amber-500/30' },
-                { border: 'border-t-teal-500',    icon: '📌', badge: 'bg-teal-500/15 text-teal-500 dark:text-teal-400 border-teal-500/30' },
-                { border: 'border-t-indigo-500',  icon: '👤', badge: 'bg-indigo-500/15 text-indigo-500 dark:text-indigo-400 border-indigo-500/30' },
-                { border: 'border-t-orange-500',  icon: '⚖️', badge: 'bg-orange-500/15 text-orange-500 dark:text-orange-400 border-orange-500/30' },
-                { border: 'border-t-lime-500',    icon: '🔗', badge: 'bg-lime-500/15 text-lime-600 dark:text-lime-400 border-lime-500/30' },
-                { border: 'border-t-pink-500',    icon: '🔍', badge: 'bg-pink-500/15 text-pink-500 dark:text-pink-400 border-pink-500/30' },
-                { border: 'border-t-emerald-500', icon: '📝', badge: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30' },
-                { border: 'border-t-sky-500',     icon: '🎯', badge: 'bg-sky-500/15 text-sky-500 dark:text-sky-400 border-sky-500/30' },
-                { border: 'border-t-fuchsia-500', icon: '📚', badge: 'bg-fuchsia-500/15 text-fuchsia-500 dark:text-fuchsia-400 border-fuchsia-500/30' },
-                { border: 'border-t-yellow-500',  icon: '🏆', badge: 'bg-yellow-500/15 text-yellow-600 dark:text-yellow-400 border-yellow-500/30' }
-              ];
+            {/* 15 AUTHENTIC GRAMMAR TOPICS ACROSS 3 CATEGORIES (Matching Screenshot 1) */}
+            {['all', 'tu-loai', 'dong-tu', 'ngu-phap-khac'].includes(grammarFilter) && (
+              <div className="space-y-10">
+                {GRAMMAR_CATEGORIES.filter(cat => grammarFilter === 'all' || cat.id === grammarFilter).map(cat => {
+                  const visibleTopics = cat.topics
+                    .map(t => {
+                      const live = grammarList.find(g => g.slug === t.slug || g.title?.toLowerCase() === t.title.toLowerCase());
+                      return {
+                        ...t,
+                        _id: live?._id,
+                        slug: live?.slug || t.slug,
+                        totalQuestions: live?.totalQuestions || t.total,
+                        attemptsCount: live?.attemptsCount || 320,
+                        isPro: live?.isPro || false
+                      };
+                    })
+                    .filter(t => !searchTerm || t.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
-              // Read progress from localStorage
-              const getProgress = (topicId, total) => {
-                try {
-                  const raw = localStorage.getItem(`grammar_progress_${topicId}`);
-                  if (raw) return JSON.parse(raw);
-                } catch(_) {}
-                return { attempted: 0, correct: 0, wrong: 0, total };
-              };
+                  if (visibleTopics.length === 0) return null;
 
-              const filtered = grammarList.filter(g =>
-                g.title.toLowerCase().includes(searchTerm.toLowerCase())
-              );
+                  return (
+                    <div key={cat.id} className="space-y-4">
+                      {/* Category Header: "Từ loại - 3 chủ điểm · 554 câu" */}
+                      <div className="space-y-1">
+                        <h2 className="text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white font-heading">
+                          {cat.title}
+                        </h2>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                          {cat.topicsCount} chủ điểm · {cat.totalQuestions.toLocaleString('vi-VN')} câu
+                        </p>
+                      </div>
 
-              return (
-                <div className="space-y-5">
-                  {/* Header + Search */}
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                    <div className="flex items-center gap-2.5">
-                      <BookOpen className="w-5 h-5 text-emerald-500 dark:text-emerald-400" />
-                      <h2 className="font-heading font-extrabold text-lg text-slate-900 dark:text-white">Các chủ đề ngữ pháp</h2>
-                      <span className="px-2.5 py-0.5 rounded-full dark:bg-slate-800 bg-slate-100 border dark:border-slate-700 border-slate-200 text-slate-600 dark:text-slate-300 text-xs font-mono font-bold">
-                        {filtered.length} / 14 chuyên đề
-                      </span>
-                    </div>
-                    <div className="relative w-full sm:w-72">
-                      <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                      <input
-                        type="text"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        placeholder="Tìm kiếm chuyên đề..."
-                        className="w-full pl-10 pr-4 py-2.5 rounded-xl dark:bg-slate-900 bg-white border dark:border-slate-800 border-slate-200 text-xs font-medium text-slate-900 dark:text-white focus:border-emerald-500 outline-none placeholder:text-slate-400 dark:placeholder:text-slate-600 shadow-sm transition-colors"
-                      />
-                    </div>
-                  </div>
+                      {/* Topic Cards Grid (4 columns desktop, 2 tablet, 1 mobile) */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                        {visibleTopics.map(item => {
+                          const exKey = `grammar_${item.slug}`;
+                          const prog = practiceProgressMap[exKey];
+                          const completed = prog?.completedCount || 0;
+                          const correct = prog?.correctCount || 0;
+                          const wrong = prog?.wrongCount || 0;
+                          const wrongCount = (prog?.wrongQuestions?.length) || wrong;
+                          const total = item.totalQuestions || item.total;
 
-                  {/* 4-column Grid (like Đậu TOEIC) */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {filtered.map((top, idx) => {
-                      const isLocked = !isProUser && idx > 1;
-                      const color = topicColors[idx % topicColors.length];
-                      const prog = getProgress(top.grammarTopic || top._id, top.totalQuestions || 50);
-                      const pct = prog.total > 0 ? Math.round((prog.attempted / prog.total) * 100) : 0;
-
-                      return (
-                        <VipLockOverlay
-                          key={top._id || idx}
-                          isLocked={isLocked}
-                          compact
-                          onUnlockClick={() => setShowPricingModal(true)}
-                          label="VIP — Mở khóa chuyên đề"
-                        >
-                          <div className={`relative dark:bg-slate-900 bg-white rounded-2xl border dark:border-slate-800 border-slate-200 border-t-2 ${color.border} p-4 space-y-3 flex flex-col justify-between hover:border-slate-400 dark:hover:border-slate-700 hover:shadow-lg dark:hover:shadow-slate-900/50 shadow-sm transition-all group`}>
-                            {/* Title row */}
-                            <div className="space-y-2">
-                              <div className="flex items-start justify-between gap-2">
-                                <h3 className="font-heading font-extrabold text-sm text-slate-900 dark:text-white leading-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-300 transition-colors">
-                                  {top.title}
-                                </h3>
-                                {top.isPro && (
-                                  <span className={`shrink-0 px-1.5 py-0.5 rounded-md border text-[9px] font-bold uppercase flex items-center gap-0.5 ${color.badge}`}>
-                                    <Crown className="w-2.5 h-2.5" /> VIP
-                                  </span>
-                                )}
-                              </div>
-
-                              {/* Progress line */}
-                              {prog.attempted > 0 ? (
-                                <div className="flex items-center justify-between text-[11px] font-mono font-bold">
-                                  <div className="flex items-center gap-2">
-                                    <span className="text-slate-700 dark:text-slate-300">{prog.attempted}/{prog.total}</span>
-                                    <span className="text-emerald-600 dark:text-emerald-400 flex items-center gap-0.5">
-                                      <CheckCircle2 className="w-3 h-3" />{prog.correct}
-                                    </span>
-                                    <span className="text-rose-500 dark:text-rose-400 flex items-center gap-0.5">
-                                      <XCircle className="w-3 h-3" />{prog.wrong}
-                                    </span>
-                                  </div>
-                                  <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20 font-sans">
-                                    {top.attemptsCount || 320} lượt
-                                  </span>
-                                </div>
-                              ) : (
-                                <div className="flex items-center justify-between text-[11px] text-slate-500 font-medium">
-                                  <span>Chưa luyện tập · {top.totalQuestions} câu</span>
-                                  <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">
-                                    {top.attemptsCount || 320} lượt
-                                  </span>
-                                </div>
-                              )}
-
-                              {/* Progress bar */}
-                              <div className="h-1 rounded-full dark:bg-slate-800 bg-slate-100 overflow-hidden">
-                                <div
-                                  style={{ width: `${pct}%` }}
-                                  className="h-full bg-emerald-500 rounded-full transition-all duration-500"
-                                />
-                              </div>
-                            </div>
-
-                            {/* Action icons row (exact match Đậu TOEIC: 🗑️ ↩️ ⭐ 📄) */}
-                            <div className="flex items-center gap-1 pt-0.5">
-                              <button
-                                title="Xóa tiến độ"
-                                onClick={(e) => { e.stopPropagation(); localStorage.removeItem(`grammar_progress_${top.grammarTopic || top._id}`); }}
-                                className="p-1.5 rounded-lg hover:bg-rose-500/15 hover:text-rose-500 text-slate-400 transition-colors"
-                              >
-                                <Trash2 className="w-3.5 h-3.5" />
-                              </button>
-                              <button title="Làm lại từ đầu" className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200 text-slate-400 transition-colors">
-                                <RotateCcw className="w-3.5 h-3.5" />
-                              </button>
-                              <button title="Đánh dấu sao" className="p-1.5 rounded-lg hover:bg-amber-500/15 hover:text-amber-500 text-slate-400 transition-colors">
-                                <Star className="w-3.5 h-3.5" />
-                              </button>
-                              <button title="Lý thuyết & Ghi chú" className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200 text-slate-400 transition-colors">
-                                <FileText className="w-3.5 h-3.5" />
-                              </button>
-                              <div className="flex-1" />
-                              {prog.attempted > 0 && (
-                                <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded-md border border-emerald-500/20">
-                                  {pct}%
-                                </span>
-                              )}
-                            </div>
-
-                            {/* Luyện tập button */}
-                            <button
-                              onClick={() => navigate(`/grammar/${top._id || top.grammarTopic}`)}
-                              className="w-full py-2 rounded-xl border border-emerald-500/40 bg-emerald-500/10 hover:bg-emerald-500 hover:text-slate-950 hover:border-emerald-500 text-emerald-400 font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95"
+                          return (
+                            <div 
+                              key={item.slug}
+                              className="rounded-3xl dark:bg-slate-900/60 bg-white border dark:border-slate-800 border-slate-200 p-5 space-y-4 flex flex-col justify-between hover:border-blue-500/50 dark:hover:border-blue-500/50 hover:shadow-xl shadow-sm transition-all"
                             >
-                              <BookOpen className="w-3.5 h-3.5" />
-                              <span>Luyện tập</span>
-                            </button>
-                          </div>
-                        </VipLockOverlay>
-                      );
-                    })}
-                  </div>
-                </div>
-              );
-            })()}
+                              <div className="space-y-2.5">
+                                <div className="flex items-start justify-between gap-2">
+                                  <h3 className="font-heading font-extrabold text-base text-slate-900 dark:text-white">
+                                    {item.title}
+                                  </h3>
+                                </div>
 
-            {/* ════════════════════════════════════════════
-                SUBTAB 2: TỔNG HỢP — 9 bộ đề theo năm
-            ════════════════════════════════════════════ */}
-            {grammarSubTab === 'tonghop' && (
+                                {/* Status Line: "Chưa luyện tập · 287 câu" */}
+                                <div className="py-0.5">
+                                  {completed > 0 ? (
+                                    <div className="flex items-center gap-3 text-xs font-bold font-mono">
+                                      <span className="font-extrabold text-emerald-600 dark:text-emerald-400">
+                                        {completed}/{total}
+                                      </span>
+                                      <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-bold">
+                                        <CheckCircle2 className="w-3.5 h-3.5" /> {correct}
+                                      </span>
+                                      <span className="flex items-center gap-1 text-rose-500 font-bold">
+                                        <XCircle className="w-3.5 h-3.5" /> {wrongCount}
+                                      </span>
+                                    </div>
+                                  ) : (
+                                    <div className="text-xs text-slate-400 dark:text-slate-500 font-medium">
+                                      Chưa luyện tập · {total} câu
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+
+                              {/* Card Action Row: 4 Icons Capsule + Green "Học ngay" Button */}
+                              <div className="flex items-center justify-between gap-2 pt-3 border-t dark:border-slate-800/80 border-slate-100 mt-auto">
+                                {/* 4 Capsule Action Icons */}
+                                <div className="flex items-center gap-0.5 p-0.5 sm:p-1 rounded-xl bg-slate-100 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700/60 shrink-0">
+                                  {/* 1. Giỏ từ vựng */}
+                                  <button
+                                    type="button"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setShowVocabDrawer(true);
+                                    }}
+                                    className="w-6.5 h-6.5 rounded-lg flex items-center justify-center text-slate-400 hover:text-amber-500 hover:bg-white dark:hover:bg-slate-700/60 transition-colors relative cursor-pointer"
+                                    title="Xem giỏ từ vựng"
+                                  >
+                                    <ShoppingBag className="w-3.5 h-3.5" />
+                                    {basketWords.length > 0 && (
+                                      <span className="absolute -top-1 -right-1 flex h-3.5 min-w-3.5 px-0.5 items-center justify-center rounded-full bg-amber-500 text-slate-950 font-bold text-[8px] shadow-sm">
+                                        {basketWords.length}
+                                      </span>
+                                    )}
+                                  </button>
+
+                                  {/* 2. Ghi chú cá nhân */}
+                                  <button
+                                    type="button"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setActiveNoteModal({
+                                        id: exKey,
+                                        title: `Ghi chú — ${item.title}`
+                                      });
+                                    }}
+                                    className="w-6.5 h-6.5 rounded-lg flex items-center justify-center text-slate-400 hover:text-sky-500 hover:bg-white dark:hover:bg-slate-700/60 transition-colors relative cursor-pointer"
+                                    title="Ghi chú bài học"
+                                  >
+                                    <FileText className="w-3.5 h-3.5" />
+                                  </button>
+
+                                  {/* 3. Luyện lại câu sai / từ đầu */}
+                                  <button
+                                    type="button"
+                                    disabled={wrongCount === 0 && completed === 0}
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      navigate(`/grammar/${item.slug}?redo=true`);
+                                    }}
+                                    className={`w-6.5 h-6.5 rounded-lg flex items-center justify-center transition-all relative ${
+                                      wrongCount > 0
+                                        ? 'text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40 cursor-pointer'
+                                        : completed > 0
+                                          ? 'text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 cursor-pointer'
+                                          : 'text-slate-300 dark:text-slate-600 cursor-not-allowed opacity-40'
+                                    }`}
+                                    title={wrongCount > 0 ? `Làm lại ${wrongCount} câu sai` : 'Làm lại từ đầu'}
+                                  >
+                                    <RotateCcw className="w-3.5 h-3.5" />
+                                    {wrongCount > 0 && (
+                                      <span className="absolute -top-1 -right-1 flex h-3.5 min-w-3.5 px-0.5 items-center justify-center rounded-full bg-rose-500 text-white font-bold text-[8px] shadow-sm">
+                                        {wrongCount}
+                                      </span>
+                                    )}
+                                  </button>
+
+                                  {/* 4. Xóa tiến độ */}
+                                  <button
+                                    type="button"
+                                    disabled={completed === 0}
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setResetConfirmLvl({ name: item.title, exerciseKey: exKey });
+                                    }}
+                                    className={`w-6.5 h-6.5 rounded-lg flex items-center justify-center transition-all ${
+                                      completed > 0
+                                        ? 'text-slate-400 hover:text-rose-500 hover:bg-white dark:hover:bg-slate-700/60 cursor-pointer'
+                                        : 'text-slate-300 dark:text-slate-600 cursor-not-allowed opacity-40'
+                                    }`}
+                                    title={completed > 0 ? `Xóa tiến độ ${item.title}` : 'Chưa có tiến độ để xóa'}
+                                  >
+                                    <Trash2 className="w-3.5 h-3.5" />
+                                  </button>
+                                </div>
+
+                                {/* Nút Học ngay (Green pill button matching Screenshot 1) */}
+                                <button
+                                  onClick={() => navigate(`/grammar/${item.slug}`)}
+                                  className={`shrink-0 whitespace-nowrap h-8 sm:h-8.5 px-5 rounded-full font-bold text-xs flex items-center justify-center transition-all active:scale-95 cursor-pointer ${
+                                    completed > 0
+                                      ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm shadow-emerald-600/20'
+                                      : 'border border-emerald-500/60 hover:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                                  }`}
+                                >
+                                  <span>Học ngay</span>
+                                </button>
+                              </div>
+
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+
+            {/* TAB: BỘ ĐỀ TỔNG HỢP THEO NĂM (9 BỘ ĐỀ) */}
+            {grammarFilter === 'tonghop' && (
               <div className="space-y-5">
                 <div className="flex items-center gap-2.5">
                   <Grid className="w-5 h-5 text-emerald-500 dark:text-emerald-400" />
@@ -842,7 +1054,6 @@ export default function ReadingDashboard() {
                       >
                         <div className={`relative dark:bg-slate-900 bg-white rounded-2xl border dark:border-slate-800 border-slate-200 border-t-2 ${yc} p-4 space-y-3 flex flex-col justify-between hover:border-slate-400 dark:hover:border-slate-700 hover:shadow-lg shadow-sm transition-all group`}>
                           <div className="space-y-2">
-                            {/* Title + badges */}
                             <div className="flex items-start justify-between gap-2">
                               <h3 className="font-heading font-extrabold text-sm text-slate-900 dark:text-white leading-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-300 transition-colors">
                                 {set.title}
@@ -866,12 +1077,10 @@ export default function ReadingDashboard() {
                               </span>
                             </div>
 
-                            {/* Progress bar (empty for now) */}
                             <div className="h-1 rounded-full dark:bg-slate-800 bg-slate-100 overflow-hidden">
                               <div className="h-full w-0 bg-emerald-500 rounded-full" />
                             </div>
 
-                            {/* Action icons */}
                             <div className="flex items-center gap-1 pt-1 text-slate-400">
                               <button title="Xóa tiến độ" className="p-1.5 rounded-lg hover:bg-rose-500/15 hover:text-rose-500 transition-colors">
                                 <Trash2 className="w-3.5 h-3.5" />
@@ -903,157 +1112,22 @@ export default function ReadingDashboard() {
               </div>
             )}
 
-            {/* ════════════════════════════════════════════
-                SUBTAB 3: THEO CẤP ĐỘ — Level 1-5 (Giống Đậu TOEIC)
-            ════════════════════════════════════════════ */}
-            {grammarSubTab === 'capdo' && (
-              <div className="space-y-5">
-                <div className="flex items-center gap-2.5">
-                  <BarChart2 className="w-5 h-5 text-emerald-500 dark:text-emerald-400" />
-                  <h2 className="font-heading font-extrabold text-lg text-slate-900 dark:text-white">Ngữ pháp theo cấp độ</h2>
-                  <span className="px-2.5 py-0.5 rounded-full dark:bg-slate-800 bg-slate-100 border dark:border-slate-700 border-slate-200 text-slate-600 dark:text-slate-300 text-xs font-mono font-bold">5 cấp độ</span>
-                </div>
-
-                {/* Level cards grid — giống Đậu TOEIC */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-                  {[
-                    { id: 1, label: 'Level 1 — Dễ',       score: '350–500',  total: 200, isPro: false, color: 'emerald', borderC: 'border-t-emerald-500', bg: 'bg-emerald-500/10', text: 'text-emerald-600 dark:text-emerald-400', navId: '6a8f9ed81d7ebd47d4702b27' },
-                    { id: 2, label: 'Level 2 — Cơ bản',   score: '500–600',  total: 200, isPro: true,  color: 'cyan',    borderC: 'border-t-cyan-500',    bg: 'bg-cyan-500/10',    text: 'text-cyan-600 dark:text-cyan-400',    navId: '6a8f9ed91d7ebd47d4702d5b' },
-                    { id: 3, label: 'Level 3 — Trung bình', score: '600–700', total: 200, isPro: true,  color: 'blue',    borderC: 'border-t-blue-500',    bg: 'bg-blue-500/10',    text: 'text-blue-600 dark:text-blue-400',    navId: '6a8f9ed91d7ebd47d4703079' },
-                    { id: 4, label: 'Level 4 — Khó',      score: '700–850',  total: 200, isPro: true,  color: 'amber',   borderC: 'border-t-amber-500',   bg: 'bg-amber-500/10',   text: 'text-amber-600 dark:text-amber-400',   navId: '6a8f9ed91d7ebd47d4703379' },
-                    { id: 5, label: 'Level 5 — Rất khó',  score: '850–990',  total: 200, isPro: true,  color: 'rose',    borderC: 'border-t-rose-500',    bg: 'bg-rose-500/10',    text: 'text-rose-600 dark:text-rose-400',    navId: '6a8f9eda1d7ebd47d470363b' }
-                  ].map((lvl) => {
-                    const isLocked = !isProUser && lvl.isPro;
-                    // Read progress
-                    let prog = { attempted: 0, correct: 0, wrong: 0, total: lvl.total };
-                    try {
-                      const raw = localStorage.getItem(`grammar_level_progress_${lvl.id}`);
-                      if (raw) prog = { ...prog, ...JSON.parse(raw) };
-                    } catch(_) {}
-                    const pct = prog.total > 0 ? Math.round((prog.attempted / prog.total) * 100) : 0;
-
-                    return (
-                      <VipLockOverlay
-                        key={lvl.id}
-                        isLocked={isLocked}
-                        compact
-                        onUnlockClick={() => setShowPricingModal(true)}
-                        label="VIP — Mở khóa cấp độ"
-                      >
-                        <div className={`dark:bg-slate-900 bg-white rounded-2xl border dark:border-slate-800 border-slate-200 border-t-2 ${lvl.borderC} p-4 space-y-3 flex flex-col hover:border-slate-400 dark:hover:border-slate-700 hover:shadow-lg shadow-sm transition-all group`}>
-                          {/* Header */}
-                          <div className="flex items-start justify-between gap-1">
-                            <h3 className="font-heading font-extrabold text-sm text-slate-900 dark:text-white leading-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-300 transition-colors">
-                              {lvl.label}
-                            </h3>
-                            {lvl.isPro && (
-                              <span className="shrink-0 px-1.5 py-0.5 rounded-md bg-amber-500/20 border border-amber-500/30 text-amber-500 dark:text-amber-300 text-[9px] font-bold uppercase flex items-center gap-0.5">
-                                <Crown className="w-2.5 h-2.5" /> PRO
-                              </span>
-                            )}
-                          </div>
-
-                          {/* Stats */}
-                          {prog.attempted > 0 ? (
-                            <div className="flex items-center gap-2 text-[11px] font-mono font-bold">
-                              <span className="text-slate-700 dark:text-slate-300">{prog.attempted}/{prog.total}</span>
-                              <span className="text-emerald-600 dark:text-emerald-400 flex items-center gap-0.5"><CheckCircle2 className="w-3 h-3" />{prog.correct}</span>
-                              <span className="text-rose-500 dark:text-rose-400 flex items-center gap-0.5"><XCircle className="w-3 h-3" />{prog.wrong}</span>
-                            </div>
-                          ) : (
-                            <p className="text-[11px] text-slate-500 font-medium">Chưa luyện tập · {lvl.total} câu</p>
-                          )}
-
-                          {/* Score range badge */}
-                          <span className={`inline-block w-fit px-2 py-0.5 rounded-md text-[10px] font-bold border ${lvl.bg} ${lvl.text} border-current/20`}>
-                            {lvl.score}
-                          </span>
-
-                          {/* Progress bar */}
-                          <div className="h-1 rounded-full dark:bg-slate-800 bg-slate-100 overflow-hidden">
-                            <div style={{ width: `${pct}%` }} className={`h-full rounded-full transition-all duration-500 bg-${lvl.color}-500`} />
-                          </div>
-
-                          {/* Action icons (giống Đậu TOEIC: 🔖 □ 🗑️) */}
-                          <div className="flex items-center gap-1 text-slate-400">
-                            <button title="Đánh dấu" className="p-1.5 rounded-lg hover:bg-amber-500/15 hover:text-amber-500 transition-colors">
-                              <Star className="w-3.5 h-3.5" />
-                            </button>
-                            <button title="Làm lại" className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200 transition-colors">
-                              <RotateCcw className="w-3.5 h-3.5" />
-                            </button>
-                            <button
-                              title="Xóa tiến độ"
-                              onClick={(e) => { e.stopPropagation(); localStorage.removeItem(`grammar_level_progress_${lvl.id}`); }}
-                              className="p-1.5 rounded-lg hover:bg-rose-500/15 hover:text-rose-500 transition-colors"
-                            >
-                              <Trash2 className="w-3.5 h-3.5" />
-                            </button>
-                          </div>
-
-                          {/* Luyện tập button */}
-                          <button
-                            onClick={() => navigate(`/grammar/${lvl.navId}`)}
-                            className="w-full py-2 rounded-xl border border-emerald-500/40 bg-emerald-500/10 hover:bg-emerald-500 hover:text-slate-950 hover:border-emerald-500 text-emerald-600 dark:text-emerald-400 font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95"
-                          >
-                            <BookOpen className="w-3.5 h-3.5" />
-                            <span>Luyện tập</span>
-                          </button>
-                        </div>
-                      </VipLockOverlay>
-                    );
-                  })}
-                </div>
-
-                {/* Mô tả hệ thống */}
-                <div className="dark:bg-slate-900/60 bg-white border dark:border-slate-800 border-slate-200 shadow-sm rounded-2xl px-5 py-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                  <div className="flex items-center gap-2 shrink-0">
-                    <BarChart2 className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
-                    <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">Hệ thống 5 cấp độ</span>
-                  </div>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                    Câu hỏi được sắp xếp từ dễ đến khó dựa trên tỉ lệ sai thực tế của hàng nghìn thí sinh TOEIC. Mỗi cấp độ có khoảng 200 câu Part 5 ETS thật với giải thích chi tiết tiếng Việt.
-                  </p>
-                </div>
-              </div>
-            )}
-
-
-
-            {/* ════════════════════════════════════════════
-                SUBTAB 4: TIẾN ĐỘ — Dashboard tổng quát
-            ════════════════════════════════════════════ */}
-            {grammarSubTab === 'tiendo' && (() => {
-              // Aggregate from localStorage
-              const allTopics = [
-                { id: 'basic-grammar', title: 'Kiến thức cơ bản', total: 50 },
-                { id: 'nouns', title: 'Danh từ', total: 62 },
-                { id: 'verbs', title: 'Động từ', total: 45 },
-                { id: 'passive-active', title: 'Câu bị động', total: 20 },
-                { id: 'adjectives', title: 'Tính từ', total: 45 },
-                { id: 'adverbs', title: 'Trạng từ', total: 48 },
-                { id: 'pronouns', title: 'Đại từ', total: 50 },
-                { id: 'comparisons', title: 'Câu so sánh', total: 38 },
-                { id: 'conjunctions-prepositions', title: 'Liên từ/Giới từ', total: 24 },
-                { id: 'relative-clauses', title: 'Mệnh đề quan hệ', total: 40 },
-                { id: 'word-forms', title: 'Bài tập từ loại', total: 50 },
-                { id: 'mixed-verbs', title: 'Động từ hỗn hợp', total: 30 },
-                { id: 'mixed-grammar', title: 'Ngữ pháp tổng hợp', total: 60 },
-                { id: 'real-exam', title: 'Đề thi thật', total: 435 }
-              ];
-
-              const statsWithProgress = allTopics.map(t => {
-                try {
-                  const raw = localStorage.getItem(`grammar_progress_${t.id}`);
-                  if (raw) {
-                    const p = JSON.parse(raw);
-                    return { ...t, ...p };
-                  }
-                } catch(_) {}
-                return { ...t, attempted: 0, correct: 0, wrong: 0 };
+            {/* TAB: TIẾN ĐỘ NGỮ PHÁP TỔNG QUAN (15 CHỦ ĐIỂM · 1.843 CÂU) */}
+            {grammarFilter === 'tiendo' && (() => {
+              const allTopicsList = GRAMMAR_CATEGORIES.flatMap(cat => cat.topics);
+              const statsWithProgress = allTopicsList.map(t => {
+                const live = grammarList.find(g => g.slug === t.slug);
+                const prog = practiceProgressMap[`grammar_${t.slug}`];
+                return {
+                  ...t,
+                  total: live?.totalQuestions || t.total,
+                  attempted: prog?.completedCount || 0,
+                  correct: prog?.correctCount || 0,
+                  wrong: (prog?.wrongQuestions?.length) || (prog?.wrongCount || 0)
+                };
               });
 
-              const totalQuestions = 997;
+              const totalQuestions = 1843;
               const totalAttempted = statsWithProgress.reduce((sum, t) => sum + (t.attempted || 0), 0);
               const totalCorrect = statsWithProgress.reduce((sum, t) => sum + (t.correct || 0), 0);
               const totalWrong = statsWithProgress.reduce((sum, t) => sum + (t.wrong || 0), 0);
@@ -1085,7 +1159,7 @@ export default function ReadingDashboard() {
                       </div>
                       <div className="text-center">
                         <div className="text-lg font-black text-emerald-600 dark:text-emerald-400 font-mono">{totalAttempted.toLocaleString('vi-VN')}</div>
-                        <div className="text-xs text-slate-500 dark:text-slate-400">/ {totalQuestions} câu đã làm</div>
+                        <div className="text-xs text-slate-500 dark:text-slate-400">/ {totalQuestions.toLocaleString('vi-VN')} câu đã làm</div>
                       </div>
                     </div>
 
@@ -1110,14 +1184,14 @@ export default function ReadingDashboard() {
                   <div className="dark:bg-slate-900 bg-white border dark:border-slate-800 border-slate-200 shadow-sm rounded-2xl overflow-hidden">
                     <div className="px-5 py-3.5 border-b dark:border-slate-800 border-slate-200 flex items-center gap-2">
                       <BarChart2 className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
-                      <h3 className="font-heading font-extrabold text-sm text-slate-900 dark:text-white">Tiến độ từng chuyên đề</h3>
+                      <h3 className="font-heading font-extrabold text-sm text-slate-900 dark:text-white">Tiến độ 15 chuyên đề chuẩn Đậu TOEIC</h3>
                     </div>
                     <div className="divide-y dark:divide-slate-800/60 divide-slate-100">
                       {statsWithProgress.map((t, i) => {
                         const pct = t.total > 0 ? Math.round(((t.attempted || 0) / t.total) * 100) : 0;
                         const acc = (t.attempted || 0) > 0 ? Math.round(((t.correct || 0) / t.attempted) * 100) : 0;
                         return (
-                          <div key={t.id} className="px-5 py-3 grid grid-cols-12 items-center gap-3 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
+                          <div key={t.slug} className="px-5 py-3 grid grid-cols-12 items-center gap-3 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
                             <div className="col-span-1 text-xs font-mono text-slate-400 font-bold">{String(i + 1).padStart(2, '0')}</div>
                             <div className="col-span-3 text-xs font-semibold text-slate-700 dark:text-slate-300 truncate">{t.title}</div>
                             <div className="col-span-4 flex items-center gap-2">
@@ -1145,31 +1219,6 @@ export default function ReadingDashboard() {
                       })}
                     </div>
                   </div>
-
-                  {/* Reset all progress button */}
-                  {totalAttempted > 0 && (
-                    <div className="flex justify-end">
-                      <button
-                        onClick={() => {
-                          allTopics.forEach(t => localStorage.removeItem(`grammar_progress_${t.id}`));
-                          window.location.reload();
-                        }}
-                        className="px-4 py-2 rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-600 dark:text-rose-400 hover:bg-rose-500/20 text-xs font-bold flex items-center gap-1.5 transition-all"
-                      >
-                        <RotateCcw className="w-3.5 h-3.5" />
-                        <span>Reset toàn bộ tiến độ ngữ pháp</span>
-                      </button>
-                    </div>
-                  )}
-
-                  {/* Empty state */}
-                  {totalAttempted === 0 && (
-                    <div className="text-center py-10 text-slate-400">
-                      <BookOpen className="w-10 h-10 mx-auto mb-3 opacity-30" />
-                      <p className="text-sm font-medium text-slate-600 dark:text-slate-400">Chưa có tiến độ nào.</p>
-                      <p className="text-xs mt-1 text-slate-500">Bắt đầu luyện tập từ tab <strong className="text-emerald-600 dark:text-emerald-400">Theo chủ điểm</strong> để xem thống kê tại đây.</p>
-                    </div>
-                  )}
                 </div>
               );
             })()}
@@ -1177,10 +1226,8 @@ export default function ReadingDashboard() {
           </div>
         )}
 
-
-
         {/* ========================================================================= */}
-        {/* MODE 3: ĐỌC SONG NGỮ ANH-VIỆT (75 BÀI ĐỌC TRỌN BỘ 5 LEVELS) */}
+        {/* MODE 3: ĐỌC SONG NGỮ ANH-VIỆT (31 BÀI ĐỌC TRỌN BỘ 2 LEVELS ĐẬU TOEIC) */}
         {/* ========================================================================= */}
         {activeMode === 'bilingual' && (
           <div className="space-y-6 animate-fadeIn">
@@ -1260,7 +1307,6 @@ export default function ReadingDashboard() {
                 })}
               </div>
             )}
-
 
           </div>
         )}

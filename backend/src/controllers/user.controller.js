@@ -487,9 +487,13 @@ exports.syncStudyTime = async (req, res) => {
 
     const prevMinutes = profile.todayProgress?.studyTimeMinutes || 0;
     if (incomingMinutes > prevMinutes) {
-      const diff = incomingMinutes - prevMinutes;
-      profile.todayProgress.studyTimeMinutes = incomingMinutes;
-      profile.studyTimeMinutes = Math.max(incomingMinutes, (profile.studyTimeMinutes || 0) + diff);
+      // ANTI-CHEAT: Cap increment per sync to 10 minutes, and daily cap to 600 minutes (10h)
+      const rawDiff = incomingMinutes - prevMinutes;
+      const allowedDiff = Math.min(rawDiff, 10);
+      const newTodayMinutes = Math.min(prevMinutes + allowedDiff, 600);
+
+      profile.todayProgress.studyTimeMinutes = newTodayMinutes;
+      profile.studyTimeMinutes = Math.max(newTodayMinutes, (profile.studyTimeMinutes || 0) + (newTodayMinutes - prevMinutes));
       profile.lastStudyDate = new Date();
       if (!profile.streakDays || profile.streakDays === 0) {
         profile.streakDays = 1;

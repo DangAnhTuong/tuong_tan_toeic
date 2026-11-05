@@ -52,10 +52,11 @@ const questionSchema = new mongoose.Schema({
 const listeningExerciseSchema = new mongoose.Schema({
   title: { type: String, required: true }, // E.g. "Level 1 — Dễ", "TEST 1 2026", "Canteen Management"
   part: { type: Number, required: true, enum: [1, 2, 3, 4] },
-  level: { type: Number, enum: [1, 2, 3, 4, 5], default: 1 }, // 1: Dễ, 2: Cơ bản, 3: Trung bình, 4: Khó, 5: Rất khó
+  level: { type: Number, enum: [1, 2, 3, 4, 5, 6, 7, 8], default: 1 }, // 1 to 8 Levels matching Dau TOEIC
   mode: { type: String, enum: ['level', 'dictation', 'topic'], default: 'level' },
-  year: { type: String, default: '2026' }, // 2026, 2024, 2023, MASTER
+  year: { type: String, default: '2026' }, // 2026, 2024, 2023, MASTER, crack1, crack2, etc.
   topic: { type: String, default: '' },
+  topicKey: { type: String, default: '' },
   errorRate: { type: String, default: '1% - 14%' },
   totalQuestions: { type: Number, default: 0 },
   totalLessons: { type: Number, default: 0 },

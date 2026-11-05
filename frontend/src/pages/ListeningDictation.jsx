@@ -372,11 +372,14 @@ export default function ListeningDictation() {
     return speechText.split(/\s+/).filter(Boolean);
   }, [speechText]);
 
-  // Direct backend high-definition MP3 audio stream URL
+  // Direct backend high-definition MP3 audio stream URL (or authentic question audio)
   const audioStreamUrl = useMemo(() => {
+    if (currentSentence.audioUrl || currentSentence.audio) {
+      return currentSentence.audioUrl || currentSentence.audio;
+    }
     if (!speechText) return '';
     return `/api/v1/audio/tts?text=${encodeURIComponent(speechText)}&accent=${accent}`;
-  }, [speechText, accent]);
+  }, [currentSentence.audioUrl, currentSentence.audio, speechText, accent]);
 
   // Dynamic blank indices based on density (30%, 50%, 100%)
   const blankIndices = useMemo(() => {

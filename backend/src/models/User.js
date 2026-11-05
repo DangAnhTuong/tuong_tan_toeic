@@ -10,9 +10,9 @@ const userSchema = new mongoose.Schema({
   role: { type: String, enum: ['user', 'admin'], default: 'user' },
   googleId: { type: String, default: null },
 
-  // Password Reset Token & Expiration
-  resetPasswordToken: { type: String, default: null },
-  resetPasswordExpires: { type: Date, default: null },
+  // Password Reset Token & Expiration (Protected from accidental exposure)
+  resetPasswordToken: { type: String, default: null, select: false },
+  resetPasswordExpires: { type: Date, default: null, select: false },
 
   // VIP & Subscription Status
   isPro: { type: Boolean, default: false },

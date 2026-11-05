@@ -72,15 +72,13 @@ export default function App() {
                 <Route path="/grammar/:id" element={<ProtectedRoute><GrammarLesson /></ProtectedRoute>} />
                 <Route path="/reading/article/:id" element={<ProtectedRoute><BilingualReader /></ProtectedRoute>} />
 
-                {/* Writing Routes */}
-                <Route path="/write" element={<WritingDashboard />} />
-                <Route path="/write/part1/:id" element={<ProtectedRoute><WritingPart1Practice /></ProtectedRoute>} />
-                <Route path="/write/part2/:id" element={<ProtectedRoute><WritingPart2Practice /></ProtectedRoute>} />
-
-                {/* Speaking Routes */}
-                <Route path="/speaking" element={<SpeakingDashboard />} />
-                <Route path="/speaking/practice/:partId" element={<ProtectedRoute><SpeakingPractice /></ProtectedRoute>} />
-                <Route path="/speak" element={<Navigate to="/speaking" replace />} />
+                {/* Speaking & Writing Routes (Ẩn theo yêu cầu người dùng - chuyển hướng về Nghe & Đọc) */}
+                <Route path="/write" element={<Navigate to="/read" replace />} />
+                <Route path="/write/*" element={<Navigate to="/read" replace />} />
+                <Route path="/speaking" element={<Navigate to="/listen" replace />} />
+                <Route path="/speaking/*" element={<Navigate to="/listen" replace />} />
+                <Route path="/speak" element={<Navigate to="/listen" replace />} />
+                <Route path="/speak/*" element={<Navigate to="/listen" replace />} />
 
                 {/* Error Notebook / Sổ Tay Câu Sai */}
                 <Route path="/mistakes" element={<ProtectedRoute><ErrorNotebook /></ProtectedRoute>} />

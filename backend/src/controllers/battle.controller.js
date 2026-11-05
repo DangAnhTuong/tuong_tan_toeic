@@ -318,6 +318,9 @@ exports.matchmakeBattle = async (req, res) => {
   }
 };
 
+// Anti-Cheat: Battle cooldown map (Minimum 30s per battle)
+const battleCooldownMap = new Map();
+
 // Finish 1v1 Battle & Award XP, Elo & Streaks
 exports.finishBattle = async (req, res) => {
   try {
@@ -330,27 +333,49 @@ exports.finishBattle = async (req, res) => {
       if (!user && reqUser.email) user = await User.findOne({ email: reqUser.email.toLowerCase().trim() });
     }
 
-    const xpReward = isWinner ? 100 : 35;
-
-    if (user) {
-      user.totalXp = (user.totalXp || 0) + xpReward;
-
-      if (isWinner) {
-        user.battleWins = (user.battleWins || 0) + 1;
-        user.battleStreak = (user.battleStreak || 0) + 1;
-        if (user.battleStreak > (user.maxBattleStreak || 0)) {
-          user.maxBattleStreak = user.battleStreak;
-        }
-        user.battleElo = (user.battleElo || 1200) + 25;
-      } else {
-        user.battleLosses = (user.battleLosses || 0) + 1;
-        user.battleStreak = 0;
-        user.battleElo = Math.max(1000, (user.battleElo || 1200) - 15);
-      }
-
-      user.battleTier = calculateTierFromElo(user.battleElo);
-      await user.save();
+    if (!user) {
+      return res.status(200).json({
+        success: true,
+        message: 'Khách vãng lai: Kết quả trận đấu không lưu vào hồ sơ.',
+        data: { isWinner, userScore }
+      });
     }
+
+    // ANTI-CHEAT: Minimum 30 seconds between consecutive battle completions
+    const userIdStr = user._id.toString();
+    const now = Date.now();
+    const lastFinishedAt = battleCooldownMap.get(userIdStr) || 0;
+    if (now - lastFinishedAt < 30000) {
+      return res.status(429).json({
+        success: false,
+        message: '⚠️ Thao tác quá nhanh. Trận đấu 1v1 cần tối thiểu 30 giây để hoàn thành.'
+      });
+    }
+    battleCooldownMap.set(userIdStr, now);
+
+    // ANTI-CHEAT: Validate win condition (Winner must have answered questions legitimately)
+    const validCorrectCount = Math.max(0, Math.min(10, Number(correctCount) || 0));
+    const effectiveIsWinner = Boolean(isWinner) && validCorrectCount >= 4;
+
+    const xpReward = effectiveIsWinner ? 100 : 35;
+
+    user.totalXp = (user.totalXp || 0) + xpReward;
+
+    if (effectiveIsWinner) {
+      user.battleWins = (user.battleWins || 0) + 1;
+      user.battleStreak = (user.battleStreak || 0) + 1;
+      if (user.battleStreak > (user.maxBattleStreak || 0)) {
+        user.maxBattleStreak = user.battleStreak;
+      }
+      user.battleElo = (user.battleElo || 1200) + 25;
+    } else {
+      user.battleLosses = (user.battleLosses || 0) + 1;
+      user.battleStreak = 0;
+      user.battleElo = Math.max(1000, (user.battleElo || 1200) - 15);
+    }
+
+    user.battleTier = calculateTierFromElo(user.battleElo);
+    await user.save();
 
     return res.status(200).json({
       success: true,

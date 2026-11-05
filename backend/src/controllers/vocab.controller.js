@@ -21,8 +21,29 @@ const getCanonicalUserId = (req) => {
 exports.getVocabTopics = async (req, res) => {
   try {
     const { category } = req.query;
+    const isAuthed = req.user && !req.user.isGuest;
+    const currentUserId = isAuthed ? req.user._id : null;
+
     let query = {};
-    if (category) query.category = category;
+    if (category) {
+      query.category = category;
+      if (category === 'custom_ocr') {
+        if (!currentUserId) {
+          return res.status(200).json({ success: true, count: 0, data: [] });
+        }
+        query.createdBy = currentUserId;
+      }
+    } else {
+      // General list: show all preloaded topics, plus current user's custom OCR topics
+      if (currentUserId) {
+        query.$or = [
+          { category: { $ne: 'custom_ocr' } },
+          { category: 'custom_ocr', createdBy: currentUserId }
+        ];
+      } else {
+        query.category = { $ne: 'custom_ocr' };
+      }
+    }
 
     const topics = await VocabularyTopic.find(query);
 
@@ -622,20 +643,39 @@ exports.scanVocabImage = async (req, res) => {
 // Create Custom OCR Vocabulary Topic
 exports.createCustomTopic = async (req, res) => {
   try {
-    const { title, words } = req.body;
-    if (!title || !words || !Array.isArray(words)) {
-      return res.status(400).json({ success: false, message: 'Title and words array are required' });
+    if (!req.user || req.user.isGuest) {
+      return res.status(401).json({ success: false, message: 'Vui lòng đăng nhập để tạo bộ từ vựng cá nhân.' });
     }
 
+    const { title, words } = req.body;
+    if (!title || typeof title !== 'string' || !title.trim()) {
+      return res.status(400).json({ success: false, message: 'Tiêu đề bộ từ vựng không được để trống.' });
+    }
+
+    if (!words || !Array.isArray(words) || words.length === 0 || words.length > 100) {
+      return res.status(400).json({ success: false, message: 'Danh sách từ vựng phải từ 1 đến tối đa 100 từ.' });
+    }
+
+    // Sanitize words
+    const safeWords = words.map(w => ({
+      word: String(w.word || '').trim().slice(0, 80),
+      pos: String(w.pos || 'n.').trim().slice(0, 30),
+      phonetic: String(w.phonetic || '').trim().slice(0, 50),
+      meaning: String(w.meaning || '').trim().slice(0, 200),
+      exampleEn: String(w.exampleEn || '').trim().slice(0, 300),
+      exampleVi: String(w.exampleVi || '').trim().slice(0, 300)
+    })).filter(w => w.word.length > 0);
+
     const newTopic = new VocabularyTopic({
-      title,
+      title: title.trim().slice(0, 100),
       category: 'custom_ocr',
       tagLabel: 'TỪ VỰNG TẢI LÊN (OCR)',
       sourceType: 'USER_OCR',
       learnedCount: 0,
-      totalCount: words.length,
+      totalCount: safeWords.length,
       isPro: false,
-      words
+      createdBy: req.user._id,
+      words: safeWords
     });
 
     await newTopic.save();

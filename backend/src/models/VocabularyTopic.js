@@ -23,6 +23,7 @@ const vocabularyTopicSchema = new mongoose.Schema({
   learnedCount: { type: Number, default: 0 },
   totalCount: { type: Number, default: 0 },
   isPro: { type: Boolean, default: false },
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
   parts: [{
     name: String,
     orderIndex: Number,

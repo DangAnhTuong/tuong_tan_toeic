@@ -38,9 +38,14 @@ import axios from 'axios';
 import { getPracticeProgress, resetPracticeProgress } from '../services/practiceProgressService';
 import { getBasketWords, removeWordFromBasket } from '../services/vocabBasketService';
 import { getStoredUser, setStoredUser } from '../utils/auth';
+import { DICTATION_CATALOG } from '../data/dictationCatalog';
 
 export default function ListeningDashboard() {
-  usePageTitle('Luyện Nghe TOEIC Online - 4 Chế Độ Đậu TOEIC');
+  usePageTitle(
+    'Luyện Nghe TOEIC Online - 8 Level & Nghe Chép Đậu TOEIC',
+    'Chinh phục TOEIC Listening từ dễ đến khó. Nghe chép chính tả và luyện Part 1–4 theo 8 level, từ dưới 300 tới trên 900 điểm.'
+  );
+
   const { requireAuth, isPro: authIsPro, refreshProfile } = useAuth();
   const rawNavigate = useNavigate();
   const navigate = (to, options) => {
@@ -52,44 +57,50 @@ export default function ListeningDashboard() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   // Read URL query params on load or back button
-  const urlTab = searchParams.get('tab') || searchParams.get('mode') || 'type';
-  const urlPart = parseInt(searchParams.get('part'), 10) || 1;
-  const urlYear = searchParams.get('year') || '2026';
+  // Single-row navigation matching Dau English:
+  // Default is 'dictation' if no part is selected; otherwise '1', '2', '3', '4'
+  const getInitialTab = () => {
+    const curPart = searchParams.get('part');
+    const curMode = searchParams.get('mode') || searchParams.get('tab');
+    if (curMode === 'dictation') return 'dictation';
+    if (curPart && ['1', '2', '3', '4'].includes(String(curPart))) return String(curPart);
+    if (curMode && ['1', '2', '3', '4'].includes(String(curMode))) return String(curMode);
+    return 'dictation';
+  };
 
-  // 3 Main Tabs: 'type' (Theo dạng bài) | 'level' (Theo level) | 'dictation' (Nghe chép)
-  const [mainTab, setMainTab] = useState(urlTab);
+  const [activeTab, setActiveTab] = useState(getInitialTab);
+  const [dictationYear, setDictationYear] = useState(searchParams.get('year') || '2026');
 
-  // Sub-tab for Part 1-4
-  const [activePart, setActivePart] = useState(urlPart);
-
-  // Sub-tab for Dictation (2026, 2024, 2023, MASTER, topic, review)
-  const [dictationYear, setDictationYear] = useState(urlYear);
+  // Active Part for Level & Subtype Practice (1, 2, 3, 4)
+  const activePart = activeTab === 'dictation' ? 1 : Number(activeTab);
 
   // Keep state synced when user clicks browser Back / Forward buttons
   useEffect(() => {
-    const currentTab = searchParams.get('tab') || searchParams.get('mode') || 'type';
-    const currentPart = parseInt(searchParams.get('part'), 10) || 1;
-    const currentYear = searchParams.get('year') || '2026';
+    const curPart = searchParams.get('part');
+    const curMode = searchParams.get('mode') || searchParams.get('tab');
+    const curYear = searchParams.get('year') || '2026';
 
-    setMainTab(currentTab);
-    setActivePart(currentPart);
-    setDictationYear(currentYear);
+    if (curPart && ['1', '2', '3', '4'].includes(String(curPart))) {
+      setActiveTab(String(curPart));
+    } else if (curMode === 'dictation' || !curPart) {
+      setActiveTab('dictation');
+    }
+    setDictationYear(curYear);
   }, [searchParams]);
 
-  // Tab switch handlers that update URL
-  const handleTabChange = (newTab) => {
-    setMainTab(newTab);
-    setSearchParams({ tab: newTab, part: activePart, year: dictationYear }, { replace: true });
-  };
-
-  const handlePartChange = (newPart) => {
-    setActivePart(newPart);
-    setSearchParams({ tab: mainTab, part: newPart, year: dictationYear }, { replace: true });
+  // Tab switch handlers that update URL matching Dau English exactly
+  const handleTabChange = (tabId) => {
+    setActiveTab(tabId);
+    if (tabId === 'dictation') {
+      setSearchParams({ mode: 'dictation', year: dictationYear }, { replace: true });
+    } else {
+      setSearchParams({ part: tabId }, { replace: true });
+    }
   };
 
   const handleDictationYearChange = (newYear) => {
     setDictationYear(newYear);
-    setSearchParams({ tab: mainTab, part: activePart, year: newYear }, { replace: true });
+    setSearchParams({ mode: 'dictation', year: newYear }, { replace: true });
   };
 
   // Pricing Modal & User VIP status
@@ -115,23 +126,22 @@ export default function ListeningDashboard() {
   const [topicExercises, setTopicExercises] = useState([]);
   const [dictationExercises, setDictationExercises] = useState([]);
 
-  // Fetch listening exercises for active tab and active part to display real attemptsCount
+  // Fetch listening exercises for active part to display real attemptsCount
   useEffect(() => {
     let isMounted = true;
     async function loadListeningExercises() {
       try {
-        if (mainTab === 'level') {
-          const res = await axios.get(`/api/v1/listening/exercises?mode=level&part=${activePart}`);
-          if (isMounted && res.data?.data) {
-            setLevelExercises(res.data.data);
+        if (activeTab !== 'dictation') {
+          const [lvlRes, topRes] = await Promise.all([
+            axios.get(`/api/v1/listening/exercises?mode=level&part=${activePart}`),
+            axios.get(`/api/v1/listening/exercises?mode=topic&part=${activePart}`)
+          ]);
+          if (isMounted) {
+            if (lvlRes.data?.data) setLevelExercises(lvlRes.data.data);
+            if (topRes.data?.data) setTopicExercises(topRes.data.data);
           }
-        } else if (mainTab === 'type') {
-          const res = await axios.get(`/api/v1/listening/exercises?mode=topic&part=${activePart}`);
-          if (isMounted && res.data?.data) {
-            setTopicExercises(res.data.data);
-          }
-        } else if (mainTab === 'dictation') {
-          const res = await axios.get(`/api/v1/listening/exercises?mode=dictation&part=${activePart}&year=${dictationYear}`);
+        } else {
+          const res = await axios.get(`/api/v1/listening/exercises?mode=dictation&part=1&year=${dictationYear}`);
           if (isMounted && res.data?.data) {
             setDictationExercises(res.data.data);
           }
@@ -142,7 +152,7 @@ export default function ListeningDashboard() {
     }
     loadListeningExercises();
     return () => { isMounted = false; };
-  }, [mainTab, activePart, dictationYear]);
+  }, [activeTab, activePart, dictationYear]);
 
   const getTopicAttempts = (title, fallback = 240) => {
     const match = topicExercises.find(e => e.topic === title || e.title === title);
@@ -182,7 +192,7 @@ export default function ListeningDashboard() {
       window.removeEventListener('focus', onFocus);
       window.removeEventListener('vocab_basket_updated', handleBasketUpdate);
     };
-  }, [activePart, mainTab]);
+  }, [activePart, activeTab]);
 
   // Sync user profile & VIP status
   useEffect(() => {
@@ -207,45 +217,48 @@ export default function ListeningDashboard() {
     return () => window.removeEventListener('auth_state_changed', checkPro);
   }, []);
 
-  // --- DATA FOR TAB 1: THEO DẠNG BÀI (DYNAMIC FROM DATABASE) ---
+  // --- SUBTYPE DATA (MATCHING DAU ENGLISH 100%) ---
+  // Part 1: Theo dạng tranh (single, multi, scene, object) -> Total 450 (100% Đậu English)
   const part1Topics = [
-    { title: 'Tranh một người', total: 220 },
-    { title: 'Tranh nhiều người', total: 104 },
-    { title: 'Tranh cảnh vật', total: 214 }
+    { title: 'Tranh một người', total: 176, isPro: false, key: 'single' },
+    { title: 'Tranh nhiều người', total: 106, isPro: true, key: 'multi' },
+    { title: 'Tranh tả cảnh', total: 37, isPro: false, key: 'scene' },
+    { title: 'Tranh tả vật', total: 131, isPro: true, key: 'object' }
   ];
 
+  // Part 2: Theo dạng câu hỏi (who, when, where, why, what, how, auxbe, modal, choice, tag, negative, statement) -> Total 1000 (Matches Đậu TOEIC 100%)
   const part2Topics = [
-    { title: 'Câu khẳng định', total: 780 },
-    { title: 'Câu hỏi Be/Do/Have', total: 162 },
-    { title: 'Câu hỏi Modal verb', total: 158 },
-    { title: 'Câu hỏi When', total: 156 },
-    { title: 'Câu hỏi How', total: 155 },
-    { title: 'Câu hỏi Why', total: 144 },
-    { title: 'Câu hỏi lựa chọn', total: 174 },
-    { title: 'Câu hỏi phủ định', total: 142 },
-    { title: 'Câu hỏi Who', total: 127 },
-    { title: 'Câu hỏi Where', total: 123 },
-    { title: 'Câu hỏi What', total: 92 },
-    { title: 'Câu hỏi đuôi', total: 88 }
+    { title: 'Câu hỏi Who', total: 78 },
+    { title: 'Câu hỏi When', total: 102 },
+    { title: 'Câu hỏi Where', total: 60 },
+    { title: 'Câu hỏi Why', total: 83 },
+    { title: 'Câu hỏi What / Which', total: 34 },
+    { title: 'Câu hỏi How', total: 92 },
+    { title: 'Câu hỏi Be/Do/Have', total: 101 },
+    { title: 'Câu hỏi Modal verb', total: 99 },
+    { title: 'Câu hỏi lựa chọn', total: 96 },
+    { title: 'Câu hỏi đuôi', total: 65 },
+    { title: 'Câu hỏi phủ định', total: 77 },
+    { title: 'Câu khẳng định', total: 113 }
   ];
 
-  // Part 3: 3 Special Formats (Includes 3-Speaker Conversations)
+  // Part 3: Dạng đặc biệt (Có hình, 3 người, hàm ý) -> Total 741 (Matches Đậu TOEIC 100%)
   const part3Special = [
-    { title: 'Có hình / bảng biểu', total: 375 },
-    { title: 'Hội thoại 3 người nói', total: 255 },
+    { title: 'Có hình / bảng biểu', total: 351 },
+    { title: 'Hội thoại 3 người nói', total: 264 },
     { title: 'Câu hỏi hàm ý người nói', total: 126 }
   ];
 
   const part3Topics = [
     { title: 'Lịch hẹn, cuộc họp & tiến độ công việc', total: 924 },
-    { title: 'Đơn hàng, kho bãi & giao nhận', total: 552 },
-    { title: 'Mua sắm, cửa hàng & đổi trả', total: 420 },
-    { title: 'Nhà ở & dịch vụ đời sống', total: 378 },
-    { title: 'Tàu xe & đi lại hằng ngày', total: 261 },
-    { title: 'Nhà hàng & ăn uống', total: 204 },
-    { title: 'Sân bay, khách sạn & du lịch', total: 150 },
-    { title: 'Marketing, bán hàng & khách hàng', total: 126 },
-    { title: 'Công nghệ, IT & website', total: 69 },
+    { title: 'Nhà ở & dịch vụ đời sống', total: 612 },
+    { title: 'Đơn hàng, kho bãi & giao nhận', total: 396 },
+    { title: 'Mua sắm, cửa hàng & đổi trả', total: 330 },
+    { title: 'Tàu xe & đi lại hằng ngày', total: 240 },
+    { title: 'Nhà hàng & ăn uống', total: 210 },
+    { title: 'Sân bay, khách sạn & du lịch', total: 120 },
+    { title: 'Công nghệ, IT & website', total: 90 },
+    { title: 'Marketing, bán hàng & khách hàng', total: 75 },
     { title: 'Sự cố, bảo trì & xây dựng', total: 72 },
     { title: 'Đào tạo & nhân viên mới', total: 60 },
     { title: 'Sự kiện, hội thảo & tiệc', total: 57 },
@@ -255,10 +268,10 @@ export default function ListeningDashboard() {
     { title: 'Chủ đề khác', total: 261 }
   ];
 
-  // Part 4: 2 Special Formats (Short Talks do NOT have 3-speaker conversations)
+  // Part 4: Dạng đặc biệt (Có hình, hàm ý) -> Total 399 (Matches Đậu TOEIC 100%)
   const part4Special = [
-    { title: 'Có hình / bảng biểu', total: 228 },
-    { title: 'Câu hỏi hàm ý người nói', total: 150 }
+    { title: 'Có hình / bảng biểu', total: 240 },
+    { title: 'Câu hỏi hàm ý người nói', total: 159 }
   ];
 
   const part4Topics = [
@@ -280,61 +293,67 @@ export default function ListeningDashboard() {
     { title: 'Chủ đề khác', total: 153 }
   ];
 
-  // --- DATA FOR TAB 2: THEO LEVEL (5 LEVELS DYNAMIC PER PART - CALIBRATED FOR 200 STUDENTS) ---
+  // --- DATA FOR 8 LEVEL CARDS (EXACT MATCH DAU TOEIC STANDARDIZED) ---
   const getLevelList = (part) => {
     const defaultData = {
       1: [
-        { levelNum: 1, name: 'Level 1 — Dễ', attempts: 895, total: 93, isPro: false },
-        { levelNum: 2, name: 'Level 2 — Cơ bản', attempts: 542, total: 93, isPro: false },
-        { levelNum: 3, name: 'Level 3 — Trung bình', attempts: 326, total: 92, isPro: true },
-        { levelNum: 4, name: 'Level 4 — Khó', attempts: 184, total: 92, isPro: true },
-        { levelNum: 5, name: 'Level 5 — Rất khó', attempts: 72, total: 92, isPro: true }
+        { levelNum: 1, name: 'Level 1', scoreText: 'Dưới 300 điểm', attempts: 1895, total: 67, isPro: false },
+        { levelNum: 2, name: 'Level 2', scoreText: '300–400 điểm', attempts: 1542, total: 31, isPro: true },
+        { levelNum: 3, name: 'Level 3', scoreText: '400–500 điểm', attempts: 2326, total: 71, isPro: false },
+        { levelNum: 4, name: 'Level 4', scoreText: '500–600 điểm', attempts: 1184, total: 72, isPro: false },
+        { levelNum: 5, name: 'Level 5', scoreText: '600–700 điểm', attempts: 2890, total: 98, isPro: true },
+        { levelNum: 6, name: 'Level 6', scoreText: '700–800 điểm', attempts: 1750, total: 70, isPro: false },
+        { levelNum: 7, name: 'Level 7', scoreText: '800–900 điểm', attempts: 1320, total: 23, isPro: true },
+        { levelNum: 8, name: 'Level 8', scoreText: 'Trên 900 điểm', attempts: 940, total: 18, isPro: false }
       ],
       2: [
-        { levelNum: 1, name: 'Level 1 — Dễ', attempts: 768, total: 385, isPro: false },
-        { levelNum: 2, name: 'Level 2 — Cơ bản', attempts: 485, total: 385, isPro: false },
-        { levelNum: 3, name: 'Level 3 — Trung bình', attempts: 294, total: 385, isPro: true },
-        { levelNum: 4, name: 'Level 4 — Khó', attempts: 156, total: 385, isPro: true },
-        { levelNum: 5, name: 'Level 5 — Rất khó', attempts: 68, total: 385, isPro: true }
+        { levelNum: 1, name: 'Level 1', scoreText: 'Dưới 300 điểm', attempts: 2527, total: 175, isPro: false },
+        { levelNum: 2, name: 'Level 2', scoreText: '300–400 điểm', attempts: 2133, total: 105, isPro: true },
+        { levelNum: 3, name: 'Level 3', scoreText: '400–500 điểm', attempts: 3126, total: 187, isPro: false },
+        { levelNum: 4, name: 'Level 4', scoreText: '500–600 điểm', attempts: 1347, total: 267, isPro: false },
+        { levelNum: 5, name: 'Level 5', scoreText: '600–700 điểm', attempts: 2980, total: 409, isPro: true },
+        { levelNum: 6, name: 'Level 6', scoreText: '700–800 điểm', attempts: 2210, total: 371, isPro: false },
+        { levelNum: 7, name: 'Level 7', scoreText: '800–900 điểm', attempts: 1640, total: 241, isPro: true },
+        { levelNum: 8, name: 'Level 8', scoreText: 'Trên 900 điểm', attempts: 1080, total: 120, isPro: false }
       ],
       3: [
-        { levelNum: 1, name: 'Level 1 — Dễ', attempts: 512, total: 435, isPro: false },
-        { levelNum: 2, name: 'Level 2 — Cơ bản', attempts: 345, total: 435, isPro: false },
-        { levelNum: 3, name: 'Level 3 — Trung bình', attempts: 218, total: 435, isPro: true },
-        { levelNum: 4, name: 'Level 4 — Khó', attempts: 115, total: 435, isPro: true },
-        { levelNum: 5, name: 'Level 5 — Rất khó', attempts: 48, total: 435, isPro: true }
+        { levelNum: 1, name: 'Level 1', scoreText: 'Dưới 300 điểm', attempts: 1986, total: 87, isPro: false },
+        { levelNum: 2, name: 'Level 2', scoreText: '300–400 điểm', attempts: 2052, total: 57, isPro: true },
+        { levelNum: 3, name: 'Level 3', scoreText: '400–500 điểm', attempts: 2839, total: 285, isPro: false },
+        { levelNum: 4, name: 'Level 4', scoreText: '500–600 điểm', attempts: 1125, total: 558, isPro: false },
+        { levelNum: 5, name: 'Level 5', scoreText: '600–700 điểm', attempts: 3410, total: 741, isPro: true },
+        { levelNum: 6, name: 'Level 6', scoreText: '700–800 điểm', attempts: 2950, total: 729, isPro: false },
+        { levelNum: 7, name: 'Level 7', scoreText: '800–900 điểm', attempts: 1870, total: 360, isPro: true },
+        { levelNum: 8, name: 'Level 8', scoreText: 'Trên 900 điểm', attempts: 1190, total: 108, isPro: false }
       ],
       4: [
-        { levelNum: 1, name: 'Level 1 — Dễ', attempts: 426, total: 360, isPro: false },
-        { levelNum: 2, name: 'Level 2 — Cơ bản', attempts: 284, total: 360, isPro: false },
-        { levelNum: 3, name: 'Level 3 — Trung bình', attempts: 176, total: 360, isPro: true },
-        { levelNum: 4, name: 'Level 4 — Khó', attempts: 92, total: 360, isPro: true },
-        { levelNum: 5, name: 'Level 5 — Rất khó', attempts: 38, total: 360, isPro: true }
+        { levelNum: 1, name: 'Level 1', scoreText: 'Dưới 300 điểm', attempts: 1792, total: 36, isPro: false },
+        { levelNum: 2, name: 'Level 2', scoreText: '300–400 điểm', attempts: 1814, total: 27, isPro: true },
+        { levelNum: 3, name: 'Level 3', scoreText: '400–500 điểm', attempts: 2229, total: 156, isPro: false },
+        { levelNum: 4, name: 'Level 4', scoreText: '500–600 điểm', attempts: 909, total: 366, isPro: false },
+        { levelNum: 5, name: 'Level 5', scoreText: '600–700 điểm', attempts: 3120, total: 519, isPro: true },
+        { levelNum: 6, name: 'Level 6', scoreText: '700–800 điểm', attempts: 2780, total: 588, isPro: false },
+        { levelNum: 7, name: 'Level 7', scoreText: '800–900 điểm', attempts: 1940, total: 405, isPro: true },
+        { levelNum: 8, name: 'Level 8', scoreText: 'Trên 900 điểm', attempts: 1250, total: 153, isPro: false }
       ]
     };
 
     const base = defaultData[part] || defaultData[1];
     return base.map(item => {
-      const match = levelExercises.find(e => e.level === item.levelNum);
+      const match = levelExercises.find(e => Number(e.part) === Number(part) && Number(e.level) === Number(item.levelNum));
       const attCount = match?.attemptsCount ?? item.attempts;
       const totCount = match?.totalQuestions || item.total;
       return {
         ...item,
         total: totCount,
-        attempts: `${attCount} lượt làm`,
-        completed: 0,
-        correct: 0,
-        wrong: 0
+        attempts: `${attCount} lượt làm`
       };
     });
   };
 
   const levelList = getLevelList(activePart);
 
-  // --- DATA FOR TAB 3: NGHE CHÉP (DICTATION 10 TESTS MATCHING DAU TOEIC 100%) ---
-  const p3Counts = [156, 142, 138, 148, 150, 144, 140, 146, 152, 145];
-  const p4Counts = [106, 101, 98, 104, 102, 100, 105, 103, 108, 100];
-
+  // --- DATA FOR DICTATION (AUTHENTIC 11 TABS & EXACT TEST COUNTS MATCHING DAU TOEIC 100%) ---
   const getCurrentUserId = () => {
     const user = getStoredUser();
     return user?.userId || user?._id || user?.id || user?.email || 'guest';
@@ -346,7 +365,7 @@ export default function ListeningDashboard() {
     
     let progress = practiceProgressMap[stdKey] || practiceProgressMap[altKey];
     
-    // Fallback: check localStorage mirror tuongtan_dictation_resume_*
+    // Fallback: check localStorage mirror
     if (!progress || !progress.completedCount) {
       try {
         const userId = getCurrentUserId();
@@ -387,12 +406,16 @@ export default function ListeningDashboard() {
   };
 
   const dictationTests = useMemo(() => {
-    return Array.from({ length: 10 }, (_, i) => {
+    const yearCatalog = DICTATION_CATALOG[dictationYear] || DICTATION_CATALOG['2026'] || {};
+    const testCount = dictationYear === '2021' ? 5 : 10;
+
+    return Array.from({ length: testCount }, (_, i) => {
       const testNum = i + 1;
-      const p1Count = 24;
-      const p2Count = 100;
-      const p3Count = p3Counts[i] || 140;
-      const p4Count = p4Counts[i] || 100;
+      const testData = yearCatalog[`Test ${testNum}`] || {};
+      const p1Count = testData.p1 || 24;
+      const p2Count = testData.p2 || 100;
+      const p3Count = testData.p3 || 140;
+      const p4Count = testData.p4 || 100;
 
       const p1Prog = getDictationProgress(dictationYear, 1, testNum, p1Count);
       const p2Prog = getDictationProgress(dictationYear, 2, testNum, p2Count);
@@ -409,33 +432,24 @@ export default function ListeningDashboard() {
     });
   }, [dictationYear, practiceProgressMap]);
 
-  const handleStartPractice = (modeName, testNumber = 1, part = 1, level = null) => {
-    let url = `/listen/practice/test${testNumber}?mode=${modeName}&test=${testNumber}&part=${part}`;
-    if (level) {
-      url = `/listen/practice/level${level}?mode=${modeName}&level=${level}&part=${part}`;
-    }
-    navigate(url);
-  };
-
-
   return (
     <div className="min-h-screen dark:bg-[#0b1120] bg-[#f8fafc] dark:text-slate-100 text-slate-900 flex flex-col font-sans pb-16 transition-colors duration-200">
       <Navbar />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         
-        {/* HERO BANNER: CHINH PHỤC TOEIC LISTENING */}
+        {/* HERO BANNER: CHINH PHỤC TOEIC LISTENING (MATCHING DAU ENGLISH 100%) */}
         <div className="relative overflow-hidden rounded-3xl glass-panel border dark:border-slate-800 border-slate-200 p-8 md:p-10 dark:bg-gradient-to-r dark:from-purple-950/40 dark:via-[#0f172a] dark:to-[#0b1120] bg-gradient-to-r from-purple-50 via-white to-indigo-50/60 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl dark:shadow-2xl">
           <div className="space-y-3 text-center md:text-left">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full dark:bg-purple-500/10 bg-purple-100 border dark:border-purple-500/30 border-purple-300 text-purple-700 dark:text-purple-400 text-xs font-bold uppercase tracking-wider">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>LUYỆN NGHE TOEIC</span>
+              <span>Luyện nghe TOEIC</span>
             </div>
             <h1 className="text-3xl md:text-5xl font-extrabold font-heading dark:text-white text-slate-900 tracking-tight leading-tight">
               Chinh phục <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-cyan-500 dark:from-purple-400 dark:via-pink-300 dark:to-cyan-300 bg-clip-text text-transparent">TOEIC Listening</span> từ dễ đến khó
             </h1>
             <p className="dark:text-slate-400 text-slate-600 text-sm md:text-base">
-              Luyện Part 1—4 theo 5 cấp độ và luyện nghe chép chính tả Dictation.
+              Nghe chép chính tả và luyện Part 1–4 theo 8 level, từ dưới 300 tới trên 900 điểm.
             </p>
           </div>
 
@@ -446,187 +460,229 @@ export default function ListeningDashboard() {
           </div>
         </div>
 
-        {/* 3 MAIN TABS SWITCHER */}
-        <div className="flex items-center gap-3 border-b dark:border-slate-800 border-slate-200 pb-4 overflow-x-auto">
-          
-          {/* Tab 1: Theo dạng bài */}
-          <button
-            onClick={() => handleTabChange('type')}
-            className={`px-5 py-2.5 rounded-2xl text-xs font-heading font-extrabold transition-all flex items-center gap-2 shrink-0 ${
-              mainTab === 'type'
-                ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/30'
-                : 'dark:bg-slate-900 bg-white border dark:border-slate-800 border-slate-200 dark:text-slate-400 text-slate-600 hover:text-purple-600 dark:hover:text-white shadow-sm'
-            }`}
-          >
-            <Layers className="w-4 h-4" />
-            <span>Theo dạng bài</span>
-            <span className="px-1.5 py-0.2 rounded bg-rose-500 text-white text-[9px] font-black uppercase">NEW</span>
-          </button>
-
-          {/* Tab 2: Theo level */}
-          <button
-            onClick={() => handleTabChange('level')}
-            className={`px-5 py-2.5 rounded-2xl text-xs font-heading font-extrabold transition-all flex items-center gap-2 shrink-0 ${
-              mainTab === 'level'
-                ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/30'
-                : 'dark:bg-slate-900 bg-white border dark:border-slate-800 border-slate-200 dark:text-slate-400 text-slate-600 hover:text-purple-600 dark:hover:text-white shadow-sm'
-            }`}
-          >
-            <Sliders className="w-4 h-4" />
-            <span>Theo level</span>
-          </button>
-
-          {/* Tab 3: Nghe chép */}
-          <button
-            onClick={() => handleTabChange('dictation')}
-            className={`px-5 py-2.5 rounded-2xl text-xs font-heading font-extrabold transition-all flex items-center gap-2 shrink-0 ${
-              mainTab === 'dictation'
-                ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/30'
-                : 'dark:bg-slate-900 bg-white border dark:border-slate-800 border-slate-200 dark:text-slate-400 text-slate-600 hover:text-purple-600 dark:hover:text-white shadow-sm'
-            }`}
-          >
-            <Edit3 className="w-4 h-4" />
-            <span>Nghe chép</span>
-          </button>
-
+        {/* SINGLE-ROW PILL NAVIGATION TABS (MATCHING DAU ENGLISH 100%) */}
+        <div className="flex items-center gap-2 border-b dark:border-slate-800 border-slate-200 pb-3 overflow-x-auto">
+          {[
+            { id: 'dictation', label: 'Nghe chép' },
+            { id: '1', label: 'Part 1' },
+            { id: '2', label: 'Part 2' },
+            { id: '3', label: 'Part 3' },
+            { id: '4', label: 'Part 4' }
+          ].map((tab) => {
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => handleTabChange(tab.id)}
+                className={`px-6 py-2 rounded-full text-sm font-bold transition-all shrink-0 cursor-pointer ${
+                  isActive
+                    ? 'bg-purple-600 text-white shadow-md shadow-purple-600/25'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
+                }`}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
         </div>
 
-        {/* SUB-TABS: PART 1-4 (For Tab 1 and Tab 2) */}
-        {mainTab !== 'dictation' && (
-          <div className="flex items-center gap-2 overflow-x-auto pb-1">
-            {[1, 2, 3, 4].map((pNum) => (
-              <button
-                key={pNum}
-                onClick={() => handlePartChange(pNum)}
-                className={`px-4 py-1.5 rounded-xl text-xs font-heading font-extrabold transition-all flex items-center gap-1.5 shrink-0 ${
-                  activePart === pNum
-                    ? 'bg-purple-600 text-white shadow-md shadow-purple-600/20'
-                    : 'dark:bg-slate-900/80 bg-white border dark:border-slate-800 border-slate-200 dark:text-slate-400 text-slate-600 hover:text-purple-600 dark:hover:text-white shadow-sm'
-                }`}
-              >
-                <Headphones className="w-3.5 h-3.5" />
-                <span>Part {pNum}</span>
-              </button>
-            ))}
-          </div>
-        )}
-
-        {/* SUB-TABS: YEAR FILTERS (For Tab 3: Nghe Chép) */}
-        {mainTab === 'dictation' && (
-          <div className="flex items-center gap-2.5 overflow-x-auto pb-1">
-            {[
-              { id: '2026', label: 'Đề 2026' },
-              { id: '2024', label: 'Đề 2024' },
-              { id: '2023', label: 'Đề 2023' },
-              { id: 'master', label: 'TOEIC MASTER' },
-              { id: 'topic', label: 'Nghe theo chủ đề', icon: '🔥', hot: true },
-              { id: 'review', label: 'Câu cần luyện lại', icon: '🔖' }
-            ].map((f) => (
-              <button
-                key={f.id}
-                onClick={() => handleDictationYearChange(f.id)}
-                className={`px-4 py-2 rounded-full text-xs font-heading font-extrabold transition-all flex items-center gap-1.5 shrink-0 ${
-                  dictationYear === f.id
-                    ? 'bg-[#7c3aed] text-white shadow-md shadow-purple-600/30'
-                    : 'dark:bg-[#0f172a] bg-white border dark:border-slate-800 border-slate-200 dark:text-slate-400 text-slate-600 hover:text-purple-600 dark:hover:text-white shadow-sm'
-                }`}
-              >
-                {f.icon && <span>{f.icon}</span>}
-                <span>{f.label}</span>
-                {f.hot && (
-                  <span className="px-1.5 py-0.2 rounded bg-amber-500 text-slate-950 font-black text-[9px] uppercase tracking-wider ml-0.5">
-                    HOT
-                  </span>
-                )}
-              </button>
-            ))}
-          </div>
-        )}
-
-        {/* ========================================================= */}
-        {/* TAB 1 CONTENT: THEO DẠNG BÀI */}
-        {/* ========================================================= */}
-        {mainTab === 'type' && (
-          <div className="space-y-6">
+        {/* ========================================================================= */}
+        {/* MODE: PART 1, 2, 3, 4 (8 LEVEL CARDS + SUBTYPE TOPIC BREAKDOWN) */}
+        {/* ========================================================================= */}
+        {activeTab !== 'dictation' && (
+          <div className="space-y-10 animate-fadeIn">
             
-            {/* PART 1 */}
+            {/* Header tip and dropdown for Part 1 matching Đậu TOEIC */}
             {activePart === 1 && (
               <div className="space-y-3">
+                <div className="flex items-center gap-2 text-xs text-sky-500 dark:text-sky-400 font-medium">
+                  <span className="text-slate-400">Mẹo:</span>
+                  <a href="#tips" onClick={(e) => { e.preventDefault(); }} className="hover:underline flex items-center gap-1">
+                    Mẹo làm Part 1: 6 bẫy hay gặp →
+                  </a>
+                </div>
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-900/60 border border-slate-800 text-xs font-bold text-slate-300">
+                  <span>Tất cả dạng tranh (450)</span>
+                </div>
+              </div>
+            )}
+
+            {/* 1. 8 LEVEL CARDS GRID */}
+            <div className="space-y-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+                {levelList.map((lvl) => {
+                  const isLocked = !isProUser && lvl.isPro;
+                  const exKey = `listening_p${activePart}_lv${lvl.levelNum}`;
+                  const progress = practiceProgressMap[exKey];
+                  const completed = progress?.completedCount || 0;
+                  const correct = progress?.correctCount || 0;
+                  const wrong = progress?.wrongCount || 0;
+                  const total = lvl.total;
+
+                  return (
+                    <VipLockOverlay
+                      key={lvl.levelNum}
+                      isLocked={isLocked}
+                      onUnlockClick={() => setShowPricingModal(true)}
+                      label={`Level ${lvl.levelNum} (VIP)`}
+                    >
+                      <div 
+                        className="rounded-3xl dark:bg-slate-900/60 bg-white border dark:border-slate-800 border-slate-200 p-5 space-y-4 flex flex-col justify-between hover:border-purple-500/50 dark:hover:border-purple-500/50 hover:shadow-xl shadow-sm transition-all"
+                      >
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <h3 className="font-heading font-extrabold text-sm sm:text-base text-slate-900 dark:text-white">
+                                {lvl.name}
+                              </h3>
+                              <p className="text-xs text-slate-400 dark:text-slate-500 font-medium">
+                                {lvl.scoreText}
+                              </p>
+                            </div>
+                            {lvl.isPro && (
+                              <span className="px-2 py-0.5 rounded-md bg-amber-500 text-slate-950 font-black text-[9px] uppercase tracking-wider flex items-center gap-1 shadow-sm">
+                                <Crown className="w-2.5 h-2.5" /> PRO
+                              </span>
+                            )}
+                          </div>
+
+                          {/* Question Counts & Progress Stat Row matching Dau TOEIC */}
+                          <div className="py-1">
+                            {completed > 0 ? (
+                              <div className="flex items-center gap-3 text-xs font-bold font-mono">
+                                <span className="font-extrabold text-emerald-600 dark:text-emerald-400">
+                                  {completed}/{total}
+                                </span>
+                                <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-bold">
+                                  <CheckCircle2 className="w-3.5 h-3.5" /> {correct}
+                                </span>
+                                <span className="flex items-center gap-1 text-rose-500 font-bold">
+                                  <XCircle className="w-3.5 h-3.5" /> {wrong}
+                                </span>
+                              </div>
+                            ) : (
+                              <div className="text-xs text-slate-400 dark:text-slate-500 font-medium">
+                                Chưa luyện tập · {total} câu
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Action Buttons Row matching Dau TOEIC */}
+                          <div className="flex items-center justify-between gap-2 pt-3 border-t dark:border-slate-800/80 border-slate-100 mt-auto">
+                            {/* Capsule 4 nút thao tác */}
+                            <div className="flex items-center gap-0.5 p-0.5 sm:p-1 rounded-xl bg-slate-100 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700/60 shrink-0">
+                              <button
+                                onClick={() => setShowVocabDrawer(true)}
+                                className="p-1.5 rounded-lg hover:bg-white dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 hover:text-purple-500 transition-colors cursor-pointer"
+                                title="Giỏ từ vựng"
+                              >
+                                <ShoppingBag className="w-3.5 h-3.5" />
+                              </button>
+                              <button
+                                onClick={() => setActiveNoteModal({ id: exKey, title: `Part ${activePart} Level ${lvl.levelNum}` })}
+                                className="p-1.5 rounded-lg hover:bg-white dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 hover:text-amber-500 transition-colors cursor-pointer"
+                                title="Ghi chú cá nhân"
+                              >
+                                <FileText className="w-3.5 h-3.5" />
+                              </button>
+                              <button
+                                onClick={() => setResetConfirmLvl({ name: `Part ${activePart} Level ${lvl.levelNum}`, exerciseKey: exKey })}
+                                className="p-1.5 rounded-lg hover:bg-white dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 hover:text-rose-500 transition-colors cursor-pointer"
+                                title="Làm lại từ đầu"
+                              >
+                                <RotateCcw className="w-3.5 h-3.5" />
+                              </button>
+                              <button
+                                onClick={() => { if (basketWords.length > 0) setShowVocabDrawer(true); }}
+                                className="p-1.5 rounded-lg hover:bg-white dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 hover:text-rose-500 transition-colors cursor-pointer"
+                                title="Xóa từ khỏi giỏ"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+
+                            {/* Học ngay Button */}
+                            <button
+                              onClick={() => navigate(`/listen/level-practice?part=${activePart}&level=${lvl.levelNum}`)}
+                              className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-heading font-extrabold text-xs shadow-md shadow-emerald-500/20 transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
+                            >
+                              <BookOpen className="w-3.5 h-3.5" />
+                              <span>{completed > 0 ? 'Luyện tiếp' : 'Học ngay'}</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </VipLockOverlay>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* 2. SUBTYPE / TOPIC BREAKDOWN SECTION (MATCHING DAU ENGLISH DIRECTLY BELOW LEVEL CARDS) */}
+            
+            {/* PART 1: THEO DẠNG TRANH */}
+            {activePart === 1 && (
+              <div className="space-y-4 pt-2">
                 <div className="space-y-1">
-                  <h3 className="text-sm font-bold dark:text-slate-300 text-slate-800">Theo chủ đề</h3>
-                  <p className="text-xs dark:text-slate-400 text-slate-600">Luyện theo các chủ đề thường gặp ở Part 1. Mỗi câu vẫn thuộc đúng chủ đề gốc của nó.</p>
+                  <h3 className="text-base font-bold dark:text-white text-slate-900">Theo dạng tranh</h3>
+                  <p className="text-xs dark:text-slate-400 text-slate-600">
+                    Cùng bộ câu ở trên, chia theo bức tranh mô tả gì. Mỗi câu thuộc đúng một dạng.
+                  </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                   {part1Topics.map((item, idx) => {
-                    // FREE: idx=0 (Tranh một người), PRO: idx=1,2
+                    const match = topicExercises.find(e => e.topic === item.title || e.title === item.title);
+                    const totalCount = match?.totalQuestions || item.total;
                     const isLocked = !isProUser && idx > 0;
                     const exKey = `listening_p1_topic_${encodeURIComponent(item.title)}`;
                     const progress = practiceProgressMap[exKey];
                     const completed = progress?.completedCount || 0;
                     const correct = progress?.correctCount || 0;
                     const wrong = progress?.wrongCount || 0;
-                    const percent = Math.min(100, Math.round((completed / item.total) * 100)) || 0;
 
                     return (
                       <VipLockOverlay
                         key={idx}
                         isLocked={isLocked}
-                        compact
                         onUnlockClick={() => setShowPricingModal(true)}
-                        label="VIP — Mở khóa chủ đề này"
+                        label="VIP"
                       >
-                        <div className="glass-panel rounded-3xl border dark:border-slate-800 border-slate-200 hover:border-cyan-500/40 p-6 dark:bg-slate-900/60 bg-white space-y-4 transition-all shadow-sm flex flex-col justify-between">
-                          <div className="space-y-2">
-                            <div className="flex items-center justify-between gap-2">
-                              <h4 className="font-heading font-extrabold text-base dark:text-white text-slate-900">{item.title}</h4>
-                              <span className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 px-1.5 py-0.5 rounded border border-cyan-500/20 font-mono shrink-0">
+                        <div className="rounded-2xl border dark:border-slate-800 border-slate-200 hover:border-purple-500/40 p-4 dark:bg-slate-900/60 bg-white space-y-3 transition-all flex flex-col justify-between shadow-sm">
+                          <div className="space-y-1.5">
+                            <div className="flex items-center justify-between gap-1.5">
+                              <h4 className="font-heading font-extrabold text-sm dark:text-white text-slate-900 line-clamp-1">{item.title}</h4>
+                              <span className="text-[10px] font-bold text-purple-600 dark:text-purple-400 bg-purple-500/10 px-1.5 py-0.5 rounded border border-purple-500/20 font-mono shrink-0">
                                 {getTopicAttempts(item.title, 240 + (idx * 29) % 320)} lượt
                               </span>
                             </div>
                             
-                            {completed > 0 ? (
-                              <div className="space-y-1.5 pt-1">
-                                <div className="flex items-center justify-between text-xs font-semibold">
-                                  <div className="flex items-center gap-2">
-                                    <span className="font-mono font-extrabold text-emerald-600 dark:text-emerald-400 text-sm">
-                                      {completed}/{item.total}
-                                    </span>
-                                    <span className="flex items-center gap-0.5 text-[11px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">
-                                      <CheckCircle2 className="w-3 h-3" /> {correct}
-                                    </span>
-                                    <span className="flex items-center gap-0.5 text-[11px] font-bold text-rose-600 dark:text-rose-400 bg-rose-500/10 px-1.5 py-0.5 rounded">
-                                      <XCircle className="w-3 h-3" /> {wrong}
-                                    </span>
-                                  </div>
-                                  <span className="text-[10px] text-slate-400 font-mono">{percent}%</span>
+                            <div className="py-0.5">
+                              {completed > 0 ? (
+                                <div className="flex items-center gap-2 text-xs font-bold font-mono">
+                                  <span className="font-extrabold text-emerald-600 dark:text-emerald-400">{completed}/{totalCount}</span>
+                                  <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-bold"><CheckCircle2 className="w-3 h-3" /> {correct}</span>
+                                  <span className="flex items-center gap-1 text-rose-500 font-bold"><XCircle className="w-3 h-3" /> {wrong}</span>
                                 </div>
-                                <div className="h-1.5 rounded-full dark:bg-slate-950 bg-slate-100 overflow-hidden border dark:border-slate-800 border-slate-200">
-                                  <div 
-                                    className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-500" 
-                                    style={{ width: `${percent}%` }}
-                                  />
-                                </div>
-                              </div>
-                            ) : (
-                              <span className="text-xs dark:text-slate-400 text-slate-500 block">Chưa luyện tập • {item.total} câu</span>
-                            )}
+                              ) : (
+                                <span className="text-xs dark:text-slate-400 text-slate-500 block">Chưa luyện tập · {totalCount} câu</span>
+                              )}
+                            </div>
                           </div>
 
                           <div className="flex items-center justify-between pt-3 border-t dark:border-slate-800/60 border-slate-100">
-                            <div className="inline-flex items-center gap-0.5 p-0.5 rounded-full dark:bg-slate-950/70 bg-slate-100 border dark:border-slate-800 border-slate-200 text-slate-400">
-                              <button onClick={() => window.print()} className="p-1.5 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 transition-colors" title="In đề"><Printer className="w-3.5 h-3.5" /></button>
-                              <button onClick={() => setActiveNoteModal({ id: exKey, title: item.title })} className="p-1.5 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 transition-colors" title="Ghi chú cá nhân"><FileText className="w-3.5 h-3.5" /></button>
-                              <button onClick={() => setResetConfirmLvl({ name: item.title, exerciseKey: exKey })} className="p-1.5 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-rose-500 transition-colors" title="Làm lại từ đầu (Xóa tiến độ)"><RotateCcw className="w-3.5 h-3.5" /></button>
-                              <button onClick={() => { navigator.clipboard?.writeText(window.location.href); }} className="p-1.5 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 transition-colors" title="Chia sẻ"><Copy className="w-3.5 h-3.5" /></button>
+                            <div className="flex items-center gap-0.5 p-0.5 rounded-lg bg-slate-100 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700/60 text-slate-400">
+                              <button onClick={() => window.print()} className="p-1 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-700 dark:hover:text-slate-200 cursor-pointer" title="In đề"><Printer className="w-3 h-3" /></button>
+                              <button onClick={() => setActiveNoteModal({ id: exKey, title: item.title })} className="p-1 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-amber-500 cursor-pointer" title="Ghi chú cá nhân"><FileText className="w-3 h-3" /></button>
+                              <button onClick={() => setResetConfirmLvl({ name: item.title, exerciseKey: exKey })} className="p-1 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-rose-500 cursor-pointer" title="Làm lại từ đầu"><RotateCcw className="w-3 h-3" /></button>
                             </div>
 
                             <button
                               onClick={() => navigate(`/listen/level-practice?part=1&mode=topic&topic=${encodeURIComponent(item.title)}`)}
-                              className="px-4 py-2 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-heading font-extrabold text-xs shadow-md shadow-emerald-500/20 transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
+                              className="px-3.5 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-heading font-extrabold text-xs shadow-md shadow-emerald-500/20 transition-all flex items-center gap-1 cursor-pointer whitespace-nowrap"
                             >
-                              <BookOpen className="w-3.5 h-3.5" />
-                              <span>{completed > 0 ? 'Luyện tiếp' : 'Luyện tập'}</span>
+                              <BookOpen className="w-3 h-3" />
+                              <span>{completed > 0 ? 'Luyện tiếp' : 'Học ngay'}</span>
                             </button>
                           </div>
                         </div>
@@ -637,82 +693,69 @@ export default function ListeningDashboard() {
               </div>
             )}
 
-            {/* PART 2 */}
+            {/* PART 2: THEO DẠNG CÂU HỎI */}
             {activePart === 2 && (
-              <div className="space-y-3">
+              <div className="space-y-4 pt-2">
                 <div className="space-y-1">
-                  <h3 className="text-sm font-bold dark:text-slate-300 text-slate-800">Theo chủ đề</h3>
-                  <p className="text-xs dark:text-slate-400 text-slate-600">Luyện theo các chủ đề thường gặp ở Part 2. Mỗi câu vẫn thuộc đúng chủ đề gốc của nó.</p>
+                  <h3 className="text-base font-bold dark:text-white text-slate-900">Theo dạng câu hỏi</h3>
+                  <p className="text-xs dark:text-slate-400 text-slate-600">
+                    Cùng bộ câu ở trên, chia theo dạng câu hỏi đầu tiên bạn nghe. Mỗi câu thuộc đúng một dạng.
+                  </p>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                   {part2Topics.map((item, idx) => {
-                    // FREE: idx=0 "Câu khẳng định", idx=1 "Câu hỏi Be/Do/Have" — PRO: idx=2..11
-                    const isLocked = !isProUser && idx > 1;
+                    const isLocked = false;
                     const exKey = `listening_p2_topic_${encodeURIComponent(item.title)}`;
                     const progress = practiceProgressMap[exKey];
                     const completed = progress?.completedCount || 0;
                     const correct = progress?.correctCount || 0;
                     const wrong = progress?.wrongCount || 0;
-                    const percent = Math.min(100, Math.round((completed / item.total) * 100)) || 0;
+                    const topicMatch = topicExercises.find(e => e.topic === item.title || e.title === item.title);
+                    const totalCount = topicMatch?.totalQuestions || item.total;
 
                     return (
                       <VipLockOverlay
                         key={idx}
                         isLocked={isLocked}
-                        compact
                         onUnlockClick={() => setShowPricingModal(true)}
                         label="VIP"
                       >
-                        <div className="glass-panel rounded-2xl border dark:border-slate-800 border-slate-200 hover:border-cyan-500/40 p-5 dark:bg-slate-900/60 bg-white space-y-3 transition-all flex flex-col justify-between shadow-sm">
+                        <div className="rounded-2xl border dark:border-slate-800 border-slate-200 hover:border-purple-500/40 p-4 dark:bg-slate-900/60 bg-white space-y-3 transition-all flex flex-col justify-between shadow-sm">
                           <div className="space-y-1.5">
-                            <div className="flex items-center justify-between gap-2">
-                              <h4 className="font-heading font-extrabold text-sm dark:text-white text-slate-900">{item.title}</h4>
-                              <span className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 px-1.5 py-0.2 rounded border border-cyan-500/20 font-mono shrink-0">
-                                {getTopicAttempts(item.title, 210 + (idx * 19) % 300)} lượt
+                            <div className="flex items-center justify-between gap-1.5">
+                              <h4 className="font-heading font-extrabold text-sm dark:text-white text-slate-900 line-clamp-1">{item.title}</h4>
+                              <span className="text-[10px] font-bold text-purple-600 dark:text-purple-400 bg-purple-500/10 px-1.5 py-0.2 rounded border border-purple-500/20 font-mono shrink-0">
+                                {getTopicAttempts(item.title, 190 + (idx * 21) % 290)} lượt
                               </span>
                             </div>
-                            {completed > 0 ? (
-                              <div className="space-y-1">
-                                <div className="flex items-center justify-between text-[11px] font-semibold">
-                                  <div className="flex items-center gap-1.5">
-                                    <span className="font-mono font-extrabold text-emerald-600 dark:text-emerald-400">
-                                      {completed}/{item.total}
-                                    </span>
-                                    <span className="text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-500/10 px-1 py-0.2 rounded text-[10px]">
-                                      ✓ {correct}
-                                    </span>
-                                    <span className="text-rose-600 dark:text-rose-400 font-bold bg-rose-500/10 px-1 py-0.2 rounded text-[10px]">
-                                      ✗ {wrong}
-                                    </span>
-                                  </div>
-                                  <span className="text-[10px] text-slate-400 font-mono">{percent}%</span>
+
+                            <div className="py-0.5">
+                              {completed > 0 ? (
+                                <div className="flex items-center gap-2 text-xs font-bold font-mono">
+                                  <span className="font-extrabold text-emerald-600 dark:text-emerald-400">{completed}/{totalCount}</span>
+                                  <span className="text-emerald-600 dark:text-emerald-400 font-bold text-[11px]">✓ {correct}</span>
+                                  <span className="text-rose-500 font-bold text-[11px]">✗ {wrong}</span>
                                 </div>
-                                <div className="h-1 rounded-full dark:bg-slate-950 bg-slate-100 overflow-hidden border dark:border-slate-800 border-slate-200">
-                                  <div 
-                                    className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-500" 
-                                    style={{ width: `${percent}%` }}
-                                  />
-                                </div>
-                              </div>
-                            ) : (
-                              <span className="text-[11px] dark:text-slate-400 text-slate-500 block">Chưa luyện tập • {item.total} câu</span>
-                            )}
+                              ) : (
+                                <span className="text-[11px] dark:text-slate-400 text-slate-500 block">Chưa luyện tập · {totalCount} câu</span>
+                              )}
+                            </div>
                           </div>
 
                           <div className="flex items-center justify-between pt-2 border-t dark:border-slate-800/60 border-slate-100">
-                            <div className="inline-flex items-center gap-0.5 p-0.5 rounded-full dark:bg-slate-950/70 bg-slate-100 border dark:border-slate-800 border-slate-200 text-slate-400">
-                              <button onClick={() => window.print()} className="p-1 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200" title="In đề"><Printer className="w-3 h-3" /></button>
-                              <button onClick={() => setActiveNoteModal({ id: exKey, title: item.title })} className="p-1 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200" title="Ghi chú"><FileText className="w-3 h-3" /></button>
-                              <button onClick={() => setResetConfirmLvl({ name: item.title, exerciseKey: exKey })} className="p-1 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-rose-500" title="Làm lại từ đầu"><RotateCcw className="w-3 h-3" /></button>
+                            <div className="flex items-center gap-0.5 p-0.5 rounded-lg bg-slate-100 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700/60 text-slate-400">
+                              <button onClick={() => window.print()} className="p-1 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-700 dark:hover:text-slate-200" title="In đề"><Printer className="w-3 h-3" /></button>
+                              <button onClick={() => setActiveNoteModal({ id: exKey, title: item.title })} className="p-1 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-amber-500" title="Ghi chú cá nhân"><FileText className="w-3 h-3" /></button>
+                              <button onClick={() => setResetConfirmLvl({ name: item.title, exerciseKey: exKey })} className="p-1 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-rose-500" title="Làm lại từ đầu"><RotateCcw className="w-3 h-3" /></button>
                             </div>
 
                             <button
                               onClick={() => navigate(`/listen/level-practice?part=2&mode=topic&topic=${encodeURIComponent(item.title)}`)}
-                              className="px-3 py-1.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-[11px] transition-all flex items-center gap-1 shadow-sm cursor-pointer whitespace-nowrap"
+                              className="px-3 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-[11px] transition-all flex items-center gap-1 shadow-sm cursor-pointer whitespace-nowrap"
                             >
                               <BookOpen className="w-3 h-3" />
-                              <span>{completed > 0 ? 'Luyện tiếp' : 'Luyện tập'}</span>
+                              <span>{completed > 0 ? 'Luyện tiếp' : 'Học ngay'}</span>
                             </button>
                           </div>
                         </div>
@@ -723,368 +766,197 @@ export default function ListeningDashboard() {
               </div>
             )}
 
-            {/* PART 3 & PART 4 */}
-            {(activePart === 3 || activePart === 4) && (() => {
-              const currentSpecial = activePart === 3 ? part3Special : part4Special;
-              const currentTopics = activePart === 3 ? part3Topics : part4Topics;
-
-              // FREE: special idx=0 (Có hình/bảng biểu), PRO: idx=1+
-              // Part 3 free topics: idx=0 (Lịch hẹn...)
-              // Part 4 free topics: idx=1 (Nhà ở & dịch vụ đời sống)
-              const freeTopicIdx = activePart === 3 ? 0 : 1;
-
-              return (
-                <div className="space-y-6">
-                  
-                  {/* Dạng đặc biệt */}
-                  <div className="space-y-3">
-                    <div className="space-y-1">
-                      <h3 className="text-sm font-bold text-amber-500 dark:text-amber-400">Dạng đặc biệt</h3>
-                      <p className="text-xs dark:text-slate-400 text-slate-600">Luyện riêng các dạng khó của Part {activePart}.</p>
-                    </div>
-
-                    <div className={`grid grid-cols-1 ${activePart === 4 ? 'md:grid-cols-2' : 'md:grid-cols-3'} gap-4`}>
-                      {currentSpecial.map((item, idx) => {
-                        const isLocked = !isProUser && idx > 0;
-                        const exKey = `listening_p${activePart}_topic_${encodeURIComponent(item.title)}`;
-                        const progress = practiceProgressMap[exKey];
-                        const completed = progress?.completedCount || 0;
-                        const correct = progress?.correctCount || 0;
-                        const wrong = progress?.wrongCount || 0;
-                        const percent = Math.min(100, Math.round((completed / item.total) * 100)) || 0;
-
-                        return (
-                          <VipLockOverlay
-                            key={idx}
-                            isLocked={isLocked}
-                            compact
-                            onUnlockClick={() => setShowPricingModal(true)}
-                            label="VIP"
-                          >
-                            <div className="glass-panel rounded-2xl border dark:border-slate-800 border-slate-200 hover:border-amber-500/40 p-5 dark:bg-slate-900/60 bg-white space-y-3 transition-all flex flex-col justify-between shadow-sm">
-                              <div className="space-y-1.5">
-                                <div className="flex items-center justify-between gap-2">
-                                  <h4 className="font-heading font-extrabold text-sm dark:text-white text-slate-900">{item.title}</h4>
-                                  <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-1.5 py-0.2 rounded border border-amber-500/20 font-mono shrink-0">
-                                    {getTopicAttempts(item.title, 230 + (idx * 27) % 250)} lượt
-                                  </span>
-                                </div>
-                                {completed > 0 ? (
-                                  <div className="space-y-1">
-                                    <div className="flex items-center justify-between text-[11px] font-semibold">
-                                      <div className="flex items-center gap-1.5">
-                                        <span className="font-mono font-extrabold text-emerald-600 dark:text-emerald-400">
-                                          {completed}/{item.total}
-                                        </span>
-                                        <span className="text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-500/10 px-1 py-0.2 rounded text-[10px]">
-                                          ✓ {correct}
-                                        </span>
-                                        <span className="text-rose-600 dark:text-rose-400 font-bold bg-rose-500/10 px-1 py-0.2 rounded text-[10px]">
-                                          ✗ {wrong}
-                                        </span>
-                                      </div>
-                                      <span className="text-[10px] text-slate-400 font-mono">{percent}%</span>
-                                    </div>
-                                    <div className="h-1 rounded-full dark:bg-slate-950 bg-slate-100 overflow-hidden border dark:border-slate-800 border-slate-200">
-                                      <div 
-                                        className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-500" 
-                                        style={{ width: `${percent}%` }}
-                                      />
-                                    </div>
-                                  </div>
-                                ) : (
-                                  <span className="text-[11px] dark:text-slate-400 text-slate-500 mt-1 block">Chưa luyện tập • {item.total} câu</span>
-                                )}
-                              </div>
-
-                              <div className="flex items-center justify-between pt-2 border-t dark:border-slate-800/60 border-slate-100">
-                                <div className="inline-flex items-center gap-0.5 p-0.5 rounded-full dark:bg-slate-950/70 bg-slate-100 border dark:border-slate-800 border-slate-200 text-slate-400">
-                                  <button onClick={() => window.print()} className="p-1 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200" title="In đề"><Printer className="w-3 h-3" /></button>
-                                  <button onClick={() => setActiveNoteModal({ id: exKey, title: item.title })} className="p-1 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200" title="Ghi chú"><FileText className="w-3 h-3" /></button>
-                                  <button onClick={() => setResetConfirmLvl({ name: item.title, exerciseKey: exKey })} className="p-1 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-rose-500" title="Làm lại từ đầu"><RotateCcw className="w-3 h-3" /></button>
-                                </div>
-
-                                <button
-                                  onClick={() => navigate(`/listen/level-practice?part=${activePart}&mode=topic&topic=${encodeURIComponent(item.title)}`)}
-                                  className="px-3 py-1.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-[11px] transition-all flex items-center gap-1 shadow-sm cursor-pointer whitespace-nowrap"
-                                >
-                                  <BookOpen className="w-3 h-3" />
-                                  <span>{completed > 0 ? 'Luyện tiếp' : 'Luyện tập'}</span>
-                                </button>
-                              </div>
-                            </div>
-                          </VipLockOverlay>
-                        );
-                      })}
-                    </div>
+            {/* PART 3: DẠNG ĐẶC BIỆT (MATCHES ĐẬU TOEIC 100% - KHÔNG CÓ THEO CHỦ ĐỀ) */}
+            {activePart === 3 && (
+              <div className="space-y-8 pt-2">
+                {/* Dạng đặc biệt */}
+                <div className="space-y-3">
+                  <div className="space-y-1">
+                    <h3 className="text-base font-bold text-amber-500 dark:text-amber-400">Dạng đặc biệt</h3>
+                    <p className="text-xs dark:text-slate-400 text-slate-600">
+                      Luyện riêng các dạng khó của Part 3, lấy từ bộ câu ở trên. Mỗi nhóm chỉ nằm ở một thẻ.
+                    </p>
                   </div>
 
-                  {/* Theo chủ đề doanh nghiệp */}
-                  <div className="space-y-3">
-                    <div className="space-y-1">
-                      <h3 className="text-sm font-bold dark:text-slate-300 text-slate-700">Theo chủ đề</h3>
-                      <p className="text-xs dark:text-slate-400 text-slate-500">Luyện theo các chủ đề thường gặp ở Part {activePart}. Mỗi câu vẫn thuộc đúng chủ đề gốc của nó.</p>
-                    </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {part3Special.map((item, idx) => {
+                      const topicMatch = topicExercises.find(e => Number(e.part) === 3 && (e.topic === item.title || e.title === item.title));
+                      const totalCount = topicMatch?.totalQuestions || item.total;
+                      const exKey = `listening_p3_topic_${encodeURIComponent(item.title)}`;
+                      const progress = practiceProgressMap[exKey];
+                      const completed = progress?.completedCount || 0;
+                      const correct = progress?.correctCount || 0;
+                      const wrong = progress?.wrongCount || 0;
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                      {currentTopics.map((item, idx) => {
-                        const isLocked = !isProUser && idx !== freeTopicIdx;
-                        const exKey = `listening_p${activePart}_topic_${encodeURIComponent(item.title)}`;
-                        const progress = practiceProgressMap[exKey];
-                        const completed = progress?.completedCount || 0;
-                        const correct = progress?.correctCount || 0;
-                        const wrong = progress?.wrongCount || 0;
-                        const percent = Math.min(100, Math.round((completed / item.total) * 100)) || 0;
-
-                        return (
-                          <VipLockOverlay
-                            key={idx}
-                            isLocked={isLocked}
-                            compact
-                            onUnlockClick={() => setShowPricingModal(true)}
-                            label="VIP"
-                          >
-                            <div className="glass-panel rounded-2xl border dark:border-slate-800 border-slate-200 hover:border-cyan-500/40 p-5 dark:bg-slate-900/60 bg-white space-y-3 transition-all flex flex-col justify-between shadow-sm">
-                              <div className="space-y-1.5">
-                                <div className="flex items-center justify-between gap-2">
-                                  <h4 className="font-heading font-extrabold text-sm dark:text-white text-slate-900">{item.title}</h4>
-                                  <span className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 px-1.5 py-0.2 rounded border border-cyan-500/20 font-mono shrink-0">
-                                    {getTopicAttempts(item.title, 220 + (idx * 17) % 280)} lượt
-                                  </span>
-                                </div>
-                                {completed > 0 ? (
-                                  <div className="space-y-1">
-                                    <div className="flex items-center justify-between text-[11px] font-semibold">
-                                      <div className="flex items-center gap-1.5">
-                                        <span className="font-mono font-extrabold text-emerald-600 dark:text-emerald-400">
-                                          {completed}/{item.total}
-                                        </span>
-                                        <span className="text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-500/10 px-1 py-0.2 rounded text-[10px]">
-                                          ✓ {correct}
-                                        </span>
-                                        <span className="text-rose-600 dark:text-rose-400 font-bold bg-rose-500/10 px-1 py-0.2 rounded text-[10px]">
-                                          ✗ {wrong}
-                                        </span>
-                                      </div>
-                                      <span className="text-[10px] text-slate-400 font-mono">{percent}%</span>
-                                    </div>
-                                    <div className="h-1 rounded-full dark:bg-slate-950 bg-slate-100 overflow-hidden border dark:border-slate-800 border-slate-200">
-                                      <div 
-                                        className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-500" 
-                                        style={{ width: `${percent}%` }}
-                                      />
-                                    </div>
-                                  </div>
-                                ) : (
-                                  <span className="text-[11px] dark:text-slate-400 text-slate-500 mt-1 block">Chưa luyện tập • {item.total} câu</span>
-                                )}
-                              </div>
-
-                              <div className="flex items-center justify-between pt-2 border-t dark:border-slate-800/60 border-slate-100">
-                                <div className="inline-flex items-center gap-0.5 p-0.5 rounded-full dark:bg-slate-950/70 bg-slate-100 border dark:border-slate-800 border-slate-200 text-slate-400">
-                                  <button onClick={() => window.print()} className="p-1 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200" title="In đề"><Printer className="w-3 h-3" /></button>
-                                  <button onClick={() => setActiveNoteModal({ id: exKey, title: item.title })} className="p-1 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200" title="Ghi chú"><FileText className="w-3 h-3" /></button>
-                                  <button onClick={() => setResetConfirmLvl({ name: item.title, exerciseKey: exKey })} className="p-1 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-rose-500" title="Làm lại từ đầu"><RotateCcw className="w-3 h-3" /></button>
-                                </div>
-
-                                <button
-                                  onClick={() => navigate(`/listen/level-practice?part=${activePart}&mode=topic&topic=${encodeURIComponent(item.title)}`)}
-                                  className="px-3 py-1.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-[11px] transition-all flex items-center gap-1 shadow-sm cursor-pointer whitespace-nowrap"
-                                >
-                                  <BookOpen className="w-3 h-3" />
-                                  <span>{completed > 0 ? 'Luyện tiếp' : 'Luyện tập'}</span>
-                                </button>
-                              </div>
+                      return (
+                        <div
+                          key={idx}
+                          className="rounded-2xl border dark:border-slate-800 border-slate-200 hover:border-amber-500/40 p-5 dark:bg-slate-900/60 bg-white space-y-3 transition-all flex flex-col justify-between shadow-sm"
+                        >
+                          <div className="space-y-1.5">
+                            <div className="flex items-center justify-between gap-2">
+                              <h4 className="font-heading font-extrabold text-sm dark:text-white text-slate-900">{item.title}</h4>
+                              <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/20 font-mono shrink-0">
+                                sau 1 lượt
+                              </span>
                             </div>
-                          </VipLockOverlay>
-                        );
-                      })}
-                    </div>
-                  </div>
+                            <div className="py-0.5">
+                              {completed > 0 ? (
+                                <div className="flex items-center gap-2 text-xs font-bold font-mono">
+                                  <span className="font-extrabold text-emerald-600 dark:text-emerald-400">{completed}/{totalCount}</span>
+                                  <span className="text-emerald-600 dark:text-emerald-400 font-bold text-[11px]">✓ {correct}</span>
+                                  <span className="text-rose-500 font-bold text-[11px]">✗ {wrong}</span>
+                                </div>
+                              ) : (
+                                <span className="text-[11px] dark:text-slate-400 text-slate-500 block">Chưa luyện tập · {totalCount} câu</span>
+                              )}
+                            </div>
+                          </div>
 
+                          <div className="flex items-center justify-between pt-2 border-t dark:border-slate-800/60 border-slate-100">
+                            <div className="flex items-center gap-0.5 p-0.5 rounded-lg bg-slate-100 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700/60 text-slate-400">
+                              <button onClick={() => window.print()} className="p-1 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-700 dark:hover:text-slate-200" title="In đề"><Printer className="w-3 h-3" /></button>
+                              <button onClick={() => setActiveNoteModal({ id: exKey, title: item.title })} className="p-1 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-amber-500" title="Ghi chú cá nhân"><FileText className="w-3 h-3" /></button>
+                              <button onClick={() => setResetConfirmLvl({ name: item.title, exerciseKey: exKey })} className="p-1 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-rose-500" title="Làm lại từ đầu"><RotateCcw className="w-3 h-3" /></button>
+                            </div>
+
+                            <button
+                              onClick={() => navigate(`/listen/level-practice?part=3&mode=topic&topic=${encodeURIComponent(item.title)}`)}
+                              className="px-3.5 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs shadow-md shadow-emerald-500/20 transition-all flex items-center gap-1 cursor-pointer whitespace-nowrap"
+                            >
+                              <BookOpen className="w-3 h-3" />
+                              <span>{completed > 0 ? 'Luyện tiếp' : 'Học ngay'}</span>
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              );
-            })()}
+              </div>
+            )}
+
+            {/* PART 4: DẠNG ĐẶC BIỆT (MATCHES ĐẬU TOEIC 100% - KHÔNG CÓ THEO DẠNG BÀI NÓI) */}
+            {activePart === 4 && (
+              <div className="space-y-8 pt-2">
+                {/* Dạng đặc biệt */}
+                <div className="space-y-3">
+                  <div className="space-y-1">
+                    <h3 className="text-base font-bold text-amber-500 dark:text-amber-400">Dạng đặc biệt</h3>
+                    <p className="text-xs dark:text-slate-400 text-slate-600">
+                      Luyện riêng các dạng khó của Part 4, lấy từ bộ câu ở trên. Mỗi nhóm chỉ nằm ở một thẻ.
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {part4Special.map((item, idx) => {
+                      const topicMatch = topicExercises.find(e => Number(e.part) === 4 && (e.topic === item.title || e.title === item.title));
+                      const totalCount = topicMatch?.totalQuestions || item.total;
+                      const exKey = `listening_p4_topic_${encodeURIComponent(item.title)}`;
+                      const progress = practiceProgressMap[exKey];
+                      const completed = progress?.completedCount || 0;
+                      const correct = progress?.correctCount || 0;
+                      const wrong = progress?.wrongCount || 0;
+
+                      return (
+                        <div
+                          key={idx}
+                          className="rounded-2xl border dark:border-slate-800 border-slate-200 hover:border-amber-500/40 p-5 dark:bg-slate-900/60 bg-white space-y-3 transition-all flex flex-col justify-between shadow-sm"
+                        >
+                          <div className="space-y-1.5">
+                            <div className="flex items-center justify-between gap-2">
+                              <h4 className="font-heading font-extrabold text-sm dark:text-white text-slate-900">{item.title}</h4>
+                            </div>
+                            <div className="py-0.5">
+                              {completed > 0 ? (
+                                <div className="flex items-center gap-2 text-xs font-bold font-mono">
+                                  <span className="font-extrabold text-emerald-600 dark:text-emerald-400">{completed}/{totalCount}</span>
+                                  <span className="text-emerald-600 dark:text-emerald-400 font-bold text-[11px]">✓ {correct}</span>
+                                  <span className="text-rose-500 font-bold text-[11px]">✗ {wrong}</span>
+                                </div>
+                              ) : (
+                                <span className="text-[11px] dark:text-slate-400 text-slate-500 block">Chưa luyện tập · {totalCount} câu</span>
+                              )}
+                            </div>
+                          </div>
+
+                          <div className="flex items-center justify-between pt-2 border-t dark:border-slate-800/60 border-slate-100">
+                            <div className="flex items-center gap-0.5 p-0.5 rounded-lg bg-slate-100 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700/60 text-slate-400">
+                              <button onClick={() => window.print()} className="p-1 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-700 dark:hover:text-slate-200" title="In đề"><Printer className="w-3 h-3" /></button>
+                              <button onClick={() => setActiveNoteModal({ id: exKey, title: item.title })} className="p-1 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-amber-500" title="Ghi chú cá nhân"><FileText className="w-3 h-3" /></button>
+                              <button onClick={() => setResetConfirmLvl({ name: item.title, exerciseKey: exKey })} className="p-1 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-rose-500" title="Làm lại từ đầu"><RotateCcw className="w-3 h-3" /></button>
+                            </div>
+
+                            <button
+                              onClick={() => navigate(`/listen/level-practice?part=4&mode=topic&topic=${encodeURIComponent(item.title)}`)}
+                              className="px-3.5 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs shadow-md shadow-emerald-500/20 transition-all flex items-center gap-1 cursor-pointer whitespace-nowrap"
+                            >
+                              <BookOpen className="w-3 h-3" />
+                              <span>{completed > 0 ? 'Luyện tiếp' : 'Học ngay'}</span>
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            )}
 
           </div>
         )}
 
-        {/* ========================================================= */}
-        {/* TAB 2 CONTENT: THEO LEVEL (5 LEVELS) */}
-        {/* ========================================================= */}
-        {mainTab === 'level' && (
-          <div className="space-y-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
-              {levelList.map((item) => {
-                const isLocked = !isProUser && item.levelNum > 1;
-                const exKey = `listening_p${activePart}_lv${item.levelNum}`;
-                const progress = practiceProgressMap[exKey];
-                const completed = progress?.completedCount || 0;
-                const correct = progress?.correctCount || 0;
-                const wrong = progress?.wrongCount || 0;
-                const percent = Math.min(100, Math.round((completed / item.total) * 100)) || 0;
+        {/* ========================================================================= */}
+        {/* MODE: NGHE CHÉP CHÍNH TẢ (DICTATION ETS 10 TESTS & TOPICS) */}
+        {/* ========================================================================= */}
+        {activeTab === 'dictation' && (
+          <div className="space-y-8 animate-fadeIn">
+            
+            {/* TIP GUIDE MATCHING DAU TOEIC */}
+            <div className="flex items-center gap-2 text-xs text-sky-500 dark:text-sky-400 font-medium">
+              <span className="text-slate-400">Mẹo:</span>
+              <a href="#dictation-guide" onClick={(e) => { e.preventDefault(); }} className="hover:underline flex items-center gap-1">
+                Nghe chép chính tả đúng cách →
+              </a>
+            </div>
 
+            {/* SUB-TABS: 11 YEAR / CATEGORY FILTERS MATCHING DAU TOEIC 100% */}
+            <div className="flex items-center gap-2 overflow-x-auto pb-1">
+              {[
+                { id: 'crack1', label: 'Crack Vol 1' },
+                { id: 'crack2', label: 'Crack Vol 2' },
+                { id: '2026', label: '2026' },
+                { id: '2024', label: '2024' },
+                { id: '2023', label: '2023' },
+                { id: '2022', label: '2022' },
+                { id: '2021', label: '2021' },
+                { id: '2020', label: '2020' },
+                { id: '2019', label: '2019' },
+                { id: 'master', label: 'TOEIC MASTER' },
+                { id: 'topic', label: 'Theo chủ đề' },
+                { id: 'review', label: 'Câu cần luyện lại', icon: '🔖' }
+              ].map((f) => {
+                const isActive = dictationYear === f.id;
+                const isReview = f.id === 'review';
                 return (
-                  <VipLockOverlay
-                    key={item.levelNum}
-                    isLocked={isLocked}
-                    onUnlockClick={() => setShowPricingModal(true)}
-                    label={`Level ${item.levelNum} (VIP)`}
+                  <button
+                    key={f.id}
+                    onClick={() => handleDictationYearChange(f.id)}
+                    className={`px-4 py-2 rounded-full text-xs font-heading font-extrabold transition-all flex items-center gap-1.5 shrink-0 cursor-pointer ${
+                      isActive
+                        ? (isReview ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/30' : 'bg-[#0284c7] text-white shadow-md shadow-sky-600/30')
+                        : (isReview
+                            ? 'dark:bg-amber-500/10 bg-amber-50 border border-amber-500/40 text-amber-500 dark:text-amber-400 hover:bg-amber-500/20'
+                            : 'dark:bg-[#0f172a] bg-white border dark:border-slate-800 border-slate-200 dark:text-slate-400 text-slate-600 hover:text-sky-500 dark:hover:text-white shadow-sm')
+                    }`}
                   >
-                    <div 
-                      className="glass-panel rounded-3xl border dark:border-slate-800 border-slate-200 hover:border-purple-500/40 p-4 sm:p-5 dark:bg-slate-900/60 bg-white space-y-3.5 transition-all relative flex flex-col justify-between shadow-sm"
-                    >
-                      {item.isPro && (
-                        <span className="absolute top-3.5 right-3.5 px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-300 text-[10px] font-black border border-amber-500/40 flex items-center gap-1">
-                          <Crown className="w-3 h-3 fill-amber-500" />
-                          PRO
-                        </span>
-                      )}
-                      {!isProUser && item.levelNum === 1 && (
-                        <span className="absolute top-3.5 right-3.5 px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-[10px] font-black border border-emerald-500/30 flex items-center gap-1 shadow-sm">
-                          <Sparkles className="w-3 h-3" />
-                          Free 20 câu
-                        </span>
-                      )}
-
-                      <div className="space-y-0.5">
-                        <h4 className="font-heading font-extrabold text-sm sm:text-base dark:text-white text-slate-900">{item.name}</h4>
-                        <span className="text-xs dark:text-slate-400 text-slate-500 block">{item.attempts}</span>
-                      </div>
-
-                      {/* Progress Bar and Counts matching Dau TOEIC */}
-                      <div className="space-y-1.5 pt-1">
-                        <div className="flex items-center justify-between text-xs font-semibold">
-                          <div className="flex items-center gap-1.5">
-                            <span className="font-mono font-extrabold text-emerald-600 dark:text-emerald-400 text-xs sm:text-sm">
-                              {completed}/{item.total}
-                            </span>
-                            <span className="flex items-center gap-0.5 text-[10px] sm:text-[11px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">
-                              <CheckCircle2 className="w-3 h-3" /> {correct}
-                            </span>
-                            <span className="flex items-center gap-0.5 text-[10px] sm:text-[11px] font-bold text-rose-600 dark:text-rose-400 bg-rose-500/10 px-1.5 py-0.5 rounded">
-                              <XCircle className="w-3 h-3" /> {wrong}
-                            </span>
-                          </div>
-                          <span className="text-[10px] text-slate-400 font-mono">
-                            {percent}%
-                          </span>
-                        </div>
-
-                        <div className="h-1.5 rounded-full dark:bg-slate-900 bg-slate-100 overflow-hidden border dark:border-slate-800 border-slate-200">
-                          <div 
-                            style={{ width: `${percent}%` }}
-                            className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-300" 
-                          />
-                        </div>
-                      </div>
-
-                      {/* 4 Action Buttons matching Dau TOEIC */}
-                      <div className="flex items-center justify-between gap-1.5 pt-3 border-t dark:border-slate-800/80 border-slate-100 mt-auto">
-                        {/* Capsule 4 nút thao tác */}
-                        <div className="flex items-center gap-0.5 p-0.5 sm:p-1 rounded-xl bg-slate-100 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700/60 shrink-0">
-                          {/* 1. Giỏ từ */}
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setShowVocabDrawer(true);
-                            }}
-                            className="w-6.5 h-6.5 rounded-lg flex items-center justify-center text-slate-400 hover:text-amber-500 hover:bg-white dark:hover:bg-slate-700/60 transition-colors relative cursor-pointer"
-                            title="Xem giỏ từ vựng"
-                          >
-                            <ShoppingBag className="w-3.5 h-3.5" />
-                            {basketWords.length > 0 && (
-                              <span className="absolute -top-1 -right-1 flex h-3.5 min-w-3.5 px-0.5 items-center justify-center rounded-full bg-amber-500 text-slate-950 font-bold text-[8px] shadow-sm">
-                                {basketWords.length}
-                              </span>
-                            )}
-                          </button>
-
-                          {/* 2. Ghi chú bài học */}
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setActiveNoteModal({
-                                id: exKey,
-                                title: `Ghi chú — ${item.name} (Part ${activePart})`
-                              });
-                            }}
-                            className="w-6.5 h-6.5 rounded-lg flex items-center justify-center text-slate-400 hover:text-sky-500 hover:bg-white dark:hover:bg-slate-700/60 transition-colors relative cursor-pointer"
-                            title="Ghi chú bài học"
-                          >
-                            <FileText className="w-3.5 h-3.5" />
-                          </button>
-
-                          {/* 3. Làm lại câu sai */}
-                          <button
-                            type="button"
-                            disabled={wrong === 0}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              navigate(`/listen/level-practice?part=${activePart}&level=${item.levelNum}&redo=true`);
-                            }}
-                            className={`w-6.5 h-6.5 rounded-lg flex items-center justify-center transition-all relative ${
-                              wrong > 0
-                                ? 'text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40 cursor-pointer'
-                                : 'text-slate-300 dark:text-slate-600 cursor-not-allowed opacity-40'
-                            }`}
-                            title={wrong > 0 ? `Làm lại ${wrong} câu sai` : 'Không có câu sai'}
-                          >
-                            <RotateCcw className="w-3.5 h-3.5" />
-                            {wrong > 0 && (
-                              <span className="absolute -top-1 -right-1 flex h-3.5 min-w-3.5 px-0.5 items-center justify-center rounded-full bg-rose-500 text-white font-bold text-[8px] shadow-sm">
-                                {wrong}
-                              </span>
-                            )}
-                          </button>
-
-                          {/* 4. Xóa tiến độ */}
-                          <button
-                            type="button"
-                            disabled={completed === 0}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setResetConfirmLvl({ ...item, exerciseKey: exKey });
-                            }}
-                            className={`w-6.5 h-6.5 rounded-lg flex items-center justify-center transition-all ${
-                              completed > 0
-                                ? 'text-slate-400 hover:text-rose-500 hover:bg-white dark:hover:bg-slate-700/60 cursor-pointer'
-                                : 'text-slate-300 dark:text-slate-600 cursor-not-allowed opacity-40'
-                            }`}
-                            title={completed > 0 ? `Xóa tiến độ ${item.name}` : 'Chưa có tiến độ để xóa'}
-                          >
-                            <Trash2 className="w-3.5 h-3.5" />
-                          </button>
-                        </div>
-
-                        {/* Luyện tập / Luyện tiếp / Luyện lại Button */}
-                        <button
-                          onClick={() => {
-                            navigate(`/listen/level-practice?part=${activePart}&level=${item.levelNum}`);
-                          }}
-                          className="ml-auto shrink-0 whitespace-nowrap h-8 sm:h-8.5 px-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-sm shadow-emerald-600/20 flex items-center justify-center gap-1 transition-all active:scale-95 cursor-pointer"
-                        >
-                          <BookOpen className="w-3.5 h-3.5 shrink-0" />
-                          <span>{completed > 0 ? (completed >= item.total ? 'Luyện lại' : 'Luyện tiếp') : 'Luyện tập'}</span>
-                        </button>
-                      </div>
-                    </div>
-                  </VipLockOverlay>
+                    {f.icon && <span>{f.icon}</span>}
+                    <span>{f.label}</span>
+                  </button>
                 );
               })}
             </div>
-          </div>
-        )}
 
-        {/* ========================================================= */}
-        {/* TAB 3 CONTENT: NGHE CHÉP (DICTATION ETS 10 TESTS & TOPICS) */}
-        {/* ========================================================= */}
-        {mainTab === 'dictation' && (
-          <div className="space-y-8">
-            
-            {/* 1. TOPIC MODE: 🔥 NGHE THEO CHỦ ĐỀ (PART 3 & PART 4) */}
             {/* 1. TOPIC MODE: 🔥 NGHE THEO CHỦ ĐỀ (PART 3 & PART 4) */}
             {dictationYear === 'topic' && (
               <div className="space-y-6">
@@ -1185,23 +1057,23 @@ export default function ListeningDashboard() {
                 </div>
 
                 {/* Part 4 Topics */}
-                <div className="space-y-3 pt-4">
+                <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="px-3.5 py-1.5 rounded-xl bg-sky-500/10 text-sky-600 dark:text-sky-400 font-heading font-extrabold text-xs border border-sky-500/20 flex items-center gap-1.5">
-                      <span>PART 4 — 8 CHỦ ĐỀ BÀI NÓI ĐỘC THOẠI</span>
+                    <span className="px-3.5 py-1.5 rounded-xl bg-purple-500/10 text-purple-400 font-heading font-extrabold text-xs border border-purple-500/20 flex items-center gap-1.5">
+                      <span>PART 4 — 8 BÀI NÓI & BẢN TIN CHUYÊN ĐỀ</span>
                     </span>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     {[
-                      { title: 'Company Expansion Announcement', subTitle: 'Thông báo mở rộng quy mô chi nhánh công ty', badge: 'B2', count: 8 },
-                      { title: 'Voicemail Regarding Project Delay', subTitle: 'Tin nhắn thoại báo hoãn tiến độ dự án', badge: 'A2', count: 7 },
-                      { title: 'Weather and Traffic Advisory Report', subTitle: 'Bản tin dự báo thời tiết bão và giao thông', badge: 'A2', count: 7 },
-                      { title: 'Keynote Presentation on AI Technology', subTitle: 'Thuyết trình công nghệ trí tuệ nhân tạo', badge: 'C1', count: 9 },
-                      { title: 'Museum Guided Tour Instructions', subTitle: 'Hướng dẫn đoàn tham quan bảo tàng lịch sử', badge: 'B1', count: 8 },
-                      { title: 'Airport Gate Change and Boarding Call', subTitle: 'Thông báo đổi cửa khởi hành và lên máy bay', badge: 'B1', count: 8 },
-                      { title: 'Award Ceremony Opening Speech', subTitle: 'Phát biểu khai mạc lễ vinh danh nhân viên', badge: 'B2', count: 8 },
-                      { title: 'Promotional Radio Commercial for Supermarket', subTitle: 'Quảng cáo phát thanh ưu đãi siêu thị cuối tuần', badge: 'B2', count: 9 }
+                      { title: 'Corporate Volunteer Day Announcement', subTitle: 'Thông báo ngày hoạt động tình nguyện công ty', badge: 'B1', count: 10 },
+                      { title: 'Annual Energy Summit Opening Remarks', subTitle: 'Phát biểu khai mạc hội nghị năng lượng thường niên', badge: 'B2', count: 9 },
+                      { title: 'Public Transit Delay Broadcast', subTitle: 'Bản tin phát thanh hoãn chuyến tàu công cộng', badge: 'B1', count: 10 },
+                      { title: 'Warehouse Operations Safety Guidelines', subTitle: 'Quy tắc an toàn vận hành kho hàng', badge: 'B1', count: 11 },
+                      { title: 'Guided Tour of Eco-Friendly Architecture', subTitle: 'Hướng dẫn tham quan công trình kiến trúc xanh', badge: 'B2', count: 9 },
+                      { title: 'Airport Terminal Gate Change Broadcast', subTitle: 'Thông báo thay đổi cửa khởi hành sân bay', badge: 'A2', count: 10 },
+                      { title: 'Museum Exhibit Preview for Press', subTitle: 'Buổi giới thiệu triển lãm bảo tàng cho báo chí', badge: 'B2', count: 9 },
+                      { title: 'Voicemail: Rescheduling Dental Appointment', subTitle: 'Tin nhắn thoại: Dời lịch hẹn khám răng', badge: 'A2', count: 9 }
                     ].map((item, idx) => {
                       const isLocked = !isProUser && idx > 0;
                       return (
@@ -1219,12 +1091,12 @@ export default function ListeningDashboard() {
                                   <span className="px-2.5 py-0.5 rounded-lg bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20 text-xs font-bold font-heading">
                                     Part 4
                                   </span>
-                                  <span className="px-2.5 py-0.5 rounded-lg dark:bg-slate-800/80 bg-slate-100 text-sky-700 dark:text-sky-300 font-mono text-xs font-bold border dark:border-slate-700 border-slate-200">
+                                  <span className="px-2.5 py-0.5 rounded-lg dark:bg-slate-800/80 bg-slate-100 text-purple-700 dark:text-purple-300 font-mono text-xs font-bold border dark:border-slate-700 border-slate-200">
                                     {item.badge}
                                   </span>
                                 </div>
                                 <span className="text-[10px] font-bold text-sky-600 dark:text-sky-400 bg-sky-500/10 px-1.5 py-0.5 rounded border border-sky-500/20 font-mono">
-                                  {dictationExercises.find(e => e.topic === item.title)?.attemptsCount || (195 + (idx * 29) % 260)} lượt
+                                  {dictationExercises.find(e => e.topic === item.title)?.attemptsCount || (240 + (idx * 21) % 270)} lượt
                                 </span>
                               </div>
 
@@ -1274,314 +1146,215 @@ export default function ListeningDashboard() {
               </div>
             )}
 
-            {/* 2. TOEIC MASTER PRO (9 SPECIALIZED TOPICS MATCHING DAU TOEIC 100%) */}
-            {dictationYear === 'master' && (
-              <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <span className="px-3.5 py-1.5 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 font-heading font-extrabold text-xs border border-amber-500/20 flex items-center gap-1.5">
-                    <Crown className="w-3.5 h-3.5 fill-amber-500 dark:fill-amber-400 text-amber-600" />
-                    <span>TOEIC MASTER — 9 CHỦ ĐỀ LUYỆN TẬP CHUYÊN SÂU PRO</span>
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                  {[
-                    { title: 'Tranh người', count: 101, part: 1 },
-                    { title: 'Tranh cảnh vật', count: 105, part: 1 },
-                    { title: 'Câu hỏi when', count: 90, part: 2 },
-                    { title: 'Câu hỏi why', count: 90, part: 2 },
-                    { title: 'Modal verbs', count: 90, part: 2 },
-                    { title: 'Câu hỏi what', count: 90, part: 2 },
-                    { title: 'Be do have', count: 90, part: 2 },
-                    { title: 'Câu hỏi where', count: 90, part: 2 },
-                    { title: 'Câu hỏi who', count: 90, part: 2 }
-                  ].map((item, idx) => {
-                    const isLocked = !isProUser && idx > 0;
-                    return (
-                      <VipLockOverlay
-                        key={idx}
-                        isLocked={isLocked}
-                        compact
-                        onUnlockClick={() => setShowPricingModal(true)}
-                        label="VIP"
-                      >
-                        <div className="rounded-2xl border dark:border-slate-800/80 border-slate-200 hover:border-amber-500/40 p-5 dark:bg-[#0d1424] bg-white space-y-4 transition-all flex flex-col justify-between shadow-sm relative">
-                          <div>
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-1.5">
-                                <span className="px-2.5 py-0.5 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 text-xs font-bold font-heading">
-                                  📄 Chuyên đề
-                                </span>
-                                <span className="px-2.5 py-0.5 rounded-lg dark:bg-slate-800/80 bg-slate-100 dark:text-slate-300 text-slate-700 text-xs font-bold font-heading border dark:border-slate-700 border-slate-200">
-                                  Part {item.part}
-                                </span>
-                              </div>
-                              <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/20 font-mono">
-                                {dictationExercises.find(e => e.topic === item.title || e.title?.includes(item.title))?.attemptsCount || (220 + (idx * 31) % 250)} lượt
-                              </span>
-                            </div>
-
-                            <h4 className="font-heading font-extrabold text-base dark:text-white text-slate-900 mt-4">
-                              {item.title}
-                            </h4>
-
-                            <h5 className="font-heading font-extrabold text-lg text-amber-600 dark:text-amber-300 mt-2 flex items-center gap-2">
-                              <Headphones className="w-4 h-4 text-amber-500 dark:text-amber-400" />
-                              <span>{item.count} câu</span>
-                            </h5>
-                          </div>
-
-                          {(() => {
-                            const prog = getDictationProgress('master', item.part, item.title, item.count);
-                            return (
-                              <div className="flex items-center justify-between pt-3 border-t dark:border-slate-800/80 border-slate-100">
-                                <span className="text-xs font-mono">
-                                  {prog.completed > 0 ? (
-                                    <span className={prog.isCompleted ? "text-emerald-500 font-bold" : "text-sky-500 font-bold"}>
-                                      {prog.isCompleted ? `✓ Hoàn thành (${prog.completed}/${item.count})` : `${prog.completed}/${item.count} câu`}
-                                    </span>
-                                  ) : (
-                                    <span className="dark:text-slate-400 text-slate-500">Chưa bắt đầu</span>
-                                  )}
-                                </span>
-                                <button
-                                  onClick={() => navigate(`/listen/dictation?year=master&part=${item.part}&topic=${encodeURIComponent(item.title)}`)}
-                                  className="px-4 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-heading font-black text-xs shadow-md shadow-sky-500/20 transition-all flex items-center gap-1 active:scale-95 cursor-pointer"
-                                >
-                                  <span>{prog.completed > 0 ? (prog.isCompleted ? 'Luyện lại' : 'Luyện tiếp') : 'Luyện tập'}</span>
-                                  <ArrowRight className="w-3 h-3" />
-                                </button>
-                              </div>
-                            );
-                          })()}
-                        </div>
-                      </VipLockOverlay>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-
-            {/* 3. REVIEW TAB: 🔖 CÂU CẦN LUYỆN LẠI (MATCHING DAU TOEIC) */}
+            {/* 2. REVIEW MODE: 🔖 CÂU CẦN LUYỆN LẠI */}
             {dictationYear === 'review' && (
-              <div className="rounded-3xl border dark:border-slate-800 border-slate-200 p-10 dark:bg-[#0d1424] bg-white text-center space-y-4 max-w-xl mx-auto my-8 shadow-xl">
-                <div className="w-16 h-16 rounded-3xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center mx-auto text-pink-500">
+              <div className="rounded-3xl border dark:border-slate-800 border-slate-200 dark:bg-slate-900/60 bg-white p-8 text-center space-y-4">
+                <div className="w-16 h-16 rounded-2xl bg-amber-500/10 text-amber-500 mx-auto flex items-center justify-center">
                   <Bookmark className="w-8 h-8" />
                 </div>
-                <h3 className="font-heading font-extrabold text-xl dark:text-white text-slate-900">
-                  Chưa có câu nào cần luyện lại
-                </h3>
-                <p className="text-sm dark:text-slate-400 text-slate-600 leading-relaxed">
-                  Trong quá trình luyện nghe chép, hãy bấm biểu tượng lưu câu để gom các câu bạn nghe chưa tốt vào đây ôn luyện lại nhé!
-                </p>
-                <div className="pt-2">
-                  <button
-                    onClick={() => handleDictationYearChange('2026')}
-                    className="px-6 py-2.5 rounded-2xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-heading font-black text-sm shadow-lg shadow-sky-500/25 transition-all inline-flex items-center gap-2"
-                  >
-                    <span>Khám phá bài nghe</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
+                <div className="max-w-md mx-auto space-y-2">
+                  <h3 className="font-heading font-extrabold text-lg text-slate-900 dark:text-white">
+                    Sổ tay câu sai & Đánh dấu luyện lại
+                  </h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                    Hệ thống lưu tự động các câu bạn viết sai hoặc bấm bookmark trong quá trình nghe chép để bạn nghe lại và kiểm tra chính tả.
+                  </p>
                 </div>
+                <button
+                  onClick={() => navigate('/mistakes')}
+                  className="px-6 py-2.5 rounded-full bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shadow-lg shadow-purple-600/25 transition-all inline-flex items-center gap-2 cursor-pointer"
+                >
+                  <Bookmark className="w-4 h-4" />
+                  <span>Mở sổ tay câu sai & Đánh dấu</span>
+                </button>
               </div>
             )}
 
-
-            {/* 3. TESTS GRID (ĐỀ 2026, ĐỀ 2024, ĐỀ 2023) */}
-            {['2026', '2024', '2023'].includes(dictationYear) && (
-              <div className="space-y-4">
+            {/* 3. TEST MODES: 11 COLLECTIONS (CRACK 1/2, 2026-2019, MASTER) */}
+            {dictationYear !== 'topic' && dictationYear !== 'review' && (
+              <div className="space-y-8">
                 {dictationTests.map((t) => {
-                  // FREE: Test 1 (toàn bộ 4 Parts), PRO: Test 2-10
-                  const isTestLocked = !isProUser && t.testNum > 1;
+                  const isLocked = !isProUser && t.testNum > 2;
+
                   return (
                     <VipLockOverlay
                       key={t.testNum}
-                      isLocked={isTestLocked}
-                      compact
+                      isLocked={isLocked}
                       onUnlockClick={() => setShowPricingModal(true)}
-                      label={`VIP — Mở khóa Test ${t.testNum}`}
+                      label="VIP"
                     >
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        
-                        {/* Part 1 */}
-                        <div className="rounded-2xl border dark:border-slate-800/80 border-slate-200 hover:border-sky-500/40 p-5 dark:bg-[#0d1424] bg-white space-y-4 transition-all flex flex-col justify-between shadow-sm">
-                          <div>
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-1.5">
-                                <span className="px-2.5 py-0.5 rounded-lg bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20 text-xs font-bold font-heading">
-                                  📄 Test {t.testNum}
-                                </span>
+                      <div className="space-y-3">
+                        {/* Test Section Header matching Đậu TOEIC: | Test X */}
+                        <div className="flex items-center gap-2 font-heading font-extrabold text-base text-sky-500 dark:text-sky-400">
+                          <span className="w-1.5 h-4 bg-sky-500 rounded-full inline-block"></span>
+                          <span className="dark:text-white text-slate-900">Test {t.testNum}</span>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                          
+                          {/* Part 1 */}
+                          <div className="rounded-2xl border dark:border-slate-800/80 border-slate-200 hover:border-sky-500/40 p-5 dark:bg-[#0d1424] bg-white space-y-4 transition-all flex flex-col justify-between shadow-sm">
+                            <div>
+                              <div className="flex items-center justify-between">
                                 <span className="px-2.5 py-0.5 rounded-lg dark:bg-slate-800/80 bg-slate-100 text-slate-700 dark:text-slate-300 text-xs font-bold font-heading border dark:border-slate-700 border-slate-200">
                                   Part 1
                                 </span>
+                                <div className="flex items-center gap-1.5 text-xs text-slate-400 font-mono">
+                                  <Bookmark className="w-3.5 h-3.5" />
+                                  <span>0</span>
+                                </div>
                               </div>
-                              <span className="text-[10px] font-bold text-sky-600 dark:text-sky-400 bg-sky-500/10 px-1.5 py-0.5 rounded border border-sky-500/20 font-mono">
-                                {dictationExercises.find(e => (e.topic === `Test ${t.testNum}` || e.title?.includes(`TEST ${t.testNum}`)) && e.part === 1)?.attemptsCount || (204 + (t.testNum * 17) % 240)} lượt
-                              </span>
+                              
+                              <h4 className="font-heading font-extrabold text-base dark:text-white text-slate-900 mt-4 flex items-center gap-2">
+                                <Headphones className="w-4 h-4 text-sky-400" />
+                                <span>{t.p1.count} câu</span>
+                              </h4>
                             </div>
-                            
-                            <h4 className="font-heading font-extrabold text-lg dark:text-white text-slate-900 mt-4 flex items-center gap-2">
-                              <Headphones className="w-4 h-4 text-sky-500 dark:text-sky-400" />
-                              <span>{t.p1.count} câu</span>
-                            </h4>
+
+                            <div className="flex items-center justify-between pt-3 border-t dark:border-slate-800/80 border-slate-100">
+                              <span className="text-xs font-mono">
+                                {t.p1.completed > 0 ? (
+                                  <span className={t.p1.isCompleted ? "text-emerald-500 font-bold" : "text-sky-500 font-bold"}>
+                                    {t.p1.isCompleted ? `✓ Hoàn thành (${t.p1.completed}/${t.p1.count})` : `${t.p1.completed}/${t.p1.count} câu`}
+                                  </span>
+                                ) : (
+                                  <span className="dark:text-slate-400 text-slate-500">Chưa bắt đầu</span>
+                                )}
+                              </span>
+                              <button
+                                onClick={() => navigate(`/listen/dictation?year=${dictationYear}&test=${t.testNum}&part=1`)}
+                                className="px-4 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-heading font-black text-xs shadow-md shadow-sky-500/20 transition-all flex items-center gap-1 active:scale-95 cursor-pointer"
+                              >
+                                <span>{t.p1.completed > 0 ? (t.p1.isCompleted ? 'Luyện lại' : 'Luyện tiếp') : 'Luyện tập'}</span>
+                                <ArrowRight className="w-3 h-3" />
+                              </button>
+                            </div>
                           </div>
 
-                          <div className="flex items-center justify-between pt-3 border-t dark:border-slate-800/80 border-slate-100">
-                            <span className="text-xs font-mono">
-                              {t.p1.completed > 0 ? (
-                                <span className={t.p1.isCompleted ? "text-emerald-500 font-bold" : "text-sky-500 font-bold"}>
-                                  {t.p1.isCompleted ? `✓ Hoàn thành (${t.p1.completed}/${t.p1.count})` : `${t.p1.completed}/${t.p1.count} câu`}
-                                </span>
-                              ) : (
-                                <span className="dark:text-slate-400 text-slate-500">Chưa bắt đầu</span>
-                              )}
-                            </span>
-                            <button
-                              onClick={() => navigate(`/listen/dictation?year=${dictationYear}&test=${t.testNum}&part=1`)}
-                              className="px-4 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-heading font-black text-xs shadow-md shadow-sky-500/20 transition-all flex items-center gap-1 active:scale-95 cursor-pointer"
-                            >
-                              <span>{t.p1.completed > 0 ? (t.p1.isCompleted ? 'Luyện lại' : 'Luyện tiếp') : 'Luyện tập'}</span>
-                              <ArrowRight className="w-3 h-3" />
-                            </button>
-                          </div>
-                        </div>
-
-                        {/* Part 2 */}
-                        <div className="rounded-2xl border dark:border-slate-800/80 border-slate-200 hover:border-sky-500/40 p-5 dark:bg-[#0d1424] bg-white space-y-4 transition-all flex flex-col justify-between shadow-sm">
-                          <div>
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-1.5">
-                                <span className="px-2.5 py-0.5 rounded-lg bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20 text-xs font-bold font-heading">
-                                  📄 Test {t.testNum}
-                                </span>
+                          {/* Part 2 */}
+                          <div className="rounded-2xl border dark:border-slate-800/80 border-slate-200 hover:border-sky-500/40 p-5 dark:bg-[#0d1424] bg-white space-y-4 transition-all flex flex-col justify-between shadow-sm">
+                            <div>
+                              <div className="flex items-center justify-between">
                                 <span className="px-2.5 py-0.5 rounded-lg dark:bg-slate-800/80 bg-slate-100 text-slate-700 dark:text-slate-300 text-xs font-bold font-heading border dark:border-slate-700 border-slate-200">
                                   Part 2
                                 </span>
+                                <div className="flex items-center gap-1.5 text-xs text-slate-400 font-mono">
+                                  <Bookmark className="w-3.5 h-3.5" />
+                                  <span>0</span>
+                                </div>
                               </div>
-                              <span className="text-[10px] font-bold text-sky-600 dark:text-sky-400 bg-sky-500/10 px-1.5 py-0.5 rounded border border-sky-500/20 font-mono">
-                                {dictationExercises.find(e => (e.topic === `Test ${t.testNum}` || e.title?.includes(`TEST ${t.testNum}`)) && e.part === 2)?.attemptsCount || (212 + (t.testNum * 19) % 240)} lượt
-                              </span>
+                              
+                              <h4 className="font-heading font-extrabold text-base dark:text-white text-slate-900 mt-4 flex items-center gap-2">
+                                <Headphones className="w-4 h-4 text-sky-400" />
+                                <span>{t.p2.count} câu</span>
+                              </h4>
                             </div>
-                            
-                            <h4 className="font-heading font-extrabold text-lg dark:text-white text-slate-900 mt-4 flex items-center gap-2">
-                              <Headphones className="w-4 h-4 text-sky-500 dark:text-sky-400" />
-                              <span>{t.p2.count} câu</span>
-                            </h4>
+
+                            <div className="flex items-center justify-between pt-3 border-t dark:border-slate-800/80 border-slate-100">
+                              <span className="text-xs font-mono">
+                                {t.p2.completed > 0 ? (
+                                  <span className={t.p2.isCompleted ? "text-emerald-500 font-bold" : "text-sky-500 font-bold"}>
+                                    {t.p2.isCompleted ? `✓ Hoàn thành (${t.p2.completed}/${t.p2.count})` : `${t.p2.completed}/${t.p2.count} câu`}
+                                  </span>
+                                ) : (
+                                  <span className="dark:text-slate-400 text-slate-500">Chưa bắt đầu</span>
+                                )}
+                              </span>
+                              <button
+                                onClick={() => navigate(`/listen/dictation?year=${dictationYear}&test=${t.testNum}&part=2`)}
+                                className="px-4 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-heading font-black text-xs shadow-md shadow-sky-500/20 transition-all flex items-center gap-1 active:scale-95 cursor-pointer"
+                              >
+                                <span>{t.p2.completed > 0 ? (t.p2.isCompleted ? 'Luyện lại' : 'Luyện tiếp') : 'Luyện tập'}</span>
+                                <ArrowRight className="w-3 h-3" />
+                              </button>
+                            </div>
                           </div>
 
-                          <div className="flex items-center justify-between pt-3 border-t dark:border-slate-800/80 border-slate-100">
-                            <span className="text-xs font-mono">
-                              {t.p2.completed > 0 ? (
-                                <span className={t.p2.isCompleted ? "text-emerald-500 font-bold" : "text-sky-500 font-bold"}>
-                                  {t.p2.isCompleted ? `✓ Hoàn thành (${t.p2.completed}/${t.p2.count})` : `${t.p2.completed}/${t.p2.count} câu`}
-                                </span>
-                              ) : (
-                                <span className="dark:text-slate-400 text-slate-500">Chưa bắt đầu</span>
-                              )}
-                            </span>
-                            <button
-                              onClick={() => navigate(`/listen/dictation?year=${dictationYear}&test=${t.testNum}&part=2`)}
-                              className="px-4 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-heading font-black text-xs shadow-md shadow-sky-500/20 transition-all flex items-center gap-1 active:scale-95 cursor-pointer"
-                            >
-                              <span>{t.p2.completed > 0 ? (t.p2.isCompleted ? 'Luyện lại' : 'Luyện tiếp') : 'Luyện tập'}</span>
-                              <ArrowRight className="w-3 h-3" />
-                            </button>
-                          </div>
-                        </div>
-
-                        {/* Part 3 */}
-                        <div className="rounded-2xl border dark:border-slate-800/80 border-slate-200 hover:border-sky-500/40 p-5 dark:bg-[#0d1424] bg-white space-y-4 transition-all flex flex-col justify-between shadow-sm">
-                          <div>
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-1.5">
-                                <span className="px-2.5 py-0.5 rounded-lg bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20 text-xs font-bold font-heading">
-                                  📄 Test {t.testNum}
-                                </span>
+                          {/* Part 3 */}
+                          <div className="rounded-2xl border dark:border-slate-800/80 border-slate-200 hover:border-sky-500/40 p-5 dark:bg-[#0d1424] bg-white space-y-4 transition-all flex flex-col justify-between shadow-sm">
+                            <div>
+                              <div className="flex items-center justify-between">
                                 <span className="px-2.5 py-0.5 rounded-lg dark:bg-slate-800/80 bg-slate-100 text-slate-700 dark:text-slate-300 text-xs font-bold font-heading border dark:border-slate-700 border-slate-200">
                                   Part 3
                                 </span>
+                                <div className="flex items-center gap-1.5 text-xs text-slate-400 font-mono">
+                                  <Bookmark className="w-3.5 h-3.5" />
+                                  <span>0</span>
+                                </div>
                               </div>
-                              <span className="text-[10px] font-bold text-sky-600 dark:text-sky-400 bg-sky-500/10 px-1.5 py-0.5 rounded border border-sky-500/20 font-mono">
-                                {dictationExercises.find(e => (e.topic === `Test ${t.testNum}` || e.title?.includes(`TEST ${t.testNum}`)) && e.part === 3)?.attemptsCount || (230 + (t.testNum * 21) % 240)} lượt
-                              </span>
+                              
+                              <h4 className="font-heading font-extrabold text-base dark:text-white text-slate-900 mt-4 flex items-center gap-2">
+                                <Headphones className="w-4 h-4 text-sky-400" />
+                                <span>{t.p3.count} câu</span>
+                              </h4>
                             </div>
-                            
-                            <h4 className="font-heading font-extrabold text-lg dark:text-white text-slate-900 mt-4 flex items-center gap-2">
-                              <Headphones className="w-4 h-4 text-sky-500 dark:text-sky-400" />
-                              <span>{t.p3.count} câu</span>
-                            </h4>
+
+                            <div className="flex items-center justify-between pt-3 border-t dark:border-slate-800/80 border-slate-100">
+                              <span className="text-xs font-mono">
+                                {t.p3.completed > 0 ? (
+                                  <span className={t.p3.isCompleted ? "text-emerald-500 font-bold" : "text-sky-500 font-bold"}>
+                                    {t.p3.isCompleted ? `✓ Hoàn thành (${t.p3.completed}/${t.p3.count})` : `${t.p3.completed}/${t.p3.count} câu`}
+                                  </span>
+                                ) : (
+                                  <span className="dark:text-slate-400 text-slate-500">Chưa bắt đầu</span>
+                                )}
+                              </span>
+                              <button
+                                onClick={() => navigate(`/listen/dictation?year=${dictationYear}&test=${t.testNum}&part=3`)}
+                                className="px-4 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-heading font-black text-xs shadow-md shadow-sky-500/20 transition-all flex items-center gap-1 active:scale-95 cursor-pointer"
+                              >
+                                <span>{t.p3.completed > 0 ? (t.p3.isCompleted ? 'Luyện lại' : 'Luyện tiếp') : 'Luyện tập'}</span>
+                                <ArrowRight className="w-3 h-3" />
+                              </button>
+                            </div>
                           </div>
 
-                          <div className="flex items-center justify-between pt-3 border-t dark:border-slate-800/80 border-slate-100">
-                            <span className="text-xs font-mono">
-                              {t.p3.completed > 0 ? (
-                                <span className={t.p3.isCompleted ? "text-emerald-500 font-bold" : "text-sky-500 font-bold"}>
-                                  {t.p3.isCompleted ? `✓ Hoàn thành (${t.p3.completed}/${t.p3.count})` : `${t.p3.completed}/${t.p3.count} câu`}
-                                </span>
-                              ) : (
-                                <span className="dark:text-slate-400 text-slate-500">Chưa bắt đầu</span>
-                              )}
-                            </span>
-                            <button
-                              onClick={() => navigate(`/listen/dictation?year=${dictationYear}&test=${t.testNum}&part=3`)}
-                              className="px-4 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-heading font-black text-xs shadow-md shadow-sky-500/20 transition-all flex items-center gap-1 active:scale-95 cursor-pointer"
-                            >
-                              <span>{t.p3.completed > 0 ? (t.p3.isCompleted ? 'Luyện lại' : 'Luyện tiếp') : 'Luyện tập'}</span>
-                              <ArrowRight className="w-3 h-3" />
-                            </button>
-                          </div>
-                        </div>
-
-                        {/* Part 4 */}
-                        <div className="rounded-2xl border dark:border-slate-800/80 border-slate-200 hover:border-sky-500/40 p-5 dark:bg-[#0d1424] bg-white space-y-4 transition-all flex flex-col justify-between shadow-sm">
-                          <div>
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-1.5">
-                                <span className="px-2.5 py-0.5 rounded-lg bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20 text-xs font-bold font-heading">
-                                  📄 Test {t.testNum}
-                                </span>
+                          {/* Part 4 */}
+                          <div className="rounded-2xl border dark:border-slate-800/80 border-slate-200 hover:border-sky-500/40 p-5 dark:bg-[#0d1424] bg-white space-y-4 transition-all flex flex-col justify-between shadow-sm">
+                            <div>
+                              <div className="flex items-center justify-between">
                                 <span className="px-2.5 py-0.5 rounded-lg dark:bg-slate-800/80 bg-slate-100 text-slate-700 dark:text-slate-300 text-xs font-bold font-heading border dark:border-slate-700 border-slate-200">
                                   Part 4
                                 </span>
+                                <div className="flex items-center gap-1.5 text-xs text-slate-400 font-mono">
+                                  <Bookmark className="w-3.5 h-3.5" />
+                                  <span>0</span>
+                                </div>
                               </div>
-                              <span className="text-[10px] font-bold text-sky-600 dark:text-sky-400 bg-sky-500/10 px-1.5 py-0.5 rounded border border-sky-500/20 font-mono">
-                                {dictationExercises.find(e => (e.topic === `Test ${t.testNum}` || e.title?.includes(`TEST ${t.testNum}`)) && e.part === 4)?.attemptsCount || (245 + (t.testNum * 23) % 240)} lượt
-                              </span>
+                              
+                              <h4 className="font-heading font-extrabold text-base dark:text-white text-slate-900 mt-4 flex items-center gap-2">
+                                <Headphones className="w-4 h-4 text-sky-400" />
+                                <span>{t.p4.count} câu</span>
+                              </h4>
                             </div>
-                            
-                            <h4 className="font-heading font-extrabold text-lg dark:text-white text-slate-900 mt-4 flex items-center gap-2">
-                              <Headphones className="w-4 h-4 text-sky-500 dark:text-sky-400" />
-                              <span>{t.p4.count} câu</span>
-                            </h4>
+
+                            <div className="flex items-center justify-between pt-3 border-t dark:border-slate-800/80 border-slate-100">
+                              <span className="text-xs font-mono">
+                                {t.p4.completed > 0 ? (
+                                  <span className={t.p4.isCompleted ? "text-emerald-500 font-bold" : "text-sky-500 font-bold"}>
+                                    {t.p4.isCompleted ? `✓ Hoàn thành (${t.p4.completed}/${t.p4.count})` : `${t.p4.completed}/${t.p4.count} câu`}
+                                  </span>
+                                ) : (
+                                  <span className="dark:text-slate-400 text-slate-500">Chưa bắt đầu</span>
+                                )}
+                              </span>
+                              <button
+                                onClick={() => navigate(`/listen/dictation?year=${dictationYear}&test=${t.testNum}&part=4`)}
+                                className="px-4 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-heading font-black text-xs shadow-md shadow-sky-500/20 transition-all flex items-center gap-1 active:scale-95 cursor-pointer"
+                              >
+                                <span>{t.p4.completed > 0 ? (t.p4.isCompleted ? 'Luyện lại' : 'Luyện tiếp') : 'Luyện tập'}</span>
+                                <ArrowRight className="w-3 h-3" />
+                              </button>
+                            </div>
                           </div>
 
-                          <div className="flex items-center justify-between pt-3 border-t dark:border-slate-800/80 border-slate-100">
-                            <span className="text-xs font-mono">
-                              {t.p4.completed > 0 ? (
-                                <span className={t.p4.isCompleted ? "text-emerald-500 font-bold" : "text-sky-500 font-bold"}>
-                                  {t.p4.isCompleted ? `✓ Hoàn thành (${t.p4.completed}/${t.p4.count})` : `${t.p4.completed}/${t.p4.count} câu`}
-                                </span>
-                              ) : (
-                                <span className="dark:text-slate-400 text-slate-500">Chưa bắt đầu</span>
-                              )}
-                            </span>
-                            <button
-                              onClick={() => navigate(`/listen/dictation?year=${dictationYear}&test=${t.testNum}&part=4`)}
-                              className="px-4 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-heading font-black text-xs shadow-md shadow-sky-500/20 transition-all flex items-center gap-1 active:scale-95 cursor-pointer"
-                            >
-                              <span>{t.p4.completed > 0 ? (t.p4.isCompleted ? 'Luyện lại' : 'Luyện tiếp') : 'Luyện tập'}</span>
-                              <ArrowRight className="w-3 h-3" />
-                            </button>
-                          </div>
                         </div>
-
                       </div>
                     </VipLockOverlay>
                   );
                 })}
               </div>
             )}
-
 
           </div>
         )}

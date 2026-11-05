@@ -133,6 +133,9 @@ exports.getSpeechAudio = async (req, res) => {
     if (!text) {
       return res.status(400).json({ success: false, message: 'Text parameter is required' });
     }
+    if (text.length > 500) {
+      return res.status(400).json({ success: false, message: 'Độ dài văn bản phát âm tối đa là 500 ký tự.' });
+    }
 
     const voiceName = getVoiceForAccent(accent, gender);
     const cacheKey = crypto.createHash('md5').update(`${voiceName}_${text}`).digest('hex');

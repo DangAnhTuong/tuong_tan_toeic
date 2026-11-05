@@ -57,8 +57,9 @@ exports.createFeedback = async (req, res) => {
 // GET /api/v1/feedback/my-feedbacks
 exports.getMyFeedbacks = async (req, res) => {
   try {
-    const userId = req.user ? req.user._id : null;
-    const userEmail = req.user?.email || req.query.email;
+    const isAuthed = req.user && !req.user.isGuest;
+    const userId = isAuthed ? req.user._id : null;
+    const userEmail = isAuthed ? req.user.email : null;
 
     if (!userId && !userEmail) {
       return res.json({ success: true, data: [] });
@@ -69,7 +70,7 @@ exports.getMyFeedbacks = async (req, res) => {
     };
 
     if (userId) query.$or.push({ userId });
-    if (userEmail) query.$or.push({ userEmail });
+    if (userEmail) query.$or.push({ userEmail: userEmail.toLowerCase().trim() });
 
     const feedbacks = await Feedback.find(query).sort({ created_at: -1 });
 

@@ -296,15 +296,15 @@ export default function GrammarLesson() {
       setLoading(true);
       setTimerOn(false);
       try {
-        let res;
-        if (id && id.length === 24) res = await axios.get(`/api/v1/reading/exercises/${id}`);
-        else {
-          res = await axios.get(`/api/v1/reading/exercises?mode=grammar`);
-          const found = res.data?.data?.find(g => g.grammarTopic===id || g._id===id);
-          if (found) res = {data:{data:found}};
+        let res = await axios.get(`/api/v1/reading/exercises/${encodeURIComponent(id)}`);
+        if (!res?.data?.data) {
+          // Fallback if needed
+          const fallbackRes = await axios.get(`/api/v1/reading/exercises?mode=grammar&full=true`);
+          const found = fallbackRes.data?.data?.find(g => g.slug === id || g.grammarTopic === id || g._id === id);
+          if (found) res = { data: { data: found } };
         }
         if (res?.data?.data) setLessonData(res.data.data);
-      } catch(e) { console.warn(e.message); }
+      } catch(e) { console.warn('Load grammar lesson error:', e.message); }
       finally { setLoading(false); }
     }
     load();

@@ -220,10 +220,41 @@ exports.getConversationMessages = async (req, res) => {
       .sort({ createdAt: 1 })
       .limit(200);
 
-    // Mark as read based on who is viewing
     const user = req.user;
     const isAdmin = checkIsAdmin(user);
 
+    // SECURITY CHECK: Non-admin users can ONLY read their own conversations
+    if (!isAdmin) {
+      if (!user || user.isGuest) {
+        return res.status(403).json({
+          success: false,
+          message: '⛔ Vui lòng đăng nhập để xem lịch sử tin nhắn của bạn.'
+        });
+      }
+
+      const userEmail = user.email ? user.email.toLowerCase().trim() : '';
+      const userIdStr = (user._id || user.id || '').toString();
+
+      const expectedConvEmail = userEmail ? `conv_${userEmail}` : null;
+      const expectedConvId = userIdStr ? `conv_${userIdStr}` : null;
+
+      const isOwner = (expectedConvEmail && conversationId.toLowerCase() === expectedConvEmail) ||
+                      (expectedConvId && conversationId === expectedConvId) ||
+                      messages.some(m => 
+                        (userEmail && m.senderEmail?.toLowerCase() === userEmail) ||
+                        (userEmail && m.recipientEmail?.toLowerCase() === userEmail) ||
+                        (userIdStr && m.senderId && m.senderId.toString() === userIdStr)
+                      );
+
+      if (!isOwner && messages.length > 0) {
+        return res.status(403).json({
+          success: false,
+          message: '⛔ Bạn không có quyền truy cập cuộc trò chuyện của học viên khác.'
+        });
+      }
+    }
+
+    // Mark as read based on who is viewing
     if (isAdmin) {
       await ChatMessage.updateMany(
         { conversationId, senderRole: 'user', isReadByAdmin: false },

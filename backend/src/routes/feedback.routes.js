@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const feedbackController = require('../controllers/feedback.controller');
-const { optionalAuth, requireAdmin } = require('../middleware/authMiddleware');
+const { optionalAuth, requireAuth, requireAdmin } = require('../middleware/authMiddleware');
 
 router.post('/', optionalAuth, feedbackController.createFeedback);
 router.get('/my-feedbacks', optionalAuth, feedbackController.getMyFeedbacks);
-router.get('/all', optionalAuth, feedbackController.getAllFeedbacks);
-router.put('/:id/reply', optionalAuth, feedbackController.replyFeedback);
-router.delete('/:id', optionalAuth, feedbackController.deleteFeedback);
+router.get('/all', requireAuth, requireAdmin, feedbackController.getAllFeedbacks);
+router.put('/:id/reply', requireAuth, requireAdmin, feedbackController.replyFeedback);
+router.delete('/:id', requireAuth, requireAdmin, feedbackController.deleteFeedback);
 
 module.exports = router;

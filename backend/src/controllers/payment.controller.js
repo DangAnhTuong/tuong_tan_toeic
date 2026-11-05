@@ -346,10 +346,11 @@ exports.handleWebhook = async (req, res) => {
 
     const isAuthenticOrder = Boolean(pendingOrder);
 
-    // Decision: Authorized if secret matches, or known IP, or our account, or authentic existing order
-    const isAuthorized = matchesConfiguredSecret || isKnownGatewayIp || matchesOurAccount || isAuthenticOrder;
+    // Decision: STRICT AUTHORIZATION REQUIRED
+    // Must authenticate via shared webhook secret OR verified gateway IP
+    const isWebhookAuthenticated = Boolean(matchesConfiguredSecret || isKnownGatewayIp);
 
-    if (!isAuthorized) {
+    if (!isWebhookAuthenticated) {
       console.warn(`[SECURITY ALERT] Unauthorized payment webhook call rejected from IP: ${clientIp}`, {
         incomingAccount,
         orderCode
@@ -364,6 +365,12 @@ exports.handleWebhook = async (req, res) => {
       return res.status(200).json({ success: false, message: 'No matching TOEIC order code found in content.' });
     }
 
+    // Must match our designated bank account if provided by gateway
+    if (incomingAccount && !matchesOurAccount) {
+      console.warn(`[SECURITY ALERT] Webhook transfer to mismatched bank account: ${incomingAccount}`);
+      return res.status(400).json({ success: false, message: 'Mismatched destination bank account.' });
+    }
+
     const order = pendingOrder || await PaymentOrder.findOne({ orderCode });
     if (!order) {
       return res.status(404).json({ success: false, message: 'Order not found for code: ' + orderCode });
@@ -374,9 +381,12 @@ exports.handleWebhook = async (req, res) => {
       return res.status(200).json({ success: true, message: 'Order was already processed.' });
     }
 
-    // Verify amount (must meet or exceed plan price)
-    if (amount > 0 && amount < order.amount) {
-      return res.status(400).json({ success: false, message: 'Amount transferred is less than order amount.' });
+    // Verify amount strictly: Must be greater than 0 and meet or exceed order amount
+    if (!amount || typeof amount !== 'number' || amount < order.amount) {
+      return res.status(400).json({ 
+        success: false, 
+        message: `Số tiền thanh toán (${amount}đ) không hợp lệ hoặc thấp hơn giá trị đơn hàng (${order.amount}đ).` 
+      });
     }
 
     // Mark order as PAID

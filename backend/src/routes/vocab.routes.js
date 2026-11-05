@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const vocabController = require('../controllers/vocab.controller');
-const { optionalAuth } = require('../middleware/authMiddleware');
+const { optionalAuth, requireAuth } = require('../middleware/authMiddleware');
 
 router.get('/topics', optionalAuth, vocabController.getVocabTopics);
 router.get('/topics/:id', optionalAuth, vocabController.getVocabTopicById);
@@ -17,7 +17,7 @@ router.get('/my-words', optionalAuth, vocabController.getMyWords);
 router.get('/decks', optionalAuth, vocabController.getUserDecks);
 router.delete('/decks/:deckName', optionalAuth, vocabController.deleteDeck);
 router.post('/scan-image', optionalAuth, vocabController.scanVocabImage);
-router.post('/custom-topic', optionalAuth, vocabController.createCustomTopic);
+router.post('/custom-topic', requireAuth, vocabController.createCustomTopic);
 
 module.exports = router;
 

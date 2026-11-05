@@ -1122,6 +1122,39 @@ export default function MockTestRoom() {
             </div>
           )}
 
+          {/* EXAM MODE AUDIO BAR (Rendered in Exam Mode when audio exists) */}
+          {!isPracticeMode && currentGroup?.audioUrl && (
+            <div className="p-3.5 rounded-2xl dark:bg-slate-900 bg-white border dark:border-slate-800 border-slate-200/90 shadow-sm flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={toggleAudioPlay}
+                  className="w-10 h-10 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 flex items-center justify-center shadow-md shadow-sky-500/20 active:scale-95 transition-all shrink-0 cursor-pointer"
+                  title={isAudioPlaying ? "Tạm dừng" : "Phát audio"}
+                >
+                  {isAudioPlaying ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current ml-0.5" />}
+                </button>
+                <div>
+                  <div className="text-xs font-bold dark:text-white text-slate-900 flex items-center gap-1.5">
+                    <Headphones className="w-3.5 h-3.5 text-sky-500" />
+                    <span>{isAudioPlaying ? "Đang phát audio bài thi..." : "Bấm nút Play để phát audio"}</span>
+                  </div>
+                  <div className="text-[11px] font-mono dark:text-slate-400 text-slate-500">
+                    {Math.floor(audioProgress)}s / {Math.floor(audioDuration || 0)}s
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center gap-1 h-5 pr-2">
+                {[30, 60, 90, 45, 75, 50, 85].map((h, i) => (
+                  <div
+                    key={i}
+                    className={`w-1 rounded-full transition-all duration-150 ${isAudioPlaying ? 'bg-sky-500 animate-pulse' : 'dark:bg-slate-700 bg-slate-300'}`}
+                    style={{ height: isAudioPlaying ? `${h}%` : '25%' }}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* PRACTICE MODE INTERACTIVE AUDIO PLAYER (Only in Practice Mode) */}
           {isPracticeMode && currentGroup?.audioUrl && (
             <div className="p-4 rounded-2xl dark:bg-slate-900/90 bg-white border dark:border-slate-800 border-slate-200/90 space-y-3 shadow-sm">
@@ -1986,11 +2019,52 @@ export default function MockTestRoom() {
           <div className="w-full flex items-center justify-between text-xs dark:text-slate-400 text-slate-600 font-mono">
             <div className="flex items-center gap-2">
               <div className="w-2.5 h-2.5 rounded-full bg-sky-500 animate-pulse" />
-              <span className="dark:text-slate-300 text-slate-700">Chuẩn thi máy IIG: Audio tự động chuyển câu sau khi kết thúc</span>
+              <span className="dark:text-slate-300 text-slate-700">
+                {autoAdvanceCountdown !== null ? `Tự động chuyển sau ${autoAdvanceCountdown}s` : 'Chuẩn thi IIG (Tự động chuyển câu sau audio)'}
+              </span>
             </div>
-            <span className="text-sky-600 dark:text-sky-400 font-bold">
-              {currentGroupIndex + 1}/{questionGroups.length} nhóm câu
-            </span>
+
+            <div className="flex items-center gap-2">
+              <span className="text-sky-600 dark:text-sky-400 font-bold hidden sm:inline">
+                {currentGroupIndex + 1}/{questionGroups.length} nhóm câu
+              </span>
+
+              {/* Prev Button */}
+              <button
+                onClick={() => {
+                  if (currentGroupIndex > 0) setCurrentGroupIndex(prev => prev - 1);
+                }}
+                disabled={currentGroupIndex === 0}
+                className="p-2 sm:px-3 sm:py-2 rounded-xl dark:bg-slate-900 bg-slate-100 hover:dark:bg-slate-800 hover:bg-slate-200 border dark:border-slate-800 border-slate-200 disabled:opacity-30 dark:text-slate-300 text-slate-700 transition-all shadow-sm flex items-center gap-1 font-bold text-xs cursor-pointer disabled:cursor-not-allowed"
+                title="Nhóm câu trước (←)"
+              >
+                <ChevronLeft className="w-4 h-4" />
+                <span className="hidden sm:inline">Trước</span>
+              </button>
+
+              {/* Question Matrix Drawer */}
+              <button
+                onClick={() => setShowQuestionMatrixDrawer(true)}
+                className="px-3.5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs flex items-center gap-1.5 shadow-md shadow-emerald-500/20 active:scale-95 transition-all cursor-pointer"
+                title="Danh sách câu hỏi"
+              >
+                <Layers className="w-3.5 h-3.5" />
+                <span>{currentGroupIndex + 1}/{questionGroups.length}</span>
+              </button>
+
+              {/* Next Button */}
+              <button
+                onClick={() => {
+                  if (currentGroupIndex < questionGroups.length - 1) setCurrentGroupIndex(prev => prev + 1);
+                }}
+                disabled={currentGroupIndex === questionGroups.length - 1}
+                className="p-2 sm:px-4 sm:py-2 rounded-xl bg-sky-500 hover:bg-sky-400 disabled:opacity-40 text-slate-950 font-extrabold text-xs flex items-center gap-1.5 shadow-md shadow-sky-500/20 transition-all cursor-pointer disabled:cursor-not-allowed"
+                title="Nhóm câu tiếp theo (→)"
+              >
+                <span>Tiếp</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         ) : (
           /* Case B: Pure Exam Mode - Reading Section (Part 5 - 7) */

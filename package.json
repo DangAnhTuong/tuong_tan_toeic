@@ -1,0 +1,27 @@
+{
+  "name": "tuong-tan-toeic-workspace",
+  "version": "2.0.0",
+  "description": "Tuong Tan TOEIC Workspace Root — Lorin Tan (SpaceX/Cursor) Autonomous Agent Standard",
+  "private": true,
+  "scripts": {
+    "verify": "node scripts/verify_toeic_system.js",
+    "guardrails": "node .agent_guardrails/guardrail_check.js",
+    "test:unit": "node --test tests/core_business_logic.test.js",
+    "test:regression": "node --test tests/regressions/*.test.js",
+    "test:generate": "node scripts/generate_regression_test.js",
+    "benny:reproduce": "node scripts/benny_reproduce_bug.mjs",
+    "build:frontend": "cd frontend && npm run build",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev"
+  },
+  "keywords": [
+    "toeic",
+    "lorin-tan",
+    "autonomous-agent",
+    "hard-guardrails",
+    "benny-verification",
+    "headless-smoke-test"
+  ],
+  "author": "Dang Anh Tuong",
+  "license": "ISC"
+}

@@ -444,8 +444,8 @@ const PURE_SCENERY_ROTATION = [
 export function getPart1ImageUrl(q, index = 0, topicName = '') {
   const isScenery = /cảnh vật/i.test(topicName || '') || /scenery/i.test(topicName || '');
 
-  // 1. If q has a valid, non-dead image URL from database, use it!
-  if (q?.imageUrl && !q.imageUrl.includes('supabase.co')) {
+  // 1. If q has a valid, non-dead self-hosted image URL from database, use it!
+  if (q?.imageUrl && !q.imageUrl.includes('supabase.co') && (q.imageUrl.startsWith('/media/') || q.imageUrl.startsWith('http'))) {
     const filename = q.imageUrl.split('/').pop();
     // If scenery topic, reject any human image
     if (isScenery && HUMAN_IMAGES.has(filename)) {

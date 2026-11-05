@@ -10,7 +10,28 @@ exports.getListeningExercises = async (req, res) => {
     if (part) filter.part = Number(part);
     if (level) filter.level = Number(level);
     if (year) filter.year = year;
-    if (topic) filter.topic = topic;
+    if (topic) {
+      const topicMap = {
+        'single': ['single', 'Tranh một người', 'Tranh 1 người'],
+        'multi': ['multi', 'Tranh nhiều người'],
+        'scene': ['scene', 'Tranh tả cảnh', 'Tranh cảnh', 'Tranh phong cảnh', 'Tranh cảnh vật'],
+        'object': ['object', 'Tranh tả vật', 'Tranh vật'],
+        'Tranh một người': ['single', 'Tranh một người', 'Tranh 1 người'],
+        'Tranh 1 người': ['single', 'Tranh một người', 'Tranh 1 người'],
+        'Tranh nhiều người': ['multi', 'Tranh nhiều người'],
+        'Tranh tả cảnh': ['scene', 'Tranh tả cảnh', 'Tranh cảnh', 'Tranh phong cảnh', 'Tranh cảnh vật'],
+        'Tranh phong cảnh': ['scene', 'Tranh tả cảnh', 'Tranh cảnh', 'Tranh phong cảnh', 'Tranh cảnh vật'],
+        'Tranh cảnh vật': ['scene', 'Tranh tả cảnh', 'Tranh cảnh', 'Tranh phong cảnh', 'Tranh cảnh vật'],
+        'Tranh tả vật': ['object', 'Tranh tả vật', 'Tranh vật'],
+        'Tranh vật': ['object', 'Tranh tả vật', 'Tranh vật'],
+      };
+      const aliases = topicMap[topic] || [topic];
+      filter.$or = [
+        { topic: { $in: aliases } },
+        { topicKey: { $in: aliases } },
+        { title: new RegExp(topic, 'i') }
+      ];
+    }
 
     let exercises = [];
     try {

@@ -11,7 +11,7 @@ const {
   paymentWebhookLimiter 
 } = require('./middleware/rateLimiter');
 
-const { optionalAuth } = require('./middleware/authMiddleware');
+const { optionalAuth, requireAuth, requireAdmin } = require('./middleware/authMiddleware');
 
 const authRoutes = require('./routes/auth.routes');
 const listeningRoutes = require('./routes/listening.routes');
@@ -140,8 +140,8 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Test Telegram Alert
-app.post('/api/v1/system/test-telegram', async (req, res) => {
+// Test Telegram Alert (Admin Only to prevent bot spam)
+app.post('/api/v1/system/test-telegram', requireAuth, requireAdmin, async (req, res) => {
   const ok = await sendTelegramAlert('🔔 <b>Kiểm tra kết nối Telegram Bot thành công!</b>\nHệ thống Tường Tận TOEIC đã sẵn sàng gửi cảnh báo sự cố 24/7 đến bạn.', 'WARNING');
   if (ok) {
     return res.json({ success: true, message: 'Đã gửi tin nhắn kiểm tra tới Telegram của bạn thành công!' });

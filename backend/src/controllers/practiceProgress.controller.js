@@ -10,8 +10,15 @@ function getCanonicalUserId(req) {
     if (id) return String(id);
   }
   const fallback = req.body?.userId || req.query?.userId;
-  if (fallback && fallback !== 'null' && fallback !== 'undefined') {
-    return String(fallback);
+  // SECURITY: Unauthenticated users CANNOT impersonate registered accounts by email or raw ID
+  if (fallback && typeof fallback === 'string' && fallback !== 'null' && fallback !== 'undefined') {
+    if (fallback.includes('@') || /^[0-9a-fA-F]{24}$/.test(fallback)) {
+      // Reject spoofed user identifier without authentication
+      return 'guest';
+    }
+    if (fallback.startsWith('guest_')) {
+      return String(fallback).slice(0, 50);
+    }
   }
   return 'guest';
 }

@@ -19,10 +19,17 @@ function calculateTOEICScore(correctL, correctR) {
 // Get All Mock Tests (Fast projection for list view)
 exports.getMockTests = async (req, res) => {
   try {
-    const { year } = req.query;
+    const { year, category } = req.query;
     let query = {};
     if (year && year !== 'all' && year !== 'All') {
       query.year = Number(year);
+    }
+    if (category && category !== 'all' && category !== 'All') {
+      query.$or = [
+        { category: category },
+        { collectionName: category },
+        { title: { $regex: category, $options: 'i' } }
+      ];
     }
 
     const tests = await MockTest.find(query, {
@@ -32,10 +39,15 @@ exports.getMockTests = async (req, res) => {
       durationMinutes: 1,
       status: 1,
       isPro: 1,
+      category: 1,
+      collectionName: 1,
+      orderIndex: 1,
+      difficulty_label: 1,
+      dauTestId: 1,
       attemptsCount: 1,
       createdAt: 1,
       updatedAt: 1
-    }).sort({ year: -1, title: 1 });
+    }).sort({ orderIndex: 1, title: 1 });
 
     return res.status(200).json({ success: true, count: tests.length, data: tests });
   } catch (error) {

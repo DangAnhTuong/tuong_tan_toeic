@@ -105,7 +105,16 @@ export default function LevelPracticeRoom() {
   }, []);
 
   // Level & Topic Info
-  const levelNames = ['Lv.1 Dễ', 'Lv.2 Cơ bản', 'Lv.3 Trung bình', 'Lv.4 Khó', 'Lv.5 Rất khó'];
+  const levelNames = [
+    'Level 1 — Dưới 300 điểm',
+    'Level 2 — 300–400 điểm',
+    'Level 3 — 400–500 điểm',
+    'Level 4 — 500–600 điểm',
+    'Level 5 — 600–700 điểm',
+    'Level 6 — 700–800 điểm',
+    'Level 7 — 800–900 điểm',
+    'Level 8 — Trên 900 điểm'
+  ];
   const levelTitle = modeParam === 'topic' && topicParam ? `Dạng bài: ${topicParam}` : (levelNames[levelNum - 1] || 'Lv.1 Dễ');
 
   // Questions Data
@@ -264,10 +273,40 @@ export default function LevelPracticeRoom() {
           : `/api/v1/listening/exercises?mode=level&part=${partNum}&level=${levelNum}`;
 
         const res = await axios.get(endpoint);
+        let exercisesList = [];
         if (res.data?.data && res.data.data.length > 0) {
-          const matched = modeParam === 'topic' && topicParam
-            ? (res.data.data.find(ex => ex.topic === topicParam || ex.title === topicParam) || res.data.data[0])
-            : (res.data.data.find(ex => ex.level === levelNum) || res.data.data[0]);
+          exercisesList = res.data.data;
+        } else {
+          // Fallback: fetch all exercises for this part & mode without rigid topic filter
+          const fallbackRes = await axios.get(`/api/v1/listening/exercises?mode=${modeParam}&part=${partNum}`);
+          if (fallbackRes.data?.data && fallbackRes.data.data.length > 0) {
+            exercisesList = fallbackRes.data.data;
+          }
+        }
+
+        if (exercisesList.length > 0) {
+          let matched = null;
+          if (modeParam === 'topic' && topicParam) {
+            const lowerT = topicParam.toLowerCase().trim();
+            matched = exercisesList.find(ex => {
+              const exTopic = (ex.topic || '').toLowerCase().trim();
+              const exKey = (ex.topicKey || '').toLowerCase().trim();
+              const exTitle = (ex.title || '').toLowerCase().trim();
+
+              if (exTopic === lowerT || exKey === lowerT || exTitle === lowerT) return true;
+              if (exTitle.includes(lowerT) || (exTopic && lowerT.includes(exTopic))) return true;
+
+              // Topic-specific keyword fallbacks for Part 1
+              if (lowerT.includes('vật') && (exKey === 'object' || exTopic === 'object' || exTitle.includes('vật'))) return true;
+              if (lowerT.includes('cảnh') && (exKey === 'scene' || exTopic === 'scene' || exTitle.includes('cảnh'))) return true;
+              if (lowerT.includes('nhiều người') && (exKey === 'multi' || exTopic === 'multi' || exTitle.includes('nhiều người'))) return true;
+              if (lowerT.includes('một người') && (exKey === 'single' || exTopic === 'single' || exTitle.includes('một người'))) return true;
+
+              return false;
+            }) || exercisesList[0];
+          } else {
+            matched = exercisesList.find(ex => Number(ex.level) === Number(levelNum)) || exercisesList[0];
+          }
 
           if (matched && matched.questions && matched.questions.length > 0) {
             setQuestions(matched.questions);
@@ -346,7 +385,8 @@ export default function LevelPracticeRoom() {
     activeQuestions.forEach((q, idx) => {
       const userAns = ansMap[idx];
       if (userAns) {
-        const isCor = q?.options?.find(o => o.label === userAns)?.isCorrect;
+        const norm = s => String(s || '').replace(/[()]/g, '').trim().toUpperCase();
+        const isCor = q?.options?.find(o => norm(o.label) === norm(userAns))?.isCorrect;
         if (isCor) {
           cor++;
         } else {
@@ -425,16 +465,17 @@ export default function LevelPracticeRoom() {
     : [activeQuestions[currentIdx] || activeQuestions[0]];
   const currentPassageQ = currentPassageQuestions[0] || activeQuestions[0];
   const currentPassageImageUrl = isPassageMode 
-    ? (currentPassageQuestions.find(q => q.imageUrl)?.imageUrl || currentPassageQ?.imageUrl || '') 
+    ? (currentPassageQuestions.find(q => (q.imageUrl && (q.imageUrl.startsWith('/media/') || q.imageUrl.startsWith('http'))))?.imageUrl || currentPassageQ?.imageUrl || '') 
     : (partNum === 1 ? getPart1ImageUrl(currentPassageQ, currentIdx, topicParam) : (currentPassageQ?.imageUrl || ''));
 
   // Guaranteed natural audio streaming URL with automatic TTS fallback
   const resolvedAudioUrl = useMemo(() => {
     if (!currentPassageQ) return '';
 
-    // 1. If audioUrl is valid and not the dead Supabase CDN link
-    if (currentPassageQ.audioUrl && !currentPassageQ.audioUrl.includes('supabase.co')) {
-      return currentPassageQ.audioUrl;
+    const rawAudio = currentPassageQ.audioUrl || currentPassageQ.audio;
+    // 1. If audioUrl or audio is valid self-hosted file (starts with /media/ or http)
+    if (rawAudio && !rawAudio.includes('supabase.co') && (rawAudio.startsWith('/media/') || rawAudio.startsWith('http'))) {
+      return rawAudio;
     }
 
     // 2. High-definition backend TTS stream
@@ -664,7 +705,8 @@ export default function LevelPracticeRoom() {
     setSelectedAnswers(nextAnswers);
 
     const targetQ = activeQuestions[targetQIdx];
-    const isCorrect = targetQ?.options?.find(o => o.label === optLabel)?.isCorrect;
+    const norm = s => String(s || '').replace(/[()]/g, '').trim().toUpperCase();
+    const isCorrect = targetQ?.options?.find(o => norm(o.label) === norm(optLabel))?.isCorrect;
     let nextCorrect = correctCount;
     let nextXp = xpCount;
 
@@ -924,7 +966,7 @@ export default function LevelPracticeRoom() {
             Tải lại trang
           </button>
           <button 
-            onClick={() => navigate('/listen')} 
+            onClick={() => navigate(modeParam === 'topic' ? `/listen?tab=type&part=${partNum}` : `/listen?tab=level&part=${partNum}`)} 
             className="px-5 py-2.5 rounded-full dark:bg-slate-800 bg-slate-200 hover:bg-slate-300 dark:hover:bg-slate-700 text-xs font-bold transition-all cursor-pointer"
           >
             Quay lại Luyện nghe
@@ -1158,7 +1200,7 @@ export default function LevelPracticeRoom() {
             <div className="rounded-3xl overflow-hidden border dark:border-slate-800 border-slate-200 dark:bg-slate-900/60 bg-white shadow-md relative group">
               <div className="aspect-[16/10] w-full relative dark:bg-slate-950 bg-slate-100 flex items-center justify-center overflow-hidden p-2">
                 <img 
-                  src={partNum === 1 ? getPart1ImageUrl(currentPassageQ, currentIdx, topicParam) : currentPassageImageUrl} 
+                  src={currentPassageImageUrl || (partNum === 1 ? getPart1ImageUrl(currentPassageQ, currentIdx, topicParam) : '')} 
                   alt={currentPassageTitle}
                   className="w-full h-full object-contain rounded-2xl transition-transform duration-500 group-hover:scale-105"
                   loading="eager"

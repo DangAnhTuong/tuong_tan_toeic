@@ -132,10 +132,18 @@ exports.markMastered = async (req, res) => {
   try {
     const { id } = req.params;
     const { isMastered } = req.body || {};
-    const mistake = await Mistake.findById(id);
+    const userId = getUserId(req);
+
+    // SECURITY: Ensure user owns this mistake unless admin
+    const query = { _id: id };
+    if (req.user?.role !== 'admin') {
+      query.userId = userId;
+    }
+
+    const mistake = await Mistake.findOne(query);
 
     if (!mistake) {
-      return res.status(404).json({ success: false, message: 'Không tìm thấy câu sai.' });
+      return res.status(404).json({ success: false, message: 'Không tìm thấy câu sai hoặc bạn không có quyền thao tác.' });
     }
 
     mistake.isMastered = isMastered !== undefined ? Boolean(isMastered) : true;
@@ -156,10 +164,18 @@ exports.markMastered = async (req, res) => {
 exports.deleteMistake = async (req, res) => {
   try {
     const { id } = req.params;
-    const deleted = await Mistake.findByIdAndDelete(id);
+    const userId = getUserId(req);
+
+    // SECURITY: Ensure user owns this mistake unless admin
+    const query = { _id: id };
+    if (req.user?.role !== 'admin') {
+      query.userId = userId;
+    }
+
+    const deleted = await Mistake.findOneAndDelete(query);
 
     if (!deleted) {
-      return res.status(404).json({ success: false, message: 'Không tìm thấy câu sai để xóa.' });
+      return res.status(404).json({ success: false, message: 'Không tìm thấy câu sai để xóa hoặc bạn không có quyền thao tác.' });
     }
 
     return res.status(200).json({

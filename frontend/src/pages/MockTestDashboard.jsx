@@ -59,15 +59,15 @@ export default function MockTestDashboard() {
   };
   const [searchParams, setSearchParams] = useSearchParams();
   const activeMainTab = searchParams.get('tab') || 'list'; // 'list' (Học) | 'history' (Tiến độ)
-  const urlCategory = searchParams.get('category') || 'Crack TOEIC Vol 1';
+  const urlCategory = searchParams.get('category') || 'Pass TOEIC';
 
-  // Filter & Category State (Only 2 categories matching Dau TOEIC: Crack TOEIC Vol 1 & Pass TOEIC)
+  // Filter & Category State matching Dau TOEIC: Pass TOEIC (6), Crack TOEIC Vol 1 (10), Crack TOEIC Vol 2 (10)
   const [selectedCategory, setSelectedCategory] = useState(urlCategory);
   const [searchKeyword, setSearchKeyword] = useState('');
 
   // Keep state synced on browser Back / Forward buttons
   useEffect(() => {
-    const curCat = searchParams.get('category') || 'Crack TOEIC Vol 1';
+    const curCat = searchParams.get('category') || 'Pass TOEIC';
     setSelectedCategory(curCat);
   }, [searchParams]);
 
@@ -104,18 +104,58 @@ export default function MockTestDashboard() {
   // Quick Scorecard Modal State
   const [selectedScorecardTest, setSelectedScorecardTest] = useState(null);
 
-  // Default 10 ETS Tests pre-populated to guarantee instant crawler indexing & eliminate Soft 404
+  // Default 50 Authentic Tests matching Dau TOEIC (Pass TOEIC 10, Max Vol 1 10, Max Vol 2 10, Crack Vol 1 10, Crack Vol 2 10)
   const DEFAULT_MOCK_TESTS = [
-    { _id: "6a91b9306d1938ebacd9ae0c", title: "ETS TOEIC 2026 — Test 1 (Full 200 Câu)", year: 2026, totalQuestions: 200, timeLimitMinutes: 120 },
-    { _id: "6a91b9306d1938ebacd9b65b", title: "ETS TOEIC 2026 — Test 2 (Full 200 Câu)", year: 2026, totalQuestions: 200, timeLimitMinutes: 120 },
-    { _id: "6a91b92f6d1938ebacd99e14", title: "ETS TOEIC 2026 — Test 3 (Full 200 Câu)", year: 2026, totalQuestions: 200, timeLimitMinutes: 120 },
-    { _id: "6a91b92f6d1938ebacd9a251", title: "ETS TOEIC 2026 — Test 4 (Full 200 Câu)", year: 2026, totalQuestions: 200, timeLimitMinutes: 120 },
-    { _id: "6a91b92f6d1938ebacd9a622", title: "ETS TOEIC 2026 — Test 5 (Full 200 Câu)", year: 2026, totalQuestions: 200, timeLimitMinutes: 120 },
-    { _id: "6a91b9306d1938ebacd9ba9d", title: "ETS TOEIC 2026 — Test 6 (Full 200 Câu)", year: 2026, totalQuestions: 200, timeLimitMinutes: 120 },
-    { _id: "6a91b9306d1938ebacd9b242", title: "ETS TOEIC 2026 — Test 7 (Full 200 Câu)", year: 2026, totalQuestions: 200, timeLimitMinutes: 120 },
-    { _id: "6a91b92f6d1938ebacd9a9f3", title: "ETS TOEIC 2026 — Test 8 (Full 200 Câu)", year: 2026, totalQuestions: 200, timeLimitMinutes: 120 },
-    { _id: "6a91b92f6d1938ebacd999fb", title: "ETS TOEIC 2026 — Test 9 (Full 200 Câu)", year: 2026, totalQuestions: 200, timeLimitMinutes: 120 },
-    { _id: "6a91b9306d1938ebacd9cab9", title: "ETS TOEIC 2026 — Test 10 (Full 200 Câu)", year: 2026, totalQuestions: 200, timeLimitMinutes: 120 }
+    // Pass TOEIC (10)
+    ...Array.from({ length: 10 }, (_, i) => ({
+      _id: `pass_toeic_${i + 1}`,
+      title: `Pass TOEIC — Test ${i + 1} (Full 200 Câu)`,
+      category: "Pass TOEIC",
+      orderIndex: i + 1,
+      difficulty_label: "Dễ",
+      isPro: false,
+      totalQuestions: 200
+    })),
+    // Max Vol 1 (10)
+    ...Array.from({ length: 10 }, (_, i) => ({
+      _id: `max_vol1_${i + 1}`,
+      title: `Max Vol 1 — Test ${i + 1} (Full 200 Câu)`,
+      category: "Max Vol 1",
+      orderIndex: i + 1,
+      difficulty_label: "Trung bình",
+      isPro: false,
+      totalQuestions: 200
+    })),
+    // Max Vol 2 (10)
+    ...Array.from({ length: 10 }, (_, i) => ({
+      _id: `max_vol2_${i + 1}`,
+      title: `Max Vol 2 — Test ${i + 1} (Full 200 Câu)`,
+      category: "Max Vol 2",
+      orderIndex: i + 1,
+      difficulty_label: "Trung bình",
+      isPro: false,
+      totalQuestions: 200
+    })),
+    // Crack TOEIC Vol 1 (10)
+    ...Array.from({ length: 10 }, (_, i) => ({
+      _id: `crack_v1_${i + 1}`,
+      title: `Crack TOEIC Vol 1 — Test ${i + 1} (Full 200 Câu)`,
+      category: "Crack TOEIC Vol 1",
+      orderIndex: i + 1,
+      difficulty_label: "Khó",
+      isPro: false,
+      totalQuestions: 200
+    })),
+    // Crack TOEIC Vol 2 (10)
+    ...Array.from({ length: 10 }, (_, i) => ({
+      _id: `crack_v2_${i + 1}`,
+      title: `Crack TOEIC Vol 2 — Test ${i + 1} (Full 200 Câu)`,
+      category: "Crack TOEIC Vol 2",
+      orderIndex: i + 1,
+      difficulty_label: "Khó",
+      isPro: false,
+      totalQuestions: 200
+    }))
   ];
 
   // Tests Data
@@ -213,10 +253,13 @@ export default function MockTestDashboard() {
     return acc + (p?.minutes || 10);
   }, 0);
 
-  // EXACT Categories List (ONLY 2 Categories matching Dau TOEIC 100%)
+  // EXACT Categories List (5 Categories matching Dau TOEIC 100%)
   const categoryPillList = [
+    { id: 'Pass TOEIC', label: 'Pass TOEIC (10)', count: 10 },
+    { id: 'Max Vol 1', label: 'Max Vol 1 (10)', count: 10 },
+    { id: 'Max Vol 2', label: 'Max Vol 2 (10)', count: 10 },
     { id: 'Crack TOEIC Vol 1', label: 'Crack TOEIC Vol 1 (10)', count: 10 },
-    { id: 'Pass TOEIC', label: 'Pass TOEIC (6)', count: 6 }
+    { id: 'Crack TOEIC Vol 2', label: 'Crack TOEIC Vol 2 (10)', count: 10 }
   ];
 
   // Helper to extract natural test number for numerical sorting (Test 1..10)
@@ -227,28 +270,32 @@ export default function MockTestDashboard() {
 
   // Exact mock test attempt counts matching Dau TOEIC
   const attemptsCrackVol1 = [500, 150, 44, 23, 31, 18, 11, 9, 17, 46];
-  const attemptsPassToeic = [320, 140, 85, 42, 28, 19];
+  const attemptsCrackVol2 = [380, 120, 52, 19, 27, 14, 8, 12, 15, 39];
+  const attemptsPassToeic = [320, 140, 85, 42, 28, 19, 15, 12, 25, 40];
+  const attemptsMaxVol1 = [420, 190, 88, 45, 32, 21, 19, 14, 22, 51];
+  const attemptsMaxVol2 = [310, 130, 65, 30, 24, 16, 12, 10, 18, 35];
 
   // Filter & Naturally Sort Tests strictly according to selected category
   const displayedTests = useMemo(() => {
-    let filtered = [];
+    let filtered = tests.filter(t => {
+      const cat = t.category || t.collectionName || '';
+      if (selectedCategory) {
+        return cat === selectedCategory || (t.title && t.title.toLowerCase().includes(selectedCategory.toLowerCase()));
+      }
+      return true;
+    });
 
-    if (selectedCategory === 'Pass TOEIC') {
-      // Pass TOEIC has exactly 6 tests from year 2024 / Pass TOEIC set
-      filtered = tests.filter(t => t.year === 2024 || (t.title && t.title.includes('2024')));
-      filtered.sort((a, b) => extractTestNumber(a.title) - extractTestNumber(b.title));
-      filtered = filtered.slice(0, 6);
-    } else {
-      // Default: Crack TOEIC Vol 1 has exactly 10 tests from year 2026 / Crack TOEIC set
-      filtered = tests.filter(t => t.year === 2026 || (t.title && t.title.includes('2026')));
-      filtered.sort((a, b) => extractTestNumber(a.title) - extractTestNumber(b.title));
-      filtered = filtered.slice(0, 10);
-    }
+    filtered.sort((a, b) => {
+      const numA = a.orderIndex || extractTestNumber(a.title);
+      const numB = b.orderIndex || extractTestNumber(b.title);
+      return numA - numB;
+    });
 
     // Apply search keyword if user types in search box
     if (searchKeyword.trim()) {
       filtered = filtered.filter((t, idx) => {
-        const titleName = `Test ${idx + 1}`;
+        const testNum = t.orderIndex || extractTestNumber(t.title);
+        const titleName = `Test ${testNum}`;
         return titleName.toLowerCase().includes(searchKeyword.toLowerCase()) || 
                (t.title && t.title.toLowerCase().includes(searchKeyword.toLowerCase()));
       });
@@ -433,16 +480,25 @@ export default function MockTestDashboard() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 {displayedTests.map((test, idx) => {
                   const historyRecord = testHistory.find(h => h.testId === test._id);
-                  const isFreeTest = idx === 0; // Test 1 is Free
-                  const isLocked = !isProUser && !isFreeTest;
+                  const isFreeTest = !test.isPro;
+                  const isLocked = !isProUser && test.isPro;
 
                   // Strictly sequential Title: 'Test 1', 'Test 2', ..., 'Test 10'
-                  const displayTitle = `Test ${idx + 1}`;
+                  const testNum = test.orderIndex || (idx + 1);
+                  const displayTitle = `Test ${testNum}`;
 
                   // Real attempt counts from MongoDB (seeded baseline + live attempts increment)
                   const attempts = test.attemptsCount || (selectedCategory === 'Pass TOEIC' 
                     ? (attemptsPassToeic[idx] || 35)
-                    : (attemptsCrackVol1[idx] || 45));
+                    : (selectedCategory === 'Max Vol 1'
+                      ? (attemptsMaxVol1[idx] || 40)
+                      : (selectedCategory === 'Max Vol 2'
+                        ? (attemptsMaxVol2[idx] || 30)
+                        : (selectedCategory === 'Crack TOEIC Vol 2'
+                          ? (attemptsCrackVol2[idx] || 25)
+                          : (attemptsCrackVol1[idx] || 45)))));
+
+                  const difficulty = test.difficulty_label || (selectedCategory === 'Pass TOEIC' ? 'Dễ' : 'Khó');
 
                   return (
                     <VipLockOverlay
@@ -517,7 +573,7 @@ export default function MockTestDashboard() {
 
                             <div className="flex items-center gap-1">
                               <span className="dark:text-slate-500 text-slate-400">📶</span>
-                              <span>Vừa</span>
+                              <span>{difficulty}</span>
                             </div>
 
                             <span>•</span>
