@@ -30,6 +30,7 @@ import {
   Newspaper,
   Lightbulb,
   MessageSquare,
+  Languages,
   Bell
 } from 'lucide-react';
 import PricingModal from './PricingModal';
@@ -153,6 +154,7 @@ export default function Navbar() {
     { name: 'Nghe', path: '/listen', icon: Headphones },
     { name: 'Đọc', path: '/read', icon: BookOpen },
     { name: 'Từ vựng', path: '/vocabulary', icon: Sparkles },
+    { name: 'Tra Từ', path: '/tra-tu', icon: Languages, badge: 'AI' },
     { name: 'Đề thi', path: '/tests', icon: FileText },
     { name: 'Video', path: '/video', icon: Video },
     { name: 'Đấu trường', path: '/leaderboard', icon: Trophy },
@@ -225,6 +227,18 @@ export default function Navbar() {
               <div 
                 className="absolute right-0 mt-2 w-60 dark:bg-[#0f172a] bg-white backdrop-blur-xl border dark:border-slate-800 border-slate-200 rounded-2xl p-2 shadow-2xl z-50 text-xs space-y-1 animate-fadeIn"
               >
+                <Link 
+                  to="/tra-tu" 
+                  onClick={() => setShowMoreMenu(false)}
+                  className="flex items-center gap-2.5 p-2.5 rounded-xl dark:text-slate-200 text-slate-700 dark:hover:bg-slate-800/80 hover:bg-slate-100 hover:text-cyan-400 font-semibold transition-colors"
+                >
+                  <Languages className="w-4 h-4 text-cyan-400 shrink-0" />
+                  <div className="flex flex-col">
+                    <span>Tra Từ & Dịch Thuật 2 Chiều</span>
+                    <span className="text-[10px] text-slate-400 font-normal">Anh ⇄ Việt, Voice Mic & TTS</span>
+                  </div>
+                </Link>
+
                 <Link 
                   to="/blog" 
                   onClick={() => setShowMoreMenu(false)}

@@ -22,6 +22,7 @@ import {
   Newspaper,
   Lightbulb,
   MessageSquare,
+  Languages,
   Smartphone
 } from 'lucide-react';
 import { clearStoredUser } from '../utils/auth';
@@ -203,6 +204,29 @@ export default function MobileMenuDrawer({
             </div>
             <ChevronRight className="w-4 h-4 text-cyan-400 group-hover:translate-x-0.5 transition-transform" />
           </button>
+
+          {/* TRA TỪ & DỊCH THUẬT */}
+          <Link
+            to="/tra-tu"
+            onClick={onClose}
+            className="flex items-center justify-between p-3 rounded-2xl dark:bg-slate-900/60 bg-slate-50 hover:bg-slate-100 dark:hover:bg-slate-800 border dark:border-slate-800/60 border-slate-200 dark:text-slate-200 text-slate-800 transition-colors group"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-400 group-hover:scale-105 transition-transform">
+                <Languages className="w-4 h-4" />
+              </div>
+              <div>
+                <span className="font-bold text-xs block dark:text-white text-slate-900 flex items-center gap-1.5">
+                  Tra Từ & Dịch Thuật
+                  <span className="px-1.5 py-0.2 rounded-full bg-cyan-500/20 text-cyan-600 dark:text-cyan-300 text-[9px] font-black border border-cyan-500/30 font-mono">
+                    MỚI 🎙️
+                  </span>
+                </span>
+                <span className="text-[10px] dark:text-slate-400 text-slate-500">2 Chiều Anh ⇄ Việt & Voice Mic</span>
+              </div>
+            </div>
+            <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-cyan-400" />
+          </Link>
 
           {/* BLOG & CHIẾN LƯỢC */}
           <Link

@@ -29,6 +29,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import BattleRoom from './pages/BattleRoom';
 import BlogDashboard from './pages/BlogDashboard';
 import BlogDetail from './pages/BlogDetail';
+import TraTuPage from './pages/TraTuPage';
 import NotFound from './pages/NotFound';
 import FloatingSocialChat from './components/FloatingSocialChat';
 import MobileBottomNav from './components/MobileBottomNav';
@@ -103,6 +104,11 @@ export default function App() {
 
                 {/* 1v1 Battle Arena Route */}
                 <Route path="/battle" element={<ProtectedRoute><BattleRoom /></ProtectedRoute>} />
+
+                {/* Tra Từ & Dịch Thuật 2 Chiều */}
+                <Route path="/tra-tu" element={<TraTuPage />} />
+                <Route path="/translate" element={<Navigate to="/tra-tu" replace />} />
+                <Route path="/dict" element={<Navigate to="/tra-tu" replace />} />
 
                 {/* Blog & Articles Routes */}
                 <Route path="/blog" element={<BlogDashboard />} />
